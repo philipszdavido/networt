@@ -16,7 +16,7 @@ class States: ObservableObject {
 struct NetworthView: View {
     
     @Query var bankInfos: [BankInfo]
-    
+
     @State var selectedTab = 1
     
     var settings =  GlobalSettings()
@@ -48,7 +48,7 @@ struct NetworthView: View {
 #Preview {
     NetworthView()
         .modelContainer(for: [
-            BankInfo.self
+            BankInfo.self, Transaction.self
         ], inMemory: true)
 }
 
@@ -77,13 +77,13 @@ struct MainView: View {
                     Spacer()
                 }.padding(.leading, 7.0)
                 
-                if(!bankInfos.isEmpty && !settings.showMyBanks) {
+                if(!bankInfos.isEmpty && settings.showMyBanks) {
                     VStack(alignment: .leading) {
                         Text("My Banks").padding(0.0).font(.system(size: 17, design: .rounded))
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
                                 ForEach(bankInfos, id: \.self) { bankInfo in
-                                    CardView(bankInfo: bankInfo)
+                                    BankCardView(bankInfo: bankInfo)
                                 }
                             }
                         }
@@ -91,7 +91,9 @@ struct MainView: View {
                 }
                 
                 
-                if(settings.showUpdates ) { UpdatesView() }
+                if(settings.showUpdates ) {
+                    UpdatesView()
+                }
             
             Spacer()
         }.onAppear {
@@ -108,7 +110,7 @@ struct HeaderView: View {
     
     var body: some View {
         HStack {
-            Text("My Networth")
+            Text("My Net Worth")
                 .font(.system(.largeTitle, design: .rounded))
                 .bold()
                 .fontWeight(.black)
@@ -127,71 +129,3 @@ struct HeaderView: View {
     }
 }
 
-struct CardView: View {
-    
-    var bankInfo: BankInfo;
-    
-    var body: some View {
-        VStack(alignment: .center) {
-            HStack {
-                Text("\(bankInfo.bankName)")
-                Spacer()
-                Text("\(bankInfo.currency) \(bankInfo.amount)")
-            }
-            Text("\(String(bankInfo.number))")
-                .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-        }.padding([.leading, .trailing, .bottom], 20)
-            .frame(height: 120)
-            .background(.purple)
-            .cornerRadius(8.0)
-    }
-}
-
-struct UpdatesView: View {
-    
-    @Query var txns: [Transaction]
-    
-    func formatDateTime(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, h:mm a"
-        
-        let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        
-        if Calendar.current.isDateInYesterday(date) {
-            return "Yesterday, " + dateFormatter.string(from: date)
-        } else if Calendar.current.isDateInToday(date) {
-            return "Today, " + dateFormatter.string(from: date)
-        } else {
-            return dateFormatter.string(from: date)
-        }
-    }
-    
-    var body: some View {
-
-        HStack {
-            Text("Updates").font(.system(size: 20, design: .rounded)).bold()
-            Spacer()
-        }.padding(.leading, 7.0)
-            .padding([.bottom], 0)
-            .padding(.top, 15)
-        Divider()
-
-        List {
-            ForEach(txns, id: \.self) { txn in
-                HStack {
-                    VStack(alignment: .leading) {
-                        Text("\(txn.bankInfo.bankName)")
-                        Text("\(formatDateTime(txn.dateTime))")
-                            .font(.system(.caption, design: .rounded))
-                    }
-                    Spacer()
-                    
-                    Text("\(txn.operation) \(txn.amount)")
-                }
-            }
-        }.edgesIgnoringSafeArea(.all)
-        .padding(0)
-        .listStyle(.plain)
-    }
-}

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		4FBE55B52BC30956008CBC42 /* AccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B42BC30956008CBC42 /* AccountsListView.swift */; };
 		4FBE55B72BC32A1D008CBC42 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B62BC32A1D008CBC42 /* Transaction.swift */; };
+		4FBE55BD2BC3D00A008CBC42 /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */; };
+		4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */; };
 		4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8952BBD77DC00C8911B /* networtApp.swift */; };
 		4FC3C8982BBD77DC00C8911B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8972BBD77DC00C8911B /* ContentView.swift */; };
 		4FC3C89A2BBD77DC00C8911B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8992BBD77DC00C8911B /* Item.swift */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		4FBE55B42BC30956008CBC42 /* AccountsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsListView.swift; sourceTree = "<group>"; };
 		4FBE55B62BC32A1D008CBC42 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
+		4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardView.swift; sourceTree = "<group>"; };
 		4FC3C8922BBD77DB00C8911B /* networt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC3C8952BBD77DC00C8911B /* networtApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networtApp.swift; sourceTree = "<group>"; };
 		4FC3C8972BBD77DC00C8911B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -100,9 +104,10 @@
 		4FBE55BB2BC3C467008CBC42 /* views */ = {
 			isa = PBXGroup;
 			children = (
-				4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */,
 				4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */,
 				4FBE55B42BC30956008CBC42 /* AccountsListView.swift */,
+				4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */,
+				4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -138,6 +143,7 @@
 				4FC3C89B2BBD77E400C8911B /* Assets.xcassets */,
 				4FC3C89D2BBD77E400C8911B /* Preview Content */,
 				4FC3C8C12BBD7B5600C8911B /* NetworthView.swift */,
+				4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */,
 			);
 			path = networt;
 			sourceTree = "<group>";
@@ -306,6 +312,8 @@
 				4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */,
 				4FC7A54A2BC2B99A005CA5B2 /* BankInfo.swift in Sources */,
 				4FC3C8C22BBD7B5600C8911B /* NetworthView.swift in Sources */,
+				4FBE55BD2BC3D00A008CBC42 /* UpdatesView.swift in Sources */,
+				4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */,
 				4FC7A54C2BC2C07A005CA5B2 /* AddBankAccount.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -473,6 +481,7 @@
 				DEVELOPMENT_TEAM = AVHBF8657S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "My Networth";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -502,6 +511,7 @@
 				DEVELOPMENT_TEAM = AVHBF8657S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "My Networth";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

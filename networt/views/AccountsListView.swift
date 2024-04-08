@@ -77,7 +77,7 @@ struct EditAccountView: View {
         CustomNumberTextView(text: "Amount", link: $bankInfo.amount)
         
         HStack {
-            VStack(alignment: .leading) {
+            HStack {
                 Text("Global Currency").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.leading, 5.0)
                     .foregroundColor(.gray)
                 
@@ -95,11 +95,6 @@ struct EditAccountView: View {
         Spacer()
 
             .toolbar {
-                    ToolbarItem {
-                        Button("Save") {
-                            onSave()
-                        }
-                    }
                 ToolbarItem {
                     Button("Withdraw") {
                         operation = "-"
@@ -107,6 +102,7 @@ struct EditAccountView: View {
                     }
 
                 }
+                
                 ToolbarItem {
                     Button("Add") {
                         operation = "+"
@@ -114,6 +110,12 @@ struct EditAccountView: View {
                     }
 
                 }
+
+//                    ToolbarItem {
+//                        Button("Save") {
+//                            onSave()
+//                        }
+//                    }
             }.sheet(isPresented: $showSheet, onDismiss: {
                 amount = 0;
                 operation = ""

@@ -107,7 +107,7 @@ struct AddBankAccount: View {
 
     @ObservedObject var states: States
     
-    @State var bankInfo: BankInfo = BankInfo(amount: 0, bankName: "", currency: "", number: 0)
+    @State var bankInfo: BankInfo = BankInfo(amount: 0, bankName: "", currency: "USD", number: 0)
 
     var body: some View {
         NavigationStack {
@@ -158,24 +158,46 @@ struct AddBankAccount: View {
 
             }
             
-            List {
-                Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded))
-
-                ForEach(currenciesWithFlags, id: \.0) { name, flag in
-                    HStack {
-                        Text("\(name) \(flag)")
-                        Spacer()
-                        if(bankInfo.currency == name) {
-                            Image(systemName: "hand.thumbsup.fill")
+//            List {
+//                Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded))
+//
+//                ForEach(currenciesWithFlags, id: \.0) { name, flag in
+//                    HStack {
+//                        Text("\(name) \(flag)")
+//                        Spacer()
+//                        if(bankInfo.currency == name) {
+//                            Image(systemName: "hand.thumbsup.fill")
+//                        }
+//                    }                            .onTapGesture {
+//                        bankInfo.currency = name
+//                }
+//
+//                }
+//            }.listStyle(.plain)
+                
+            
+            HStack {
+                HStack {
+                    Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded)).foregroundColor(.gray)
+                    
+                    Picker(selection: $bankInfo.currency, label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
+                        ForEach(currenciesWithFlags, id: \.0) { name, flag in
+                            HStack {
+                                Text("\(name) \(flag)")
+                                Spacer()
+                            }                            .onTapGesture {
+                                bankInfo.currency = name
                         }
-                    }                            .onTapGesture {
-                        bankInfo.currency = name
-                }
+
+                        }
+                    }
 
                 }
-            }.listStyle(.plain)
-
-
+                Spacer()
+            }.padding(.horizontal)
+            
+            Spacer()
+            
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Save") {
@@ -191,7 +213,7 @@ struct AddBankAccount: View {
                         Image(systemName: "chevron.left")
                     }
                 }
-            }
+        }
         }
     }
 }
