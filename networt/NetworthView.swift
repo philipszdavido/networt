@@ -48,13 +48,11 @@ struct NetworthView: View {
 
 #Preview {
     
-    //var settings =  GlobalSettings()
-
     NetworthView()
         .modelContainer(for: [
             BankInfo.self, Transaction.self
         ], inMemory: true)
-        //.environmentObject(settings)
+        .environmentObject(GlobalSettings())
 
 }
 
@@ -88,7 +86,7 @@ struct MainView: View {
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
                                 ForEach(bankInfos, id: \.self) { bankInfo in
-                                    BankCardView(bankInfo: bankInfo)
+                                    BankCardView(bankInfo: bankInfo, settings: settings)
                                 }
                             }
                         }
@@ -122,7 +120,7 @@ struct HeaderView: View {
                 .bold()
                 .fontWeight(.black)
             Spacer()
-            
+                                    
             Menu {
                 
                 Button("Add New Account") {

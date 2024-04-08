@@ -184,7 +184,15 @@ struct CustomNumberTextView: View {
             
             Text("\(text)").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
             
-            TextField("\(text)", value: $link, format: .number)
+            TextField("\(text)", value: Binding(
+                get: {
+                    link
+                },
+                set: { newValue in
+                    print(newValue)
+                    link = newValue
+                }
+            ), format: .number)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                     .padding(.horizontal)
             

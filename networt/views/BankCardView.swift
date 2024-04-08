@@ -9,7 +9,7 @@ import SwiftUI
 
 struct BankCardView: View {
     var bankInfo: BankInfo;
-    @EnvironmentObject var settings: GlobalSettings
+    var settings: GlobalSettings
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -36,8 +36,7 @@ struct BankCardView: View {
 }
 
 #Preview {
-    BankCardView(bankInfo: BankInfo(amount: 9000, bankName: "Sterling Bank", currency: "USD", number: 090987656545))
-        .environmentObject(GlobalSettings())
+    BankCardView(bankInfo: BankInfo(amount: 9000, bankName: "Sterling Bank", currency: "USD", number: 090987656545), settings:  GlobalSettings())
 }
     
 
