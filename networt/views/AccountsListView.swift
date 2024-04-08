@@ -105,18 +105,13 @@ struct EditAccountView: View {
                 }
                 
                 ToolbarItem {
-                    Button("Add") {
+                    Button("Add Money") {
                         operation = "+"
                         showSheet.toggle()
                     }
 
                 }
 
-//                    ToolbarItem {
-//                        Button("Save") {
-//                            onSave()
-//                        }
-//                    }
             }.sheet(isPresented: $showSheet, onDismiss: {
                 amount = 0;
                 operation = ""
@@ -125,29 +120,32 @@ struct EditAccountView: View {
                     Text("Enter amount...").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal)
                         .foregroundColor(.gray)
 
-                    TextField("Amount...", value: $amount, format: .number)
-                        .padding(10)
-                        .background(.gray)
-                    .cornerRadius(/*@START_MENU_TOKEN@*/3.0/*@END_MENU_TOKEN@*/)
-                    
-                    Button("Save", action: {
-                        switch operation {
-                        case "+":
-                            bankInfo.amount = bankInfo.amount + amount
-                        case "-":
-                            bankInfo.amount = bankInfo.amount - amount
-                        default: break
+                    HStack {
+                        TextField("Amount...", value: $amount, format: .number)
+                            .padding(10)
+                            .background(.gray)
+                        .cornerRadius(/*@START_MENU_TOKEN@*/3.0/*@END_MENU_TOKEN@*/)
+                        Button("Save", action: {
+                            switch operation {
+                            case "+":
+                                bankInfo.amount = bankInfo.amount + amount
+                            case "-":
+                                bankInfo.amount = bankInfo.amount - amount
+                            default: break
+                                
+                            }
                             
-                        }
-                        
-                        let txn = Transaction(dateTime: Date(), operation: operation, amount: amount, currency: bankInfo.currency, bankInfo: bankInfo)
-                        
-                        modelContext.insert(txn)
-                        showSheet.toggle()
-                    })
+                            let txn = Transaction(dateTime: Date(), operation: operation, amount: amount, currency: bankInfo.currency, bankInfo: bankInfo)
+                            
+                            modelContext.insert(txn)
+                            showSheet.toggle()
+                        })
+
+                    }
+                    
                 }.padding()
                 Spacer()
-                
+                .presentationDetents([.height(250)])
             }
     }
 }
@@ -174,6 +172,7 @@ struct CustomStringTextView: View {
     }
 }
 
+
 struct CustomNumberTextView: View {
     
     var text: String;
@@ -183,16 +182,10 @@ struct CustomNumberTextView: View {
         VStack(alignment: .leading) {
             
             Text("\(text)").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
-            
-            TextField("\(text)", value: Binding(
-                get: {
-                    link
-                },
-                set: { newValue in
-                    print(newValue)
-                    link = newValue
-                }
-            ), format: .number)
+                        
+            TextField("\(text)", value: $link, format: .number)
+                    .disableAutocorrection(true)
+            .keyboardType(.numberPad)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                     .padding(.horizontal)
             

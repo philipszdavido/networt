@@ -11,6 +11,13 @@ struct BankCardView: View {
     var bankInfo: BankInfo;
     var settings: GlobalSettings
     
+    func getLengthOfAmount() -> String {
+        let cur = bankInfo.currency.count;
+        let amt = String(bankInfo.amount).count
+        
+        return ""//Array(repeating: "*", count: cur+amt).joined()
+    }
+    
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
@@ -21,7 +28,7 @@ struct BankCardView: View {
             
             HStack {
                 
-                Text(settings.hideNetworth ? "****" : "\(bankInfo.currency) \(bankInfo.amount)").font(.system(.title, design: .rounded))
+                Text(settings.hideNetworth ? getLengthOfAmount() : "\(bankInfo.currency) \(bankInfo.amount)").font(.system(.title, design: .rounded))
                     .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 
                 Spacer()

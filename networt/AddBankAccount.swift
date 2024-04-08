@@ -135,7 +135,7 @@ struct AddBankAccount: View {
                     
 
                 TextField("Bank Account", value: $bankInfo.number, format: .number)
-                
+                    .keyboardType(.numberPad)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                 .padding(.horizontal)
                 
@@ -153,6 +153,7 @@ struct AddBankAccount: View {
                 TextField("Amount", value: $bankInfo.amount, format: .number)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                 .padding(.horizontal)
+                .keyboardType(.numberPad)
                 
                 Divider()
 
