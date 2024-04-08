@@ -12,6 +12,7 @@ struct UpdatesView: View {
 
         @Query var txns: [Transaction]
         @Environment(\.modelContext) private var modelContext
+    var settings: GlobalSettings
 
         func formatDateTime(_ date: Date) -> String {
             let dateFormatter = DateFormatter()
@@ -48,7 +49,11 @@ struct UpdatesView: View {
                                             }
                         Spacer()
                         
-                        Text("\(txn.operation) \(txn.currency) \(txn.amount)")
+                        Text(settings.hideNetworth ? "****" : "\(txn.operation) \(txn.currency) \(txn.amount)")
+                    }
+                }.onDelete { (indexSet) in
+                    for offset in indexSet {
+                        modelContext.delete(txns[offset])
                     }
                 }
             }.edgesIgnoringSafeArea(.all)
@@ -63,7 +68,7 @@ struct UpdatesView: View {
 }
 
 #Preview {
-    UpdatesView().modelContainer(for: [
+    UpdatesView(settings: GlobalSettings()).modelContainer(for: [
         BankInfo.self, Transaction.self
     ], inMemory: true)
 }

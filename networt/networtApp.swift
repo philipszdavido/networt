@@ -23,11 +23,27 @@ struct networtApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    @StateObject private var settings =  GlobalSettings()
 
     var body: some Scene {
         WindowGroup {
-            NetworthView()
+            
+            if(settings.lockCodes.isEmpty) {
+                
+                LockView(newLockCode: true)
+                
+            } else {
+                
+                if(!settings.isLockCodeSet) {
+                    LockView(newLockCode: false )
+                } else {
+                    NetworthView()
+                }
+            }
+            
         }
         .modelContainer(sharedModelContainer)
+        .environmentObject(settings)
     }
 }

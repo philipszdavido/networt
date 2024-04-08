@@ -11,6 +11,7 @@
 		4FBE55B72BC32A1D008CBC42 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B62BC32A1D008CBC42 /* Transaction.swift */; };
 		4FBE55BD2BC3D00A008CBC42 /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */; };
 		4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */; };
+		4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55C02BC3DEBF008CBC42 /* LockView.swift */; };
 		4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8952BBD77DC00C8911B /* networtApp.swift */; };
 		4FC3C8982BBD77DC00C8911B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8972BBD77DC00C8911B /* ContentView.swift */; };
 		4FC3C89A2BBD77DC00C8911B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8992BBD77DC00C8911B /* Item.swift */; };
@@ -48,6 +49,7 @@
 		4FBE55B62BC32A1D008CBC42 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardView.swift; sourceTree = "<group>"; };
+		4FBE55C02BC3DEBF008CBC42 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 		4FC3C8922BBD77DB00C8911B /* networt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC3C8952BBD77DC00C8911B /* networtApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networtApp.swift; sourceTree = "<group>"; };
 		4FC3C8972BBD77DC00C8911B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 				4FBE55B42BC30956008CBC42 /* AccountsListView.swift */,
 				4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */,
 				4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */,
+				4FBE55C02BC3DEBF008CBC42 /* LockView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				4FC7A54A2BC2B99A005CA5B2 /* BankInfo.swift in Sources */,
 				4FC3C8C22BBD7B5600C8911B /* NetworthView.swift in Sources */,
 				4FBE55BD2BC3D00A008CBC42 /* UpdatesView.swift in Sources */,
+				4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */,
 				4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */,
 				4FC7A54C2BC2C07A005CA5B2 /* AddBankAccount.swift in Sources */,
 			);
@@ -475,6 +479,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"networt/Preview Content\"";
@@ -505,6 +510,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"networt/Preview Content\"";

@@ -19,25 +19,26 @@ struct NetworthView: View {
 
     @State var selectedTab = 1
     
-    var settings =  GlobalSettings()
+    var settings = GlobalSettings()
     
     
     @StateObject var states = States()
         
     var body: some View {
-        TabView(selection: $selectedTab) {
-            
-            MainView(bankInfos: bankInfos, settings: settings, states: states).tabItem {
-                Label("Home", systemImage: "dollarsign.circle")
-            }.tag(1)
-            
-            AccountsListView().tabItem { Label("Accounts", systemImage: "person.3")
-            }.tag(2)
-
-            SettingsView(settings: settings).tabItem { Label("Settings", systemImage: "gear") }.tag(3)
-            
-        }.onAppear {
-        }
+        
+            TabView(selection: $selectedTab) {
+                
+                MainView(bankInfos: bankInfos, settings: settings, states: states).tabItem {
+                    Label("Home", systemImage: "dollarsign.circle")
+                }.tag(1)
+                
+                AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")
+                }.tag(2)
+                
+                SettingsView(settings: settings).tabItem { Label("Settings", systemImage: "gear") }.tag(3)
+                
+            }
+        
     }
     
     init() {
@@ -46,12 +47,16 @@ struct NetworthView: View {
 }
 
 #Preview {
+    
+    //var settings =  GlobalSettings()
+
     NetworthView()
         .modelContainer(for: [
             BankInfo.self, Transaction.self
         ], inMemory: true)
-}
+        //.environmentObject(settings)
 
+}
 
 struct MainView: View {
     
@@ -92,7 +97,7 @@ struct MainView: View {
                 
                 
                 if(settings.showUpdates ) {
-                    UpdatesView()
+                    UpdatesView(settings: settings)
                 }
             
             Spacer()
@@ -108,6 +113,8 @@ struct HeaderView: View {
     
     @ObservedObject var states: States;
     
+    @EnvironmentObject var settings: GlobalSettings
+    
     var body: some View {
         HStack {
             Text("My Net Worth")
@@ -117,9 +124,20 @@ struct HeaderView: View {
             Spacer()
             
             Menu {
+                
                 Button("Add New Account") {
                     states.addNewAccount = true
                 }
+                
+                Button("Lock") {
+                    settings.isLockCodeSet = false
+                }
+                
+                Button("Change Lock Code") {
+                    settings.lockCodes = ""
+                    settings.isLockCodeSet = false
+                }
+                
             } label: {
                 Image(systemName: "ellipsis.circle").font(.system(.largeTitle, design: .rounded))
                     .padding(.trailing, 4.0)

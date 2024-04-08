@@ -33,11 +33,25 @@ class GlobalSettings: ObservableObject {
         }
     }
     
+    @Published var lockCodes: String {
+        didSet {
+            UserDefaults.standard.set(lockCodes, forKey: "lockCodes")
+        }
+    }
+    
+    @Published var isLockCodeSet: Bool {
+        didSet {
+            UserDefaults.standard.set(isLockCodeSet, forKey: "isLockCodeSet")
+        }
+    }
+    
     init() {
         self.currency = UserDefaults.standard.string(forKey: "currency") ?? "USD"
         self.showMyBanks = UserDefaults.standard.bool(forKey: "showMyBanks")
         self.showUpdates = UserDefaults.standard.bool(forKey: "showUpdates")
         self.hideNetworth = UserDefaults.standard.bool(forKey: "hideNetworth")
+        self.lockCodes = UserDefaults.standard.string(forKey: "lockCodes") ?? ""
+        self.isLockCodeSet = UserDefaults.standard.bool(forKey: "isLockCodeSet") 
     }
     
     func loadSettings() {
@@ -45,5 +59,7 @@ class GlobalSettings: ObservableObject {
         self.showMyBanks = UserDefaults.standard.bool(forKey: "showMyBanks")
         self.showUpdates = UserDefaults.standard.bool(forKey: "showUpdates")
         self.hideNetworth = UserDefaults.standard.bool(forKey: "hideNetworth")
+        self.lockCodes = UserDefaults.standard.string(forKey: "lockCodes") ?? ""
+        self.isLockCodeSet = UserDefaults.standard.bool(forKey: "isLockCodeSet") 
     }
 }

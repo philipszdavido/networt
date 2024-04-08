@@ -13,7 +13,8 @@ struct AccountsListView: View {
     @Environment(\.modelContext) private var modelContext
 
     @Query var bankInfos: [BankInfo]
-    
+    var settings: GlobalSettings
+
     var body: some View {
         NavigationView {
             List {
@@ -29,7 +30,7 @@ struct AccountsListView: View {
                                 Text("\(String(bankInfo.number))")
                             }
                             Spacer()
-                            Text("\(bankInfo.currency) \(bankInfo.amount)")
+                            Text(settings.hideNetworth ? "*****" : "\(bankInfo.currency) \(bankInfo.amount)")
                         }
                     }
                 }.onDelete { (indexSet) in
@@ -48,7 +49,7 @@ struct AccountsListView: View {
 }
 
 #Preview {
-    AccountsListView().modelContainer(for: [
+    AccountsListView(settings: GlobalSettings()).modelContainer(for: [
         BankInfo.self
     ], inMemory: true)
 }

@@ -34,7 +34,7 @@ struct SettingsView: View {
                 }
                 
                 Toggle(isOn: $settings.hideNetworth) {
-                    Text("Hide Networth")
+                    Text("Hide Net Worth")
                 }
                 
                 Toggle(isOn: $settings.showUpdates) {
