@@ -87,6 +87,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4FBE55BA2BC3C461008CBC42 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				4FBE55B62BC32A1D008CBC42 /* Transaction.swift */,
+				4FC7A5492BC2B99A005CA5B2 /* BankInfo.swift */,
+				4FC7A54F2BC2D804005CA5B2 /* GlobalSettings.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		4FBE55BB2BC3C467008CBC42 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */,
+				4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */,
+				4FBE55B42BC30956008CBC42 /* AccountsListView.swift */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
 		4FC3C8892BBD77DB00C8911B = {
 			isa = PBXGroup;
 			children = (
@@ -110,18 +130,14 @@
 		4FC3C8942BBD77DB00C8911B /* networt */ = {
 			isa = PBXGroup;
 			children = (
+				4FBE55BB2BC3C467008CBC42 /* views */,
+				4FBE55BA2BC3C461008CBC42 /* model */,
 				4FC3C8952BBD77DC00C8911B /* networtApp.swift */,
 				4FC3C8972BBD77DC00C8911B /* ContentView.swift */,
 				4FC3C8992BBD77DC00C8911B /* Item.swift */,
 				4FC3C89B2BBD77E400C8911B /* Assets.xcassets */,
 				4FC3C89D2BBD77E400C8911B /* Preview Content */,
 				4FC3C8C12BBD7B5600C8911B /* NetworthView.swift */,
-				4FC7A5492BC2B99A005CA5B2 /* BankInfo.swift */,
-				4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */,
-				4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */,
-				4FC7A54F2BC2D804005CA5B2 /* GlobalSettings.swift */,
-				4FBE55B42BC30956008CBC42 /* AccountsListView.swift */,
-				4FBE55B62BC32A1D008CBC42 /* Transaction.swift */,
 			);
 			path = networt;
 			sourceTree = "<group>";
