@@ -13,8 +13,6 @@
 		4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */; };
 		4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55C02BC3DEBF008CBC42 /* LockView.swift */; };
 		4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8952BBD77DC00C8911B /* networtApp.swift */; };
-		4FC3C8982BBD77DC00C8911B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8972BBD77DC00C8911B /* ContentView.swift */; };
-		4FC3C89A2BBD77DC00C8911B /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8992BBD77DC00C8911B /* Item.swift */; };
 		4FC3C89C2BBD77E400C8911B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FC3C89B2BBD77E400C8911B /* Assets.xcassets */; };
 		4FC3C89F2BBD77E400C8911B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FC3C89E2BBD77E400C8911B /* Preview Assets.xcassets */; };
 		4FC3C8A92BBD77E500C8911B /* networtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8A82BBD77E500C8911B /* networtTests.swift */; };
@@ -52,8 +50,6 @@
 		4FBE55C02BC3DEBF008CBC42 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 		4FC3C8922BBD77DB00C8911B /* networt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC3C8952BBD77DC00C8911B /* networtApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networtApp.swift; sourceTree = "<group>"; };
-		4FC3C8972BBD77DC00C8911B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		4FC3C8992BBD77DC00C8911B /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		4FC3C89B2BBD77E400C8911B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4FC3C89E2BBD77E400C8911B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4FC3C8A42BBD77E500C8911B /* networtTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = networtTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +102,7 @@
 		4FBE55BB2BC3C467008CBC42 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */,
 				4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */,
 				4FBE55B42BC30956008CBC42 /* AccountsListView.swift */,
 				4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */,
@@ -141,12 +138,9 @@
 				4FBE55BB2BC3C467008CBC42 /* views */,
 				4FBE55BA2BC3C461008CBC42 /* model */,
 				4FC3C8952BBD77DC00C8911B /* networtApp.swift */,
-				4FC3C8972BBD77DC00C8911B /* ContentView.swift */,
-				4FC3C8992BBD77DC00C8911B /* Item.swift */,
 				4FC3C89B2BBD77E400C8911B /* Assets.xcassets */,
 				4FC3C89D2BBD77E400C8911B /* Preview Content */,
 				4FC3C8C12BBD7B5600C8911B /* NetworthView.swift */,
-				4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */,
 			);
 			path = networt;
 			sourceTree = "<group>";
@@ -308,10 +302,8 @@
 			files = (
 				4FC7A54E2BC2D094005CA5B2 /* SettingsView.swift in Sources */,
 				4FC7A5502BC2D804005CA5B2 /* GlobalSettings.swift in Sources */,
-				4FC3C8982BBD77DC00C8911B /* ContentView.swift in Sources */,
 				4FBE55B52BC30956008CBC42 /* AccountsListView.swift in Sources */,
 				4FBE55B72BC32A1D008CBC42 /* Transaction.swift in Sources */,
-				4FC3C89A2BBD77DC00C8911B /* Item.swift in Sources */,
 				4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */,
 				4FC7A54A2BC2B99A005CA5B2 /* BankInfo.swift in Sources */,
 				4FC3C8C22BBD7B5600C8911B /* NetworthView.swift in Sources */,
