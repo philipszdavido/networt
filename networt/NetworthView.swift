@@ -26,18 +26,20 @@ struct NetworthView: View {
         
     var body: some View {
         
+        NavigationStack {
             TabView(selection: $selectedTab) {
-                
-                MainView(bankInfos: bankInfos, settings: settings, states: states).tabItem {
-                    Label("Home", systemImage: "dollarsign.circle")
-                }.tag(1)
-                
-                AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")
-                }.tag(2)
-                
-                SettingsView(settings: settings).tabItem { Label("Settings", systemImage: "gear") }.tag(3)
-                
+                    
+                    MainView(bankInfos: bankInfos, settings: settings, states: states).tabItem {
+                        Label("Home", systemImage: "dollarsign.circle")
+                    }.tag(1)
+                    
+                    AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")
+                    }.tag(2)
+                    
+                    SettingsView(settings: settings).tabItem { Label("Settings", systemImage: "gear") }.tag(3)
+                    
             }
+        }
         
     }
     
@@ -83,8 +85,10 @@ struct MainView: View {
                 if(!bankInfos.isEmpty && settings.showMyBanks) {
                     VStack(alignment: .leading) {
                         Text("My Banks").padding(0.0).font(.system(size: 17, design: .rounded))
+                        
                         ScrollView(.horizontal, showsIndicators: false) {
                             HStack {
+
                                 ForEach(bankInfos, id: \.self) { bankInfo in
                                     BankCardView(bankInfo: bankInfo, settings: settings)
                                 }
@@ -122,9 +126,8 @@ struct HeaderView: View {
             Spacer()
                                     
             Menu {
-                
-                Button("Add New Account") {
-                    states.addNewAccount = true
+                NavigationLink(destination: AddBankAccount(states: states)) {
+                        Text("Add New Account")
                 }
                 
                 Button("Lock") {

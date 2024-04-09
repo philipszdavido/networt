@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import UIKit
 
 let currencies = [
     "USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "CNY", "SEK", "NZD",
@@ -104,7 +105,8 @@ let currenciesWithFlags: [(String, String)] = [
 struct AddBankAccount: View {
 
     @Environment(\.modelContext) private var modelContext
-
+    @Environment(\.presentationMode) var presentationMode
+    
     @ObservedObject var states: States
     
     @State var bankInfo: BankInfo = BankInfo(amount: 0, bankName: "", currency: "USD", number: 0)
@@ -117,65 +119,65 @@ struct AddBankAccount: View {
             VStack(alignment: .leading) {
                 
                 Text("Bank Name").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
-
+                
                 
                 TextField("Bank Name", text: $bankInfo.bankName)
                     .textContentType(.name)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                .padding(.horizontal)
+                    .padding(.horizontal)
                 
                 Divider()
                 
             }
-
+            
             VStack(alignment: .leading) {
                 
                 Text("Bank Account").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
-
-                    
-
+                
+                
+                
                 TextField("Bank Account", value: $bankInfo.number, format: .number)
                     .keyboardType(.numberPad)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                .padding(.horizontal)
+                    .padding(.horizontal)
                 
                 
                 Divider()
-
+                
             }
-
-
+            
+            
             VStack(alignment: .leading) {
                 
                 Text("Amount").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
-
+                
                 
                 TextField("Amount", value: $bankInfo.amount, format: .number)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
-                .padding(.horizontal)
-                .keyboardType(.numberPad)
+                    .padding(.horizontal)
+                    .keyboardType(.numberPad)
                 
                 Divider()
-
+                
             }
             
-//            List {
-//                Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded))
-//
-//                ForEach(currenciesWithFlags, id: \.0) { name, flag in
-//                    HStack {
-//                        Text("\(name) \(flag)")
-//                        Spacer()
-//                        if(bankInfo.currency == name) {
-//                            Image(systemName: "hand.thumbsup.fill")
-//                        }
-//                    }                            .onTapGesture {
-//                        bankInfo.currency = name
-//                }
-//
-//                }
-//            }.listStyle(.plain)
-                
+            //            List {
+            //                Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded))
+            //
+            //                ForEach(currenciesWithFlags, id: \.0) { name, flag in
+            //                    HStack {
+            //                        Text("\(name) \(flag)")
+            //                        Spacer()
+            //                        if(bankInfo.currency == name) {
+            //                            Image(systemName: "hand.thumbsup.fill")
+            //                        }
+            //                    }                            .onTapGesture {
+            //                        bankInfo.currency = name
+            //                }
+            //
+            //                }
+            //            }.listStyle(.plain)
+            
             
             HStack {
                 HStack {
@@ -188,34 +190,56 @@ struct AddBankAccount: View {
                                 Spacer()
                             }                            .onTapGesture {
                                 bankInfo.currency = name
-                        }
-
+                            }
+                            
                         }
                     }
-
+                    
                 }
                 Spacer()
             }.padding(.horizontal)
             
             Spacer()
             
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Save") {
-                        modelContext.insert(bankInfo)
-                        states.addNewAccount = false
-                    }
-                }
-                
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button(action: {
-                        states.addNewAccount = false
-                    }) {
-                        Image(systemName: "chevron.left")
-                    }
-                }
+            //            .toolbar {
+            //                ToolbarItem(placement: .navigationBarTrailing) {
+            //                    Button("Save") {
+            //                        modelContext.insert(bankInfo)
+            //                        states.addNewAccount = false
+            //                    }
+            //                }
+            //
+            //                ToolbarItem(placement: .navigationBarLeading) {
+            //                    Button(action: {
+            //                        states.addNewAccount = false
+            //                    }) {
+            //                        Image(systemName: "chevron.left")
+            //                    }
+            //                }
+            //            }
         }
-        }
+        
+        //.navigationBarBackButtonHidden(true)
+        .navigationBarItems(trailing: Button(action : {
+            presentationMode.wrappedValue.dismiss()
+        }){
+            Button(action: {
+                modelContext.insert(bankInfo)
+                presentationMode.wrappedValue.dismiss()
+            }){
+                Text("Save")
+            }
+        })
+        .navigationBarTitle("", displayMode: .inline)
+        
+    }
+    
+    init(states: States) {
+        self.states = states
+        
+        let navBarAppearance = UINavigationBarAppearance()
+        navBarAppearance.setBackIndicatorImage(UIImage(systemName: "arrow.turn.up.right"),
+        transitionMaskImage: UIImage(systemName: "arrow.turn.up.right"))
     }
 }
 

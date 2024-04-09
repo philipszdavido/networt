@@ -13,7 +13,7 @@ struct SettingsView: View {
     
     var body: some View {
         
-        NavigationStack {
+        NavigationView {
             List {
                                 
                 Section("Currency") {

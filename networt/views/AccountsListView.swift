@@ -12,13 +12,24 @@ struct AccountsListView: View {
 
     @Environment(\.modelContext) private var modelContext
 
-    @Query var bankInfos: [BankInfo]
     var settings: GlobalSettings
-
+    
+    @State private var searchText: String = "";
+    
+    @Query(sort: [SortDescriptor(\BankInfo.bankName)]) var bankInfos: [BankInfo]
+    
+    var filteredBankInfos: [BankInfo] {
+            if searchText.isEmpty {
+                return bankInfos
+            } else {
+                return bankInfos.filter { $0.bankName.localizedStandardContains(searchText) }
+            }
+        }
+    
     var body: some View {
         NavigationView {
             List {
-                ForEach(bankInfos, id: \.self) { bankInfo in
+                ForEach(filteredBankInfos, id: \.self) { bankInfo in
                     NavigationLink(
                         destination: EditAccountView(bankInfo: bankInfo, onSave: {
                             try! modelContext.save()
@@ -37,19 +48,38 @@ struct AccountsListView: View {
                     for offset in indexSet {
                         modelContext.delete(bankInfos[offset])
                     }
+                        
                 }
                 
             }.onAppear(perform: {
-//                modelContext.insert(BankInfo(amount: 0, bankName: "Sterling", currency: "EUR", number: 90))
 //                modelContext.insert(BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
+//                modelContext.insert(BankInfo(amount: 0, bankName: "Sterling", currency: "EUR", number: 90))
         })
+            .searchable(text: $searchText)
             .navigationTitle("Accounts")
+            .toolbar {
+                ToolbarItem {
+                    NavigationLink(destination: AddBankAccount(states: States())) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.system(size: 30))
+                    }
+                }
+            }
+            
         }
     }
+    
+//    init(settings: GlobalSettings, searchText: String? = "") {
+//        self.settings = settings;
+//        self._bankInfos = Query(
+//            filter: #Predicate<BankInfo> {
+//                $0.bankName.contains(searchText!)
+//            })
+//    }
 }
 
 #Preview {
-    AccountsListView(settings: GlobalSettings()).modelContainer(for: [
+    AccountsListView(settings: GlobalSettings()/*, searchText: ""*/).modelContainer(for: [
         BankInfo.self
     ], inMemory: true)
 }
@@ -65,7 +95,7 @@ struct EditAccountView: View {
     var onSave: () -> Void;
     
     @State var showSheet = false
-    @State var amount = 0
+    @State var amount: Int = 0;
     
     @State var operation = "";
     
@@ -122,8 +152,9 @@ struct EditAccountView: View {
 
                     HStack {
                         TextField("Amount...", value: $amount, format: .number)
+                            .keyboardType(.numberPad)
                             .padding(10)
-                            .background(.gray)
+                            .background(Color(red: 0.8, green: 0.8, blue: 0.8))
                         .cornerRadius(/*@START_MENU_TOKEN@*/3.0/*@END_MENU_TOKEN@*/)
                         Button("Save", action: {
                             switch operation {
@@ -136,6 +167,8 @@ struct EditAccountView: View {
                             }
                             
                             let txn = Transaction(dateTime: Date(), operation: operation, amount: amount, currency: bankInfo.currency, bankInfo: bankInfo)
+                            
+                            //bankInfo.transactions.append(txn)
                             
                             modelContext.insert(txn)
                             showSheet.toggle()

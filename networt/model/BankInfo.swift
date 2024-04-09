@@ -15,12 +15,12 @@ class BankInfo {
     var currency: String;
     var number: Int;
     
+//    @Relationship(deleteRule: .cascade) var transactions = [Transaction]()
     init(amount: Int, bankName: String, currency: String, number: Int) {
         self.amount = amount
         self.bankName = bankName
         self.currency = currency
         self.number = number
     }
-    
 }
 

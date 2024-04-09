@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct BankCardView: View {
+    
     var bankInfo: BankInfo;
-    var settings: GlobalSettings
+    
+    @ObservedObject var settings: GlobalSettings
     
     func getLengthOfAmount() -> String {
         let cur = bankInfo.currency.count;
         let amt = String(bankInfo.amount).count
         
-        return ""//Array(repeating: "*", count: cur+amt).joined()
+        return Array(1...(cur + amt)).map{ item in
+        "*"
+        }.joined()
+        
     }
     
     var body: some View {
@@ -29,7 +34,7 @@ struct BankCardView: View {
             HStack {
                 
                 Text(settings.hideNetworth ? getLengthOfAmount() : "\(bankInfo.currency) \(bankInfo.amount)").font(.system(.title, design: .rounded))
-                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 
                 Spacer()
 
@@ -40,6 +45,7 @@ struct BankCardView: View {
             .background(.purple)
             .cornerRadius(8.0)
     }
+    
 }
 
 #Preview {
