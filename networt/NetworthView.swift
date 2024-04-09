@@ -68,13 +68,10 @@ struct MainView: View {
     @State private var networth: Int = 0;
     
     var body: some View {
-        if(states.addNewAccount) {
-            AddBankAccount(states: states)
-        }
-        else{
             VStack {
+
                 HeaderView(states: states)
-                
+                    
                 HStack {
                     
                     Text(settings.hideNetworth ? "***" : "\(settings.currency) \(networth)").font(.system(size: 50, design: .rounded))
@@ -107,7 +104,7 @@ struct MainView: View {
             networth = bankInfos.map { bankInfo in                 return bankInfo.amount
             }.reduce(0, +)
         }
-    }
+    
     }
 }
 
@@ -118,16 +115,20 @@ struct HeaderView: View {
     @EnvironmentObject var settings: GlobalSettings
     
     var body: some View {
+        
         HStack {
+            
             Text("My Net Worth")
                 .font(.system(.largeTitle, design: .rounded))
                 .bold()
                 .fontWeight(.black)
+            
             Spacer()
-                                    
+            
             Menu {
-                NavigationLink(destination: AddBankAccount(states: states)) {
-                        Text("Add New Account")
+                
+                NavigationLink(destination: AddBankAccount()) {
+                    Text("Add New Account")
                 }
                 
                 Button("Lock") {
@@ -145,6 +146,7 @@ struct HeaderView: View {
             }
             
         }.padding(.leading, 7.0)
+        
     }
 }
 

@@ -107,7 +107,7 @@ struct AddBankAccount: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
     
-    @ObservedObject var states: States
+    //@ObservedObject var states: States
     
     @State var bankInfo: BankInfo = BankInfo(amount: 0, bankName: "", currency: "USD", number: 0)
 
@@ -160,24 +160,7 @@ struct AddBankAccount: View {
                 Divider()
                 
             }
-            
-            //            List {
-            //                Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded))
-            //
-            //                ForEach(currenciesWithFlags, id: \.0) { name, flag in
-            //                    HStack {
-            //                        Text("\(name) \(flag)")
-            //                        Spacer()
-            //                        if(bankInfo.currency == name) {
-            //                            Image(systemName: "hand.thumbsup.fill")
-            //                        }
-            //                    }                            .onTapGesture {
-            //                        bankInfo.currency = name
-            //                }
-            //
-            //                }
-            //            }.listStyle(.plain)
-            
+                        
             
             HStack {
                 HStack {
@@ -201,31 +184,14 @@ struct AddBankAccount: View {
             
             Spacer()
             
-            //            .toolbar {
-            //                ToolbarItem(placement: .navigationBarTrailing) {
-            //                    Button("Save") {
-            //                        modelContext.insert(bankInfo)
-            //                        states.addNewAccount = false
-            //                    }
-            //                }
-            //
-            //                ToolbarItem(placement: .navigationBarLeading) {
-            //                    Button(action: {
-            //                        states.addNewAccount = false
-            //                    }) {
-            //                        Image(systemName: "chevron.left")
-            //                    }
-            //                }
-            //            }
         }
         
-        //.navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: Button(action : {
             presentationMode.wrappedValue.dismiss()
         }){
             Button(action: {
-                modelContext.insert(bankInfo)
                 presentationMode.wrappedValue.dismiss()
+                modelContext.insert(bankInfo)
             }){
                 Text("Save")
             }
@@ -234,15 +200,9 @@ struct AddBankAccount: View {
         
     }
     
-    init(states: States) {
-        self.states = states
-        
-        let navBarAppearance = UINavigationBarAppearance()
-        navBarAppearance.setBackIndicatorImage(UIImage(systemName: "arrow.turn.up.right"),
-        transitionMaskImage: UIImage(systemName: "arrow.turn.up.right"))
-    }
 }
 
 #Preview {
-    AddBankAccount(states: States())
+    //AddBankAccount(states: States())
+    AddBankAccount()
 }

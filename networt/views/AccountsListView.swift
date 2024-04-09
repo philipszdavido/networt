@@ -59,7 +59,7 @@ struct AccountsListView: View {
             .navigationTitle("Accounts")
             .toolbar {
                 ToolbarItem {
-                    NavigationLink(destination: AddBankAccount(states: States())) {
+                    NavigationLink(destination: AddBankAccount()) {
                         Image(systemName: "plus.circle.fill")
                             .font(.system(size: 30))
                     }
