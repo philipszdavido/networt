@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F22F78D2BCA995A00D26908 /* CurrencyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F22F78C2BCA995900D26908 /* CurrencyPickerView.swift */; };
 		4FBE55B52BC30956008CBC42 /* AccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B42BC30956008CBC42 /* AccountsListView.swift */; };
 		4FBE55B72BC32A1D008CBC42 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B62BC32A1D008CBC42 /* Transaction.swift */; };
 		4FBE55BD2BC3D00A008CBC42 /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */; };
 		4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */; };
 		4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55C02BC3DEBF008CBC42 /* LockView.swift */; };
+		4FC1FF162BC7FDF0001912A8 /* CurrencyRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1FF152BC7FDF0001912A8 /* CurrencyRates.swift */; };
 		4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8952BBD77DC00C8911B /* networtApp.swift */; };
 		4FC3C89C2BBD77E400C8911B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FC3C89B2BBD77E400C8911B /* Assets.xcassets */; };
 		4FC3C89F2BBD77E400C8911B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FC3C89E2BBD77E400C8911B /* Preview Assets.xcassets */; };
@@ -43,11 +45,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F22F78C2BCA995900D26908 /* CurrencyPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPickerView.swift; sourceTree = "<group>"; };
 		4FBE55B42BC30956008CBC42 /* AccountsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsListView.swift; sourceTree = "<group>"; };
 		4FBE55B62BC32A1D008CBC42 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardView.swift; sourceTree = "<group>"; };
 		4FBE55C02BC3DEBF008CBC42 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
+		4FC1FF152BC7FDF0001912A8 /* CurrencyRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRates.swift; sourceTree = "<group>"; };
 		4FC3C8922BBD77DB00C8911B /* networt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC3C8952BBD77DC00C8911B /* networtApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networtApp.swift; sourceTree = "<group>"; };
 		4FC3C89B2BBD77E400C8911B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -108,8 +112,17 @@
 				4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */,
 				4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */,
 				4FBE55C02BC3DEBF008CBC42 /* LockView.swift */,
+				4F22F78C2BCA995900D26908 /* CurrencyPickerView.swift */,
 			);
 			path = views;
+			sourceTree = "<group>";
+		};
+		4FC1FF142BC7FDD5001912A8 /* services */ = {
+			isa = PBXGroup;
+			children = (
+				4FC1FF152BC7FDF0001912A8 /* CurrencyRates.swift */,
+			);
+			path = services;
 			sourceTree = "<group>";
 		};
 		4FC3C8892BBD77DB00C8911B = {
@@ -135,6 +148,7 @@
 		4FC3C8942BBD77DB00C8911B /* networt */ = {
 			isa = PBXGroup;
 			children = (
+				4FC1FF142BC7FDD5001912A8 /* services */,
 				4FBE55BB2BC3C467008CBC42 /* views */,
 				4FBE55BA2BC3C461008CBC42 /* model */,
 				4FC3C8952BBD77DC00C8911B /* networtApp.swift */,
@@ -300,6 +314,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4FC1FF162BC7FDF0001912A8 /* CurrencyRates.swift in Sources */,
 				4FC7A54E2BC2D094005CA5B2 /* SettingsView.swift in Sources */,
 				4FC7A5502BC2D804005CA5B2 /* GlobalSettings.swift in Sources */,
 				4FBE55B52BC30956008CBC42 /* AccountsListView.swift in Sources */,
@@ -308,6 +323,7 @@
 				4FC7A54A2BC2B99A005CA5B2 /* BankInfo.swift in Sources */,
 				4FC3C8C22BBD7B5600C8911B /* NetworthView.swift in Sources */,
 				4FBE55BD2BC3D00A008CBC42 /* UpdatesView.swift in Sources */,
+				4F22F78D2BCA995A00D26908 /* CurrencyPickerView.swift in Sources */,
 				4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */,
 				4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */,
 				4FC7A54C2BC2C07A005CA5B2 /* AddBankAccount.swift in Sources */,

@@ -112,12 +112,8 @@ struct EditAccountView: View {
                 Text("Global Currency").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.leading, 5.0)
                     .foregroundColor(.gray)
                 
-                Picker(selection: $bankInfo.currency, label: Text("")) {
-                    ForEach(currenciesWithFlags, id: \.0) { name, flag in
-                                    Text("\(name) \(flag)")
-                                }
-                            }
-                .pickerStyle(DefaultPickerStyle())
+                CurrencyPickerView(selection: $bankInfo.currency)
+                
             }.padding(.leading, 5.0)
                         
             Spacer()

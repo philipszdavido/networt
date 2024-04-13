@@ -61,11 +61,30 @@ struct NetworthView: View {
 struct MainView: View {
     
     var bankInfos: [BankInfo]
+    
     @ObservedObject var settings: GlobalSettings
     
     @ObservedObject var states: States;
     
-    @State private var networth: Int = 0;
+    @State private var networth: Double = 0.0;
+    
+    @State var toogleSheet = false
+        
+    func getCode(curr: String) -> String {
+        return currenciesWithFlags.first { (code, symbol, name, rate) in
+            code.localizedStandardContains(curr)
+        }!.1
+    }
+    
+    func calcNetworth() -> Double {
+        return bankInfos.map { bankInfo in                 return CurrencyRates.convertToGlobalCurrency(bankInfo, settings)
+        }.reduce(0, +)
+    }
+    
+    var sortCurrencies: [(String, String, String, Double)] {
+        
+        return CurrencyRates.getAllRates(settings: self.settings).sorted { $0.1 < $1.1 }
+    }
     
     var body: some View {
             VStack {
@@ -73,9 +92,38 @@ struct MainView: View {
                 HeaderView(states: states)
                     
                 HStack {
-                    
-                    Text(settings.hideNetworth ? "***" : "\(settings.currency) \(networth)").font(.system(size: 50, design: .rounded))
+                                        
+                    HStack(alignment: .top) {
+                        Text("\(getCode(curr: settings.currency))")
+                            .onTapGesture {
+                                toogleSheet.toggle()
+                            }.sheet(isPresented: $toogleSheet, onDismiss: {
+                            }) {
+                                HStack {
+                                    Spacer()
+                                    Button("Close") {
+                                        toogleSheet.toggle()
+                                    }      .font(.system(size: 15))
+                                        .fontWeight(.medium).padding()
+                                }
+                                List {
+                                    ForEach(sortCurrencies, id: \.0) { flag, name, code, rate in
+                                        Text("\(flag) \(name)")
+                                            .font(.system(size: 15))
+                                            .fontWeight(.medium).onTapGesture(perform: {
+                                                settings.currency = code;
+                                                networth = calcNetworth()
+                                                toogleSheet.toggle()
+                                        })
+                                    }
+                                }.listStyle(PlainListStyle())
+                            }
+
+                        Text(settings.hideNetworth ? "***" : "\(settings.currency) \(networth)")
+                            
+                    }.font(.system(size: 50, design: .rounded))
                         .fontWeight(.black)
+                    
                     Spacer()
                 }.padding(.leading, 7.0)
                 
@@ -100,9 +148,10 @@ struct MainView: View {
                 }
             
             Spacer()
-        }.onAppear {
-            networth = bankInfos.map { bankInfo in                 return bankInfo.amount
-            }.reduce(0, +)
+            }.onAppear {
+                            
+                networth = calcNetworth()
+                
         }
     
     }

@@ -9,99 +9,6 @@ import SwiftUI
 import SwiftData
 import UIKit
 
-let currencies = [
-    "USD", "EUR", "JPY", "GBP", "AUD", "CAD", "CHF", "CNY", "SEK", "NZD",
-    "KRW", "SGD", "NOK", "MXN", "INR", "RUB", "ZAR", "HKD", "BRL", "TRY",
-    "TWD", "DKK", "PLN", "THB", "IDR", "HUF", "CZK", "ILS", "CLP", "PHP",
-    "AED", "COP", "SAR", "MYR", "RON", "CNY", "NGN", "ARS", "COP", "PEN",
-    "KWD", "QAR", "IQD", "BDT", "CZK", "HUF", "PKR", "XAU", "VND", "CNY"
-]
-
-let currenciesWithFlags: [(String, String)] = [
-    ("USD", "🇺🇸"), // United States Dollar
-    ("EUR", "🇪🇺"), // Euro
-    ("GBP", "🇬🇧"), // British Pound
-    ("JPY", "🇯🇵"), // Japanese Yen
-    ("AUD", "🇦🇺"), // Australian Dollar
-    ("CAD", "🇨🇦"), // Canadian Dollar
-    ("CHF", "🇨🇭"), // Swiss Franc
-    ("CNY", "🇨🇳"), // Chinese Yuan
-    ("SEK", "🇸🇪"), // Swedish Krona
-    ("NZD", "🇳🇿"), // New Zealand Dollar
-    ("KRW", "🇰🇷"), // South Korean Won
-    ("NOK", "🇳🇴"), // Norwegian Krone
-    ("INR", "🇮🇳"), // Indian Rupee
-    ("HKD", "🇭🇰"), // Hong Kong Dollar
-    ("SGD", "🇸🇬"), // Singapore Dollar
-    ("MXN", "🇲🇽"), // Mexican Peso
-    ("BRL", "🇧🇷"), // Brazilian Real
-    ("RUB", "🇷🇺"), // Russian Ruble
-    ("TRY", "🇹🇷"), // Turkish Lira
-    ("ZAR", "🇿🇦"), // South African Rand
-    ("AED", "🇦🇪"), // UAE Dirham
-    ("SAR", "🇸🇦"), // Saudi Riyal
-    ("QAR", "🇶🇦"), // Qatari Riyal
-    ("KWD", "🇰🇼"), // Kuwaiti Dinar
-    ("PHP", "🇵🇭"), // Philippine Peso
-    ("THB", "🇹🇭"), // Thai Baht
-    ("MYR", "🇲🇾"), // Malaysian Ringgit
-    ("IDR", "🇮🇩"), // Indonesian Rupiah
-    ("ARS", "🇦🇷"), // Argentine Peso
-    ("CLP", "🇨🇱"), // Chilean Peso
-    ("COP", "🇨🇴"), // Colombian Peso
-    ("EGP", "🇪🇬"), // Egyptian Pound
-    ("ILS", "🇮🇱"), // Israeli Shekel
-    ("PKR", "🇵🇰"), // Pakistani Rupee
-    ("UAH", "🇺🇦"), // Ukrainian Hryvnia
-    ("VND", "🇻🇳"), // Vietnamese Dong
-    ("BDT", "🇧🇩"), // Bangladeshi Taka
-    ("NGN", "🇳🇬"), // Nigerian Naira
-    ("KES", "🇰🇪"), // Kenyan Shilling
-    ("UGX", "🇺🇬"), // Ugandan Shilling
-    ("GHS", "🇬🇭"), // Ghanaian Cedi
-    ("TZS", "🇹🇿"), // Tanzanian Shilling
-    ("RWF", "🇷🇼"), // Rwandan Franc
-    ("ZMW", "🇿🇲"), // Zambian Kwacha
-    ("MAD", "🇲🇦"), // Moroccan Dirham
-    ("DZD", "🇩🇿"), // Algerian Dinar
-    ("TND", "🇹🇳"), // Tunisian Dinar
-    ("LYD", "🇱🇾"), // Libyan Dinar
-    ("MUR", "🇲🇺"), // Mauritian Rupee
-    ("ETB", "🇪🇹"), // Ethiopian Birr
-    ("GEL", "🇬🇪"), // Georgian Lari
-    ("GEL", "🇧🇾"), // Belarusian Ruble
-    ("CRC", "🇨🇷"), // Costa Rican Colon
-    ("UYU", "🇺🇾"), // Uruguayan Peso
-    ("PYG", "🇵🇾"), // Paraguayan Guarani
-    ("BHD", "🇧🇭"), // Bahraini Dinar
-    ("OMR", "🇴🇲"), // Omani Rial
-    ("JOD", "🇯🇴"), // Jordanian Dinar
-    ("LBP", "🇱🇧"), // Lebanese Pound
-    ("SYP", "🇸🇾"), // Syrian Pound
-    ("MVR", "🇲🇻"), // Maldivian Rufiyaa
-    ("MZN", "🇲🇿"), // Mozambican Metical
-    ("XOF", "🇸🇳"), // West African CFA Franc
-    ("XAF", "🇨🇫"), // Central African CFA Franc
-    ("GIP", "🇬🇮"), // Gibraltar Pound
-    ("FKP", "🇫🇰"), // Falkland Islands Pound
-    ("XCD", "🇦🇮"), // East Caribbean Dollar
-    ("BMD", "🇧🇲"), // Bermudian Dollar
-    ("SHP", "🇸🇭"), // Saint Helena Pound
-    ("AWG", "🇦🇼"), // Aruban Florin
-    ("BZD", "🇧🇿"), // Belize Dollar
-    ("BBD", "🇧🇧"), // Barbadian Dollar
-    ("BND", "🇧🇳"), // Brunei Dollar
-    ("BSD", "🇧🇸"), // Bahamian Dollar
-    ("BWP", "🇧🇼"), // Botswana Pula
-    ("KYD", "🇰🇾"), // Cayman Islands Dollar
-    ("FJD", "🇫🇯"), // Fijian Dollar
-    ("GYD", "🇬🇾"), // Guyanese Dollar
-    ("JMD", "🇯🇲"), // Jamaican Dollar
-    ("LAK", "🇱🇦"), // Lao Kip
-    ("LRD", "🇱🇷"), // Liberian Dollar
-    ("MOP", "🇲🇴"), // Macanese Pataca
-]
-
 struct AddBankAccount: View {
 
     @Environment(\.modelContext) private var modelContext
@@ -166,18 +73,8 @@ struct AddBankAccount: View {
                 HStack {
                     Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded)).foregroundColor(.gray)
                     
-                    Picker(selection: $bankInfo.currency, label: /*@START_MENU_TOKEN@*/Text("Picker")/*@END_MENU_TOKEN@*/) {
-                        ForEach(currenciesWithFlags, id: \.0) { name, flag in
-                            HStack {
-                                Text("\(name) \(flag)")
-                                Spacer()
-                            }                            .onTapGesture {
-                                bankInfo.currency = name
-                            }
-                            
-                        }
-                    }
-                    
+                    CurrencyPickerView(selection: $bankInfo.currency)
+                                        
                 }
                 Spacer()
             }.padding(.horizontal)
