@@ -106,17 +106,24 @@ struct MainView: View {
                                     }      .font(.system(size: 15))
                                         .fontWeight(.medium).padding()
                                 }
+                                
                                 List {
                                     ForEach(sortCurrencies, id: \.0) { flag, name, code, rate in
-                                        Text("\(flag) \(name)")
-                                            .font(.system(size: 15))
-                                            .fontWeight(.medium).onTapGesture(perform: {
-                                                settings.currency = code;
-                                                networth = calcNetworth()
-                                                toogleSheet.toggle()
-                                        })
+                                        Button(action: {
+                                            settings.currency = code
+                                            networth = calcNetworth()
+                                            toogleSheet.toggle()
+                                        }) {
+                                            HStack {
+                                                Text("\(flag) \(name)")
+                                                    .font(.system(size: 15))
+                                                    .fontWeight(.medium)
+                                                Spacer() 
+                                            }
+                                        }
                                     }
                                 }.listStyle(PlainListStyle())
+
                             }
 
                         Text(settings.hideNetworth ? "***" : "\(settings.currency) \(networth)")
