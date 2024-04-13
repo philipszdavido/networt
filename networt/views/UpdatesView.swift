@@ -58,11 +58,13 @@ struct UpdatesView: View {
                 }
             }.edgesIgnoringSafeArea(.all)
                 .padding(0)
-                .listStyle(.plain)
+                .listStyle(.plain).scrollDisabled(true)
                 .onAppear(perform: {
-//                    modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "UBA", currency: "NGN", number: 90009876)))
-//                    
-//                    modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "First Bank of Nigeria", currency: "EUR", number: 90009876)))
+                    for item in 1...9 {
+                        modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "UBA", currency: "NGN", number: 90009876)))
+                        
+                        modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "First Bank of Nigeria", currency: "EUR", number: 90009876)))
+                    }
                 })
         }
 }

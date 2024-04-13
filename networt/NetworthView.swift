@@ -30,8 +30,9 @@ struct NetworthView: View {
             TabView(selection: $selectedTab) {
                     
                     MainView(bankInfos: bankInfos, settings: settings, states: states).tabItem {
-                        Label("Home", systemImage: "dollarsign.circle")
+                            Label("Home", systemImage: "dollarsign.circle")
                     }.tag(1)
+                
                     
                     AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")
                     }.tag(2)
@@ -69,6 +70,8 @@ struct MainView: View {
     @State private var networth: Double = 0.0;
     
     @State var toogleSheet = false
+    
+    @State var searchText = ""
         
     func getCode(curr: String) -> String {
         return currenciesWithFlags.first { (code, symbol, name, rate) in
@@ -82,54 +85,82 @@ struct MainView: View {
     }
     
     var sortCurrencies: [(String, String, String, Double)] {
+        var temCurrencies = CurrencyRates.getAllRates(settings: self.settings).sorted { $0.1 < $1.1 }
         
-        return CurrencyRates.getAllRates(settings: self.settings).sorted { $0.1 < $1.1 }
+        if searchText.isEmpty {
+            return temCurrencies
+        }
+        else {
+            return temCurrencies.filter { (flag, code, name, rate) in
+                code.localizedStandardContains(searchText)
+            }
+        }
     }
     
     var body: some View {
-            VStack {
+         
+        VStack {
 
-                HeaderView(states: states)
-                    
+                HStack {
+                    HeaderView(states: states)
+                    NavigationLink(destination: AddBankAccount()) {
+                        Image(systemName: "plus.circle.fill").font(.system(.largeTitle, design: .rounded))
+                            .padding(.trailing, 4.0)
+                    }
+                }
+
                 HStack {
                                         
                     HStack(alignment: .top) {
-                        Text("\(getCode(curr: settings.currency))")
+                        Text("\(getCode(curr: settings.currency))").font(.system(size: 50, design: .rounded))
+                            .fontWeight(.black)
                             .onTapGesture {
                                 toogleSheet.toggle()
                             }.sheet(isPresented: $toogleSheet, onDismiss: {
                             }) {
-                                HStack {
-                                    Spacer()
-                                    Button("Close") {
-                                        toogleSheet.toggle()
-                                    }      .font(.system(size: 15))
-                                        .fontWeight(.medium).padding()
-                                }
-                                
-                                List {
-                                    ForEach(sortCurrencies, id: \.0) { flag, name, code, rate in
-                                        Button(action: {
-                                            settings.currency = code
-                                            networth = calcNetworth()
-                                            toogleSheet.toggle()
-                                        }) {
-                                            HStack {
-                                                Text("\(flag) \(name)")
-                                                    .font(.system(size: 15))
-                                                    .fontWeight(.medium)
-                                                Spacer() 
+                                NavigationView {
+                                    List {
+                                        
+                                        ForEach(sortCurrencies, id: \.0) { flag, name, code, rate in
+                                            Button(action: {
+                                                settings.currency = code
+                                                networth = calcNetworth()
+                                                toogleSheet.toggle()
+                                            }) {
+                                                HStack {
+                                                    Text("\(flag) \(name)")
+                                                        .font(.system(size: 15))
+                                                        .fontWeight(.medium)
+                                                    Spacer()
+                                                }
                                             }
+                                            
                                         }
-                                    }
-                                }.listStyle(PlainListStyle())
-
+                                    }.listStyle(PlainListStyle()) .searchable(text: $searchText)
+                                    
+                                    .navigationBarItems(trailing: Button("Done",
+                                                                         action: {
+                                        toogleSheet.toggle()
+                                    }))
+                                }.padding(0.0)
+                                
+//                                HStack {
+//                                    Spacer()
+//                                    Button("Close") {
+//                                        toogleSheet.toggle()
+//                                    }      .font(.system(size: 15))
+//                                        .fontWeight(.medium).padding()
+//                                }
+                                
+                                
+                                //.searchable(text: $searchText)
+                                    
                             }
 
-                        Text(settings.hideNetworth ? "***" : "\(settings.currency) \(networth)")
+                        Text(settings.hideNetworth ? "***" : "\(settings.currency) \(networth)").font(.system(size: 50, design: .rounded))
+                            .fontWeight(.black)
                             
-                    }.font(.system(size: 50, design: .rounded))
-                        .fontWeight(.black)
+                    }
                     
                     Spacer()
                 }.padding(.leading, 7.0)
@@ -174,18 +205,22 @@ struct HeaderView: View {
         
         HStack {
             
-            Text("My Net Worth")
-                .font(.system(.largeTitle, design: .rounded))
-                .bold()
+            Group {
+                Text("My Net Worth")
+                    .font(.system(.largeTitle, design: .rounded))
+                    .bold()
                 .fontWeight(.black)
+            }
             
             Spacer()
-            
+
+//            NavigationLink(destination: AddBankAccount()) {
+//                Image(systemName: "plus.circle.fill").font(.system(.largeTitle, design: .rounded))
+//                    .padding(.trailing, 4.0)
+//            }
+
             Menu {
                 
-                NavigationLink(destination: AddBankAccount()) {
-                    Text("Add New Account")
-                }
                 
                 Button("Lock") {
                     settings.isLockCodeSet = false
