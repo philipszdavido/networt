@@ -28,10 +28,20 @@ struct AddBankAccount: View {
                 Text("Bank Name").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
                 
                 
-                TextField("Bank Name", text: $bankInfo.bankName)
-                    .textContentType(.name)
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                    .padding(.horizontal)
+                VStack {
+                    TextField("Bank Name", text: $bankInfo.bankName)
+                        .padding(10.0)
+                        //.padding(.horizontal)
+                        .contentMargins(1.0)
+                        .textContentType(.name)
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color.gray, lineWidth: 1)
+                            )
+                    .foregroundColor(.white)
+
+                }.padding(.horizontal)
                 
                 Divider()
                 
@@ -43,10 +53,20 @@ struct AddBankAccount: View {
                 
                 
                 
-                TextField("Bank Account", value: $bankInfo.number, format: .number)
-                    .keyboardType(.numberPad)
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                    .padding(.horizontal)
+                VStack {
+                    TextField("Bank Account", value: $bankInfo.number, format: .number)
+                        .keyboardType(.numberPad)
+                        .padding(10.0)
+                        //.padding(.horizontal)
+                        .contentMargins(1.0)
+                        .textContentType(.name)
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color.gray, lineWidth: 1)
+                            )
+                    .foregroundColor(.white)
+                }.padding(.horizontal)
                 
                 
                 Divider()
@@ -59,10 +79,20 @@ struct AddBankAccount: View {
                 Text("Amount").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
                 
                 
-                TextField("Amount", value: $bankInfo.amount, format: .number)
-                    .font(.system(size: 20, weight: .semibold, design: .rounded))
-                    .padding(.horizontal)
-                    .keyboardType(.numberPad)
+                VStack {
+                    TextField("Amount", value: $bankInfo.amount, format: .number)
+                        .padding(10.0)
+                        //.padding(.horizontal)
+                        .contentMargins(1.0)
+                        .textContentType(.name)
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .overlay(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .stroke(Color.gray, lineWidth: 1)
+                            )
+                    .foregroundColor(.white)
+                .keyboardType(.numberPad)
+                }.padding(.horizontal)
                 
                 Divider()
                 
@@ -78,6 +108,7 @@ struct AddBankAccount: View {
                 }
                 Spacer()
             }.padding(.horizontal)
+                .padding(.top)
             
             Spacer()
             

@@ -41,9 +41,10 @@ struct BankCardView: View {
             }
                 
         }.padding([.leading, .trailing, .bottom], 20)
-            .frame(height: 120)
-            .background(.purple)
-            .cornerRadius(8.0)
+         .frame(height: 120)
+         .background(.purple)
+         .cornerRadius(20.0)
+         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
     }
     
 }

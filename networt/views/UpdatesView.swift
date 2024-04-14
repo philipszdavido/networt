@@ -39,32 +39,50 @@ struct UpdatesView: View {
                 .padding(.top, 15)
             Divider()
             
-            List {
-                ForEach(txns, id: \.self) { txn in
-                    HStack {
-                                            VStack(alignment: .leading) {
-                                                Text("\(txn.bankInfo.bankName)")
-                                                Text("\(formatDateTime(txn.dateTime))")
-                                                    .font(.system(.caption, design: .rounded))
-                                            }
-                        Spacer()
-                        
-                        Text(settings.hideNetworth ? "****" : "\(txn.operation) \(txn.currency) \(txn.amount)")
-                    }
+            VStack {
+                ForEach(txns.indices, id: \.self) { index in
+                    
+                    let txn = txns[index]
+                    
+                    Button(action: {}) {
+                        HStack {
+                                                VStack(alignment: .leading) {
+                                                    Text("\(txn.bankInfo.bankName)")
+                                                    Text("\(formatDateTime(txn.dateTime))")
+                                                        .font(.system(.caption, design: .rounded))
+                                                }
+                            Spacer()
+                            
+                            Text(settings.hideNetworth ? "****" : "\(txn.operation) \(txn.currency) \(txn.amount)")
+                        }
+                    }.padding([.all], 9.0)
+                    .accentColor(.primary)
+                    .contextMenu(menuItems: {
+                        Button(action: {
+                            modelContext.delete(txns[index])
+                        }, label: {
+                            Text("Button")
+                            Image(systemName: "trash")
+                        })
+                })
+                    Divider()
                 }.onDelete { (indexSet) in
                     for offset in indexSet {
                         modelContext.delete(txns[offset])
                     }
                 }
-            }.edgesIgnoringSafeArea(.all)
-                .padding(0)
-                .listStyle(.plain).scrollDisabled(true)
+            }//.frame(height: .infinity)
+                //.scaledToFit()
+                .edgesIgnoringSafeArea(.all)
+                .padding([.bottom, .horizontal, .leading, .trailing], 10.0)
+                .listStyle(.plain)
+                //.scrollDisabled(true)
                 .onAppear(perform: {
-                    for item in 1...9 {
-                        modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "UBA", currency: "NGN", number: 90009876)))
-                        
-                        modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "First Bank of Nigeria", currency: "EUR", number: 90009876)))
-                    }
+//                    for _ in 1...2 {
+//                        modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "UBA", currency: "NGN", number: 90009876)))
+//                        
+//                        modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "First Bank of Nigeria", currency: "EUR", number: 90009876)))
+//                    }
                 })
         }
 }
