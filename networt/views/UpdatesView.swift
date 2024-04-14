@@ -10,41 +10,40 @@ import SwiftData
 
 struct UpdatesView: View {
 
-        @Query var txns: [Transaction]
-        @Environment(\.modelContext) private var modelContext
-    var settings: GlobalSettings
+    @Query var txns: [Transaction]
+    @Environment(\.modelContext) private var modelContext
 
-        func formatDateTime(_ date: Date) -> String {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "EEEE, h:mm a"
-            
-            _ = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-            
-            if Calendar.current.isDateInYesterday(date) {
-                return "Yesterday, " + dateFormatter.string(from: date)
-            } else if Calendar.current.isDateInToday(date) {
-                return "Today, " + dateFormatter.string(from: date)
-            } else {
-                return dateFormatter.string(from: date)
-            }
-        }
+var settings: GlobalSettings
+
+    func formatDateTime(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE, h:mm a"
         
-        var body: some View {
-            
-            HStack {
-                Text("Txn Updates").font(.system(size: 20, design: .rounded)).bold()
-                Spacer()
-            }.padding(.leading, 7.0)
-                .padding([.bottom], 0)
-                .padding(.top, 15)
-            Divider()
-            
-            VStack {
-                ForEach(txns.indices, id: \.self) { index in
-                    
-                    let txn = txns[index]
-                    
-                    Button(action: {}) {
+        _ = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
+        
+        if Calendar.current.isDateInYesterday(date) {
+            return "Yesterday, " + dateFormatter.string(from: date)
+        } else if Calendar.current.isDateInToday(date) {
+            return "Today, " + dateFormatter.string(from: date)
+        } else {
+            return dateFormatter.string(from: date)
+        }
+    }
+    
+    var body: some View {
+        
+        HStack {
+            Text("Txn Updates").font(.system(size: 20, design: .rounded)).bold()
+            Spacer()
+        }
+            .padding([.bottom], 0)
+            .padding(.top, 15)
+            .listRowSeparator(.hidden)
+        
+        Divider().listRowSeparator(.hidden)
+        VStack {
+            ForEach(txns, id: \.self) { txn in
+                                        
                         HStack {
                                                 VStack(alignment: .leading) {
                                                     Text("\(txn.bankInfo.bankName)")
@@ -55,40 +54,28 @@ struct UpdatesView: View {
                             
                             Text(settings.hideNetworth ? "****" : "\(txn.operation) \(txn.currency) \(txn.amount)")
                         }
-                    }.padding([.all], 9.0)
-                    .accentColor(.primary)
-                    .contextMenu(menuItems: {
-                        Button(action: {
-                            modelContext.delete(txns[index])
-                        }, label: {
-                            Text("Button")
-                            Image(systemName: "trash")
-                        })
-                })
-                    Divider()
+                Divider()
                 }.onDelete { (indexSet) in
                     for offset in indexSet {
                         modelContext.delete(txns[offset])
                     }
-                }
-            }//.frame(height: .infinity)
-                //.scaledToFit()
-                .edgesIgnoringSafeArea(.all)
-                .padding([.bottom, .horizontal, .leading, .trailing], 10.0)
-                .listStyle(.plain)
-                //.scrollDisabled(true)
-                .onAppear(perform: {
-//                    for _ in 1...2 {
-//                        modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "UBA", currency: "NGN", number: 90009876)))
-//                        
-//                        modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "First Bank of Nigeria", currency: "EUR", number: 90009876)))
-//                    }
-                })
-        }
+            }
+        }.listRowSeparator(.hidden)
+            .onAppear(perform: {
+                    for _ in 1...9 {
+                        modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "UBA", currency: "NGN", number: 90009876)))
+                
+                        modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "First Bank of Nigeria", currency: "EUR", number: 90009876)))
+                    }
+
+            })
+    }
 }
 
+
 #Preview {
-    UpdatesView(settings: GlobalSettings()).modelContainer(for: [
-        BankInfo.self, Transaction.self
-    ], inMemory: true)
+
+UpdatesView(settings: GlobalSettings()).modelContainer(for: [
+            BankInfo.self, Transaction.self
+        ], inMemory: true)
 }
