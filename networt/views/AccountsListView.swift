@@ -25,10 +25,12 @@ struct AccountsListView: View {
                 return bankInfos.filter { $0.bankName.localizedStandardContains(searchText) }
             }
         }
-    
+
+    @State private var selection = Set<BankInfo>()
+
     var body: some View {
         NavigationView {
-            List {
+            List(selection: $selection) {
                 ForEach(filteredBankInfos, id: \.self) { bankInfo in
                     NavigationLink(
                         destination: EditAccountView(bankInfo: bankInfo, onSave: {
@@ -58,12 +60,62 @@ struct AccountsListView: View {
             .searchable(text: $searchText)
             .navigationTitle("Accounts")
             .toolbar {
+
+                ToolbarItem {
+                    EditButton()
+
+                }
+
                 ToolbarItem {
                     NavigationLink(destination: AddBankAccount()) {
                         Image(systemName: "plus.circle.fill")
                             .font(.system(size: 30))
                     }
                 }
+                
+                if(selection.count > 0) {
+                    ToolbarItem(placement: .bottomBar) {
+                        HStack {
+                            Button(action: {
+                                print(selection)
+                                
+                                bankInfos.forEach { txn in
+                                    modelContext.delete(txn)
+                                }
+
+                                selection = Set<BankInfo>()
+
+                            }, label: {
+                                Text("Delete All")
+                            }).disabled(selection.count != bankInfos.count)
+                            Spacer()
+                            
+                            Button(action: {
+                                print(selection)
+                                
+                                selection.forEach { txn in
+                                    modelContext.delete(txn)
+                                }
+                                
+                                selection = Set<BankInfo>()
+                                
+                            }, label: {
+                                Text("Delete")
+                            }).disabled(selection.count <= 0)
+                            Spacer()
+                            
+                            Button(action: {
+                                bankInfos.forEach { txn in
+                                    selection.insert(txn)
+                                }
+                            }, label: {
+                                Text("Select All")
+                            }).disabled(selection.count == bankInfos.count)
+                        }
+                    }
+
+                }
+
             }
             
         }

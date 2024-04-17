@@ -12,7 +12,8 @@ struct TxnsListView: View {
     @Query var txns: [Transaction]
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject var settings: GlobalSettings
-    
+    @Environment(\.presentationMode) var presentationMode
+
     @State var searchText = ""
 
     func formatDateTime(_ date: Date) -> String {
@@ -39,10 +40,12 @@ struct TxnsListView: View {
             }
         }
     }
-
+    
+    @State private var selection = Set<Transaction>()
+    
     var body: some View {
-        NavigationView {
-            List {
+        NavigationStack {
+            List(selection: $selection) {
                 ForEach(filteredTxns, id: \.self) { txn in
                     
                     HStack {
@@ -62,16 +65,68 @@ struct TxnsListView: View {
                     }
                 }
             }
-            .navigationTitle("Transaction Updates")
+            .navigationBarTitle("Transaction Updates", displayMode: .inline)
             .searchable(text: $searchText)
             .onAppear(perform: {
-//                                    for _ in 1...9 {
-//                                        modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "UBA", currency: "NGN", number: 90009876)))
-//                
-//                                        modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "First Bank of Nigeria", currency: "EUR", number: 90009876)))
-//                                    }
                 
             })
+            .navigationBarItems(trailing: Button(action : {
+                presentationMode.wrappedValue.dismiss()
+            }){
+                EditButton()
+                                
+            })
+            
+//            Button(action: {
+//                
+//                let tempTxn = Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "NGN", bankInfo: BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
+//                
+//                modelContext.insert(tempTxn)
+//                
+//        }, label: {
+//            Text("Test")
+//        })
+            
+            .toolbar {
+                if(selection.count > 0) {
+                    ToolbarItem(placement: .bottomBar) {
+                        HStack {
+                            Button(action: {
+                                print(selection)
+                                
+                                txns.forEach { txn in
+                                    modelContext.delete(txn)
+                                }
+
+                            }, label: {
+                                Text("Delete All")
+                            }).disabled(selection.count != txns.count)
+                            Spacer()
+                            
+                            Button(action: {
+                                print(selection)
+                                
+                                txns.forEach { txn in
+                                    modelContext.delete(txn)
+                                }
+
+                            }, label: {
+                                Text("Delete")
+                            }).disabled(selection.count <= 0)
+                            Spacer()
+                            
+                            Button(action: {
+                                txns.forEach { txn in
+                                    selection.insert(txn)
+                                }
+                            }, label: {
+                                Text("Select All")
+                            }).disabled(selection.count == txns.count)
+                        }
+                    }
+                }
+            }
+
 
         }
     }
@@ -79,6 +134,6 @@ struct TxnsListView: View {
 
 #Preview {
     TxnsListView().modelContainer(for: [
-        BankInfo.self, Transaction.self
+        Transaction.self, BankInfo.self
     ], inMemory: true)
 }
