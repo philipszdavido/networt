@@ -39,7 +39,7 @@ struct AddBankAccount: View {
                                 RoundedRectangle(cornerRadius: 5)
                                     .stroke(Color.gray, lineWidth: 1)
                             )
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
 
                 }.padding(.horizontal)
                 
@@ -65,7 +65,7 @@ struct AddBankAccount: View {
                                 RoundedRectangle(cornerRadius: 5)
                                     .stroke(Color.gray, lineWidth: 1)
                             )
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                 }.padding(.horizontal)
                 
                 
@@ -90,7 +90,7 @@ struct AddBankAccount: View {
                                 RoundedRectangle(cornerRadius: 5)
                                     .stroke(Color.gray, lineWidth: 1)
                             )
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                 .keyboardType(.numberPad)
                 }.padding(.horizontal)
                 
@@ -100,7 +100,7 @@ struct AddBankAccount: View {
                         
             
             HStack {
-                HStack {
+                VStack(alignment: .leading) {
                     Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded)).foregroundColor(.gray)
                     
                     CurrencyPickerView(selection: $bankInfo.currency)

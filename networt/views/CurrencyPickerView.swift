@@ -18,7 +18,7 @@ struct CurrencyPickerView: View {
                             Text("\(flag) \(currencyName)")
                         }
         }
-        
+        .padding(0)
         .pickerStyle(DefaultPickerStyle())
 
     }

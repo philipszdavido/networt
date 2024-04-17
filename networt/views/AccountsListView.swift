@@ -11,7 +11,8 @@ import SwiftData
 struct AccountsListView: View {
 
     @Environment(\.modelContext) private var modelContext
-
+    @State private var isEditMode = EditMode.inactive
+    
     var settings: GlobalSettings
     
     @State private var searchText: String = "";
@@ -27,6 +28,7 @@ struct AccountsListView: View {
         }
 
     @State private var selection = Set<BankInfo>()
+    @State private var isSelected = false;
 
     var body: some View {
         NavigationView {
@@ -62,8 +64,9 @@ struct AccountsListView: View {
             .toolbar {
 
                 ToolbarItem {
+                    
                     EditButton()
-
+                    
                 }
 
                 ToolbarItem {
@@ -73,7 +76,7 @@ struct AccountsListView: View {
                     }
                 }
                 
-                if(selection.count > 0) {
+                if(isEditMode == .active) {
                     ToolbarItem(placement: .bottomBar) {
                         HStack {
                             Button(action: {
@@ -84,10 +87,12 @@ struct AccountsListView: View {
                                 }
 
                                 selection = Set<BankInfo>()
+                                
+                                isEditMode = .inactive
 
                             }, label: {
                                 Text("Delete All")
-                            }).disabled(selection.count != bankInfos.count)
+                            }).disabled(selection.count <= 0 || selection.count != bankInfos.count)
                             Spacer()
                             
                             Button(action: {
@@ -98,7 +103,8 @@ struct AccountsListView: View {
                                 }
                                 
                                 selection = Set<BankInfo>()
-                                
+                                isEditMode = .inactive
+
                             }, label: {
                                 Text("Delete")
                             }).disabled(selection.count <= 0)
@@ -116,7 +122,7 @@ struct AccountsListView: View {
 
                 }
 
-            }
+            }.environment(\.editMode, $isEditMode)
             
         }
     }
@@ -133,7 +139,7 @@ struct AccountsListView: View {
 #Preview {
     AccountsListView(settings: GlobalSettings()/*, searchText: ""*/).modelContainer(for: [
         BankInfo.self
-    ], inMemory: true)
+    ], inMemory: true)//.environment(\.editMode, Binding.constant(EditMode.active))
 }
 
 
