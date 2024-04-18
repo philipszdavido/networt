@@ -189,22 +189,20 @@ struct MainView: View {
                     }
                     
                     Spacer()
-                }.onAppear {
-                    
-                    networth = calcNetworth()
-                    
-//                        modelContext.insert(BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
-//                        
-//                        modelContext.insert(BankInfo(amount: 0, bankName: "Sterling", currency: "EUR", number: 90))
-
                 }
-                
                 
                 
             }
             
             Spacer()
             
+        }.onAppear {
+            
+            networth = calcNetworth()
+            //                        modelContext.insert(BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
+            //
+            //                        modelContext.insert(BankInfo(amount: 0, bankName: "Sterling", currency: "EUR", number: 90))
+
         }
         .frame(width: .infinity)
     

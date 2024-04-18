@@ -17,6 +17,9 @@ struct AddBankAccount: View {
     //@ObservedObject var states: States
     
     @State var bankInfo: BankInfo = BankInfo(amount: 0, bankName: "", currency: "USD", number: 0)
+    
+    @State private var amount = "";
+    @State private var number = "";
 
     var body: some View {
         NavigationStack {
@@ -54,7 +57,7 @@ struct AddBankAccount: View {
                 
                 
                 VStack {
-                    TextField("Bank Account", value: $bankInfo.number, format: .number)
+                    TextField("Bank Account", text: $number)
                         .keyboardType(.numberPad)
                         .padding(10.0)
                         //.padding(.horizontal)
@@ -80,7 +83,7 @@ struct AddBankAccount: View {
                 
                 
                 VStack {
-                    TextField("Amount", value: $bankInfo.amount, format: .number)
+                    TextField("Amount", text: $amount)
                         .padding(10.0)
                         //.padding(.horizontal)
                         .contentMargins(1.0)
@@ -91,7 +94,7 @@ struct AddBankAccount: View {
                                     .stroke(Color.gray, lineWidth: 1)
                             )
                     .foregroundColor(.primary)
-                .keyboardType(.numberPad)
+                    .keyboardType(.numberPad)
                 }.padding(.horizontal)
                 
                 Divider()
@@ -118,11 +121,21 @@ struct AddBankAccount: View {
             presentationMode.wrappedValue.dismiss()
         }){
             Button(action: {
-                presentationMode.wrappedValue.dismiss()
+
+                if let amountWraped = Int(amount), let bankAccount = Int(number) {
+
+                    bankInfo.amount = amountWraped
+                    bankInfo.number = bankAccount
+
+                }
+
                 modelContext.insert(bankInfo)
+                try! modelContext.save()
+                
+                presentationMode.wrappedValue.dismiss()
             }){
                 Text("Save")
-            }
+            }.disabled(bankInfo.bankName.isEmpty || amount.isEmpty || number.isEmpty)
         })
         .navigationBarTitle("", displayMode: .inline)
         

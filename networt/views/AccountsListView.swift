@@ -63,10 +63,12 @@ struct AccountsListView: View {
             .navigationTitle("Accounts")
             .toolbar {
 
-                ToolbarItem {
-                    
-                    EditButton()
-                    
+                if !bankInfos.isEmpty {
+                    ToolbarItem {
+                        
+                        EditButton()
+                        
+                    }
                 }
 
                 ToolbarItem {
