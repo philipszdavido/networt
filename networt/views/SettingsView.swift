@@ -95,7 +95,8 @@ struct ConversionRatesView: View {
                 }
             }
                 
-        }.searchable(text: $searchText)
+            }.navigationTitle("\((Time.dateFromString( settings.currencyRates.date)))")
+            .searchable(text: $searchText)
             .toolbar {
                 ToolbarItem {
                     Button(refreshingRates ? "Refreshing rates..." : "Refresh Rates") {

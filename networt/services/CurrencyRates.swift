@@ -64,7 +64,7 @@ class CurrencyRates {
     static func convertCurrency(amount: Double, from sourceCurrency: String, to targetCurrency: String, using rates: CurrencyRatesFawazahmed0) -> Double? {
         
         // Check if the currency rates dictionary contains rates for both the source and target currencies
-        guard let sourceRate = rates.usd[sourceCurrency], let targetRate = rates.usd[targetCurrency] else {
+        guard let sourceRate = rates.usd[sourceCurrency.lowercased()], let targetRate = rates.usd[targetCurrency.lowercased()] else {
             // Unable to find conversion rates for source and/or target currencies
             return nil
         }
@@ -74,6 +74,8 @@ class CurrencyRates {
         
         // Convert the amount from USD to the target currency using the target currency rate
         let amountInTargetCurrency = amountInUSD * targetRate
+        
+        print(amount, sourceCurrency, targetCurrency, sourceRate, targetRate, amountInUSD, amountInTargetCurrency)
         
         return amountInTargetCurrency
     }
@@ -113,9 +115,7 @@ class CurrencyRates {
         guard let code = data[code] else {
             return ""
         }
-        
-//        print(code)
-        
+                
         if code.isEmpty {
             return ""
         }

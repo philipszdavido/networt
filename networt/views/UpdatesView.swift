@@ -14,21 +14,6 @@ struct UpdatesView: View {
     @Environment(\.modelContext) private var modelContext
 
 var settings: GlobalSettings
-
-    func formatDateTime(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, h:mm a"
-        
-        _ = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        
-        if Calendar.current.isDateInYesterday(date) {
-            return "Yesterday, " + dateFormatter.string(from: date)
-        } else if Calendar.current.isDateInToday(date) {
-            return "Today, " + dateFormatter.string(from: date)
-        } else {
-            return dateFormatter.string(from: date)
-        }
-    }
     
     var body: some View {
         
@@ -64,7 +49,7 @@ var settings: GlobalSettings
                 HStack {
                     VStack(alignment: .leading) {
                         Text("\(txn.bankInfo.bankName)")
-                        Text("\(formatDateTime(txn.dateTime))")
+                        Text("\(Time.formatDateTime(txn.dateTime))")
                             .font(.system(.caption, design: .rounded))
                     }
                     Spacer()
