@@ -45,7 +45,7 @@ class GlobalSettings: ObservableObject {
         }
     }
     
-    @Published var currencyRates: CurrencyRatesResponse {
+    @Published var currencyRates: CurrencyRatesFawazahmed0 {
         didSet {
             // Convert CurrencyRatesResponse to Data before storing in UserDefaults
             if let encoded = try? JSONEncoder().encode(currencyRates) {
@@ -64,21 +64,14 @@ class GlobalSettings: ObservableObject {
         
         // Load currencyRates from UserDefaults
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
-           let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesResponse.self, from: savedCurrencyRatesData) {
+           let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
             
-            if(decodedCurrencyRates.data.isEmpty) {
-                
-                self.currencyRates = CurrencyRatesResponse(data: CurrencyRates.defaultRates)
-                
-            } else {
-                
-                self.currencyRates = decodedCurrencyRates
-                
-            }
-            
+            self.currencyRates = decodedCurrencyRates
+                            
         } else {
-            // If no saved data, initialize with an empty dictionary
-            self.currencyRates = CurrencyRatesResponse(data: CurrencyRates.defaultRates)
+            
+            self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
+            
         }
     }
     
@@ -92,17 +85,19 @@ class GlobalSettings: ObservableObject {
         
         // Load currencyRates from UserDefaults
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
-           let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesResponse.self, from: savedCurrencyRatesData) {
+           let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
 
-            if(decodedCurrencyRates.data.isEmpty) {
-                self.currencyRates = CurrencyRatesResponse(data: CurrencyRates.defaultRates)
-            }  else {
-                self.currencyRates = decodedCurrencyRates
-            }
+            self.currencyRates = decodedCurrencyRates
             
         } else {
-            // If no saved data, initialize with an empty dictionary
-            self.currencyRates = CurrencyRatesResponse(data: CurrencyRates.defaultRates)
+
+            self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
+
         }
+        
+    }
+    
+    func loadCurrency() async throws {
+        self.currencyRates = try await CurrencyRates.fetchCurrencyRates()
     }
 }

@@ -60,15 +60,15 @@ struct ConversionRatesView: View {
     @ObservedObject var settings: GlobalSettings;
     @State var searchText = ""
     
-    var filteredCurrencies: [(String, String, String, Double)] {
-        let currencies = CurrencyRates.getAllRates(settings: self.settings).sorted { $0.1 < $1.1 }
+    var filteredCurrencies: [(String, Double)] {
+        let currencies = CurrencyRates.getAllRates(settings: self.settings).sorted { $0.0 < $1.0 }
         
         if searchText.isEmpty {
             return currencies
         }
             else {
-                return currencies.filter({ (code, name, symbol, rate) in
-                    name.localizedStandardContains(searchText)
+                return currencies.filter({ (code, rate) in
+                    code.localizedStandardContains(searchText)
                 })
         }
     }
@@ -76,10 +76,10 @@ struct ConversionRatesView: View {
     var body: some View {
             List {
                 Section("Conversion rates pegged at 1 USD") {
-                    ForEach(filteredCurrencies, id: \.0) { code, name, symbol, rate in
+                    ForEach(filteredCurrencies, id: \.0) { code, rate in
                     
                         HStack {
-                            Text("\(code) \(name)")
+                            Text("\(code)")
                             Spacer()
                             Text("\(rate)")
                         }

@@ -10,20 +10,32 @@ import SwiftUI
 struct CurrencyPickerView: View {
 
     @Binding var selection: String;
+    
+//    @State var currencies: [String: Double]
+
+    @EnvironmentObject var settings: GlobalSettings
 
     var body: some View {
         
         Picker(selection: $selection, label: Text("")) {
-            ForEach(currenciesWithFlags.sorted { $0.2 < $1.2 }, id: \.0) { symbol, flag, currencyName, rate in
-                            Text("\(flag) \(currencyName)")
+            ForEach(settings.currencyRates.usd.sorted { $0.0 < $1.0 }, id: \.0) { code, rate in
+                            Text("\(code)")
                         }
         }
         .padding(0)
         .pickerStyle(DefaultPickerStyle())
+        .onAppear {
+//            Task {
+//                await settings.loadCurrency()
+//            }
+//            print(settings)
+            
+        }
 
     }
 }
 
 #Preview {
     CurrencyPickerView(selection: .constant("USD"))
+        .environmentObject(GlobalSettings())
 }
