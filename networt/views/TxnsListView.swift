@@ -15,6 +15,7 @@ struct TxnsListView: View {
     @Environment(\.presentationMode) var presentationMode
 
     @State var searchText = ""
+    @State var isEditMode = EditMode.inactive
 
     func formatDateTime(_ date: Date) -> String {
         let dateFormatter = DateFormatter()
@@ -44,7 +45,9 @@ struct TxnsListView: View {
     @State private var selection = Set<Transaction>()
     
     var body: some View {
+
         NavigationStack {
+            
             List(selection: $selection) {
                 ForEach(filteredTxns, id: \.self) { txn in
                     
@@ -77,18 +80,9 @@ struct TxnsListView: View {
                                 
             })
             
-//            Button(action: {
-//                
-//                let tempTxn = Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "NGN", bankInfo: BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
-//                
-//                modelContext.insert(tempTxn)
-//                
-//        }, label: {
-//            Text("Test")
-//        })
             
             .toolbar {
-                if(selection.count > 0) {
+                if(isEditMode == .active) {
                     ToolbarItem(placement: .bottomBar) {
                         HStack {
                             Button(action: {
@@ -97,6 +91,8 @@ struct TxnsListView: View {
                                 txns.forEach { txn in
                                     modelContext.delete(txn)
                                 }
+                                
+                                isEditMode = .inactive
 
                             }, label: {
                                 Text("Delete All")
@@ -106,9 +102,11 @@ struct TxnsListView: View {
                             Button(action: {
                                 print(selection)
                                 
-                                txns.forEach { txn in
+                                selection.forEach { txn in
                                     modelContext.delete(txn)
                                 }
+                                
+                                isEditMode = .inactive
 
                             }, label: {
                                 Text("Delete")
@@ -125,7 +123,8 @@ struct TxnsListView: View {
                         }
                     }
                 }
-            }
+            }.environment(\.editMode, $isEditMode)
+                
 
 
         }

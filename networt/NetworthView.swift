@@ -141,7 +141,10 @@ struct MainView: View {
     }
     
     func calcNetworth() -> Double {
-        return bankInfos.map { bankInfo in                 return CurrencyRates.convertToGlobalCurrency(bankInfo, settings)
+        return bankInfos.map { bankInfo in
+            print(bankInfo.amount, CurrencyRates.convertToGlobalCurrency(bankInfo, settings), settings.currencyRates)
+
+            return CurrencyRates.convertToGlobalCurrency(bankInfo, settings)
         }.reduce(0, +)
     }
         
@@ -268,7 +271,6 @@ struct MainView: View {
             //                        modelContext.insert(BankInfo(amount: 0, bankName: "Sterling", currency: "EUR", number: 90))
 
         }
-        .frame(width: .infinity)
     
     }
 }
