@@ -181,7 +181,7 @@ struct MainView: View {
                         
                         HStack(alignment: .top) {
                             
-                            Text("\(getCode(curr: settings.currency))").font(.system(size: 50, design: .rounded))
+                            Text("\(getCode(curr: settings.currency))").underline(true).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/).font(.system(size: 50, design: .rounded))
                                 .fontWeight(.black)
                                 .onTapGesture {
                                     toogleSheet.toggle()

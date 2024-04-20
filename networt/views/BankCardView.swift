@@ -33,7 +33,7 @@ struct BankCardView: View {
             
             HStack {
                 
-                Text(settings.hideNetworth ? getLengthOfAmount() : "\(bankInfo.currency) \(bankInfo.amount)").font(.system(.title, design: .rounded))
+                Text(settings.hideNetworth ? getLengthOfAmount() : "\(bankInfo.currency.uppercased()) \(bankInfo.amount)").font(.system(.title, design: .rounded))
                         .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
                 
                 Spacer()
