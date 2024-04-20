@@ -104,9 +104,15 @@ struct AddBankAccount: View {
             
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Select Currency").font(.system(size: 20, weight: .semibold, design: .rounded)).foregroundColor(.gray)
                     
-                    CurrencyPickerView(selection: $bankInfo.currency)
+                    
+                    NavigationLink(destination: CurrencyListPickerView(selection: $bankInfo.currency)) {
+                            
+                        Text("Select Currency: \(bankInfo.currency.uppercased())").font(.system(size: 20, weight: .semibold, design: .rounded)).foregroundColor(.blue)
+                            .underline(true)
+                        
+                        }
+                    
                                         
                 }
                 Spacer()

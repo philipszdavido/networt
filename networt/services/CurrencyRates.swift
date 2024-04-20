@@ -120,7 +120,7 @@ class CurrencyRates {
             return ""
         }
         
-        return " - " + code
+        return "- " + code
         
     }
 

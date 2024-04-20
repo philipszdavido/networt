@@ -45,7 +45,7 @@ struct AccountsListView: View {
                                 Text("\(String(bankInfo.number))")
                             }
                             Spacer()
-                            Text(settings.hideNetworth ? "*****" : "\(bankInfo.currency) \(bankInfo.amount)")
+                            Text(settings.hideNetworth ? "*****" : "\(bankInfo.currency.uppercased()) \(bankInfo.amount)")
                         }
                     }
                 }.onDelete { (indexSet) in
@@ -169,10 +169,22 @@ struct EditAccountView: View {
         
         HStack {
             HStack {
-                Text("Global Currency").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.leading, 5.0)
-                    .foregroundColor(.gray)
                 
-                CurrencyPickerView(selection: $bankInfo.currency)
+                NavigationLink(destination: CurrencyListPickerView(selection: $bankInfo.currency)) {
+                    HStack {
+                        Group {
+                            Text("Global Currency")
+                            Text(bankInfo.currency.uppercased())
+                            
+                        }
+                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                            .padding(.leading, 5.0)
+                            .foregroundColor(.blue)
+                            .underline(true)
+                        
+                    }
+                }
+                
                 
             }.padding(.leading, 5.0)
                         

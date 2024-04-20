@@ -18,9 +18,14 @@ struct SettingsView: View {
                                 
                 Section("Currency") {
                     HStack {
-                        Text("Global Currency")
                         
-                        CurrencyPickerView(selection: $settings.currency)
+                        NavigationLink(destination: CurrencyListPickerView(selection: $settings.currency)) {
+                            HStack {
+                                Text("Global Currency")
+                                Spacer()
+                                Text(settings.currency.uppercased())
+                            }
+                        }
                                     
                     }
                 }
