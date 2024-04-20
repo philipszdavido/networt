@@ -14,37 +14,19 @@ struct CurrencyRatesFawazahmed0: Codable {
 
 class CurrencyRates {
         
-    static func fetchCurrencyCodesFawazahmed0(completion: @escaping(Result<[String: String], Error>) -> Void) {
+    static func fetchCurrencyCodesFawazahmed0() async throws -> [String: String] {
 
         guard let url = URL(string: "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.min.json") else {
-            completion(.failure(NSError(domain: "InvalidURL", code: 0, userInfo: nil)))
-            return
+
+            throw NSError(domain: "InvalidURL", code: 0, userInfo: nil)
+
         }
         
-        let task = URLSession.shared.dataTask(with: url, completionHandler: { (data, urlResponse, error) in
-
-            if error != nil {
-                completion(.failure(error!))
-                return
-            }
-            
-            if data != nil {
-                do {
-
-                    let currencyData = try JSONDecoder().decode([String: String].self, from: data!)
-                    print(currencyData)
-                    completion(.success(currencyData))
-
-                } catch {
-                    print(error)
-                    completion(.failure(error))
-                }
-                
-            }
-        })
+        let (data, _) = try await URLSession.shared.data(from: url)
         
-        task.resume()
+        let currencyData = try JSONDecoder().decode([String: String].self, from: data)
 
+        return currencyData
         
     }
     
@@ -72,7 +54,7 @@ class CurrencyRates {
                 
         let globalCurrency = settings.currency;
         
-        var rates = settings.currencyRates
+        let rates = settings.currencyRates
 
         let a = CurrencyRates.convertCurrency(amount: Double(amount), from: currency, to: globalCurrency, using: rates) ?? 0.0
                 
@@ -99,7 +81,7 @@ class CurrencyRates {
     static func getAllRates(settings: GlobalSettings) -> [(String, Double)] {
         
         
-        var rates = settings.currencyRates
+        let rates = settings.currencyRates
         
         var result: [(String, Double)] = []
         
@@ -109,6 +91,37 @@ class CurrencyRates {
         
         return result
 
+    }
+    
+    static func checkCurrencyRatesFawazahmed0IsEmpty(data: CurrencyRatesFawazahmed0) -> Bool {
+        
+        if data.date.isEmpty && data.usd == ["": 0.0] {
+            
+            return true
+            
+        }
+        
+        return false
+    }
+    
+    static func checkCurrencyCodesIsEmpty(data: [String: String]) -> Bool {
+        return data == ["": ""]
+    }
+    
+    static func getCurrencyName(code: String, data: [String: String]) -> String {
+        
+        guard let code = data[code] else {
+            return ""
+        }
+        
+//        print(code)
+        
+        if code.isEmpty {
+            return ""
+        }
+        
+        return " - " + code
+        
     }
 
 }

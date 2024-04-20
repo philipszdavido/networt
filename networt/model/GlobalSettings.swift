@@ -54,6 +54,14 @@ class GlobalSettings: ObservableObject {
         }
     }
     
+    @Published var currencyCodes: [String: String] {
+        didSet {
+            if let currencyCodes = try? JSONEncoder().encode(currencyCodes) {
+                UserDefaults.standard.set(currencyCodes, forKey: "currencyCodes")
+            }
+        }
+    }
+    
     init() {
         self.currency = UserDefaults.standard.string(forKey: "currency") ?? "USD"
         self.showMyBanks = UserDefaults.standard.bool(forKey: "showMyBanks")
@@ -66,12 +74,34 @@ class GlobalSettings: ObservableObject {
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
            let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
             
-            self.currencyRates = decodedCurrencyRates
+            if(decodedCurrencyRates.usd.isEmpty) {
+
+                self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
+                
+            } else {
+                self.currencyRates = decodedCurrencyRates
+            }
                             
         } else {
             
             self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
             
+        }
+        
+        if let encodedCurrencyCodes = UserDefaults.standard.data(forKey: "currencyCodes"), let decodedCurrencyCodes = try? JSONDecoder().decode([String: String].self, from: encodedCurrencyCodes) {
+            
+            if (decodedCurrencyCodes.isEmpty) {
+                
+                self.currencyCodes = ["" : ""]
+                
+            } else {
+                
+                self.currencyCodes = decodedCurrencyCodes;
+                
+            }
+            
+        } else {
+            self.currencyCodes = ["" : "" ]
         }
     }
     
@@ -87,6 +117,13 @@ class GlobalSettings: ObservableObject {
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
            let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
 
+            if(decodedCurrencyRates.usd.isEmpty) {
+
+                self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
+                
+                return
+            }
+
             self.currencyRates = decodedCurrencyRates
             
         } else {
@@ -95,9 +132,32 @@ class GlobalSettings: ObservableObject {
 
         }
         
+        // Load currencyCodes from UserDefaults
+        if let encodedCurrencyCodes = UserDefaults.standard.data(forKey: "currencyCodes"), let decodedCurrencyCodes = try? JSONDecoder().decode([String: String].self, from: encodedCurrencyCodes) {
+            
+            if decodedCurrencyCodes.isEmpty {
+                
+                self.currencyCodes = ["" : ""]
+                return;
+                
+            }
+            
+            self.currencyCodes = decodedCurrencyCodes;
+            
+        } else {
+            self.currencyCodes = ["" : "" ]
+        }
+
     }
     
     func loadCurrency() async throws {
         self.currencyRates = try await CurrencyRates.fetchCurrencyRates()
     }
+    
+    func loadCurrencycodes() async throws {
+        
+        self.currencyCodes = try await CurrencyRates.fetchCurrencyCodesFawazahmed0()
+        
+    }
+    
 }

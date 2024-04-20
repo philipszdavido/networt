@@ -27,7 +27,7 @@ struct NetworthView: View {
     @State var errorLoadingCurrencayRates = false
     
     var body: some View {
-        if settings.currencyRates.usd.isEmpty {
+        if CurrencyRates.checkCurrencyRatesFawazahmed0IsEmpty(data: settings.currencyRates) || CurrencyRates.checkCurrencyCodesIsEmpty(data: settings.currencyCodes) {
             
             if errorLoadingCurrencayRates {
                 Button("Retry") {
@@ -35,6 +35,9 @@ struct NetworthView: View {
                     Task {
                         do {
                             try await settings.loadCurrency()
+                            
+                            try await settings.loadCurrencycodes()
+                            
                         } catch {
                             errorLoadingCurrencayRates = true
                         }
@@ -44,12 +47,19 @@ struct NetworthView: View {
             }
             
             if !errorLoadingCurrencayRates {
+                
+                Text("There are no currency rates found. Loading from server...")
+                
                 ProgressView()
                     .onAppear(perform: {
                         
                         Task {
                             do {
                                 try await settings.loadCurrency()
+
+                                try await settings.loadCurrencycodes()
+
+                                errorLoadingCurrencayRates = true
                             } catch {
                                 errorLoadingCurrencayRates = true
                             }
@@ -114,16 +124,27 @@ struct MainView: View {
     @State var searchText = ""
         
     func getCode(curr: String) -> String {
-        return settings.currencyRates.usd.first { (code, rate) in
-            code.localizedStandardContains(curr)
-        }!.0
+
+        let codeRateDict = settings.currencyRates.usd.first { (code, rate) in
+            code == curr.lowercased()
+        }
+        
+        
+        if let codeRateDict = codeRateDict {
+            return codeRateDict.0.uppercased()
+        }
+        
+        return ""
+//        return settings.currencyRates.usd.first { (code, rate) in
+//            code.localizedStandardContains(curr)
+//        }!.0
     }
     
     func calcNetworth() -> Double {
         return bankInfos.map { bankInfo in                 return CurrencyRates.convertToGlobalCurrency(bankInfo, settings)
         }.reduce(0, +)
     }
-    
+        
     var sortCurrencies: [(String, Double)] {
         let temCurrencies = CurrencyRates.getAllRates(settings: self.settings).sorted { $0.0 < $1.0 }
         
@@ -159,6 +180,7 @@ struct MainView: View {
                     HStack {
                         
                         HStack(alignment: .top) {
+                            
                             Text("\(getCode(curr: settings.currency))").font(.system(size: 50, design: .rounded))
                                 .fontWeight(.black)
                                 .onTapGesture {
@@ -175,7 +197,7 @@ struct MainView: View {
                                                     toogleSheet.toggle()
                                                 }) {
                                                     HStack {
-                                                        Text("\(code)")
+                                                        Text("\(code.uppercased())\(CurrencyRates.getCurrencyName(code: code, data: settings.currencyCodes))")
                                                             .font(.system(size: 15))
                                                             .fontWeight(.medium)
                                                         Spacer()
