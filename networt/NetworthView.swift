@@ -156,7 +156,7 @@ struct MainView: View {
         }
         else {
             return temCurrencies.filter { (code, rate) in
-                code.localizedStandardContains(searchText)
+                code.localizedStandardContains(searchText) || getCode(curr: code).localizedStandardContains(searchText)
             }
         }
     }
