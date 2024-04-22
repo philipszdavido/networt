@@ -23,29 +23,77 @@ struct NetworthView: View {
     
     
     @StateObject var states = States()
-        
+    
+    @State var errorLoadingCurrencayRates = false
+    
     var body: some View {
-        
-        NavigationStack {
-            TabView(selection: $selectedTab) {
+        if CurrencyRates.checkCurrencyRatesFawazahmed0IsEmpty(data: settings.currencyRates) || CurrencyRates.checkCurrencyCodesIsEmpty(data: settings.currencyCodes) {
+            
+            if errorLoadingCurrencayRates {
+                Button("Retry") {
+                    errorLoadingCurrencayRates = false
+                    Task {
+                        do {
+                            try await settings.loadCurrency()
+                            
+                            try await settings.loadCurrencycodes()
+                            
+                        } catch {
+                            errorLoadingCurrencayRates = true
+                        }
+                    }
+
+                }
+            }
+            
+            if !errorLoadingCurrencayRates {
+                
+                Text("There are no currency rates found. Loading from server...")
+                
+                ProgressView()
+                    .onAppear(perform: {
+                        
+                        Task {
+                            do {
+                                try await settings.loadCurrency()
+
+                                try await settings.loadCurrencycodes()
+
+                                errorLoadingCurrencayRates = true
+                            } catch {
+                                errorLoadingCurrencayRates = true
+                            }
+                        }
+                        
+                    })
+            }
+            
+        }
+        else {
+            NavigationStack {
+                TabView(selection: $selectedTab) {
                     
                     MainView(bankInfos: bankInfos, settings: settings, states: states).tabItem {
-                            Label("Home", systemImage: "dollarsign.circle")
+                        Label("Home", systemImage: "dollarsign.circle")
                     }.tag(1)
-                
+                    
                     
                     AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")
                     }.tag(2)
                     
                     SettingsView(settings: settings).tabItem { Label("Settings", systemImage: "gear") }.tag(3)
                     
-            }
+                }
+            }.onAppear(perform: {
+            })
         }
         
     }
     
     init() {
+        
         settings.loadSettings()
+                
     }
 }
 
@@ -76,25 +124,39 @@ struct MainView: View {
     @State var searchText = ""
         
     func getCode(curr: String) -> String {
-        return currenciesWithFlags.first { (code, symbol, name, rate) in
-            code.localizedStandardContains(curr)
-        }!.1
+
+        let codeRateDict = settings.currencyRates.data.first { (code, rate) in
+            code == curr.lowercased()
+        }
+        
+        
+        if let codeRateDict = codeRateDict {
+            return codeRateDict.0.uppercased()
+        }
+        
+        return ""
+//        return settings.currencyRates.usd.first { (code, rate) in
+//            code.localizedStandardContains(curr)
+//        }!.0
     }
     
     func calcNetworth() -> Double {
-        return bankInfos.map { bankInfo in                 return CurrencyRates.convertToGlobalCurrency(bankInfo, settings)
+        return bankInfos.map { bankInfo in
+//            print(bankInfo.amount, CurrencyRates.convertToGlobalCurrency(bankInfo, settings), settings.currencyRates)
+
+            return CurrencyRates.convertToGlobalCurrency(bankInfo, settings)
         }.reduce(0, +)
     }
-    
-    var sortCurrencies: [(String, String, String, Double)] {
-        let temCurrencies = CurrencyRates.getAllRates(settings: self.settings).sorted { $0.1 < $1.1 }
+        
+    var sortCurrencies: [(String, Double)] {
+        let temCurrencies = CurrencyRates.getAllRates(settings: self.settings).sorted { $0.0 < $1.0 }
         
         if searchText.isEmpty {
             return temCurrencies
         }
         else {
-            return temCurrencies.filter { (flag, code, name, rate) in
-                code.localizedStandardContains(searchText)
+            return temCurrencies.filter { (code, rate) in
+                code.localizedStandardContains(searchText) || getCode(curr: code).localizedStandardContains(searchText)
             }
         }
     }
@@ -121,7 +183,8 @@ struct MainView: View {
                     HStack {
                         
                         HStack(alignment: .top) {
-                            Text("\(getCode(curr: settings.currency))").font(.system(size: 50, design: .rounded))
+                            
+                            Text("\(getCode(curr: settings.currency))").underline(true).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/).font(.system(size: 50, design: .rounded))
                                 .fontWeight(.black)
                                 .onTapGesture {
                                     toogleSheet.toggle()
@@ -130,14 +193,14 @@ struct MainView: View {
                                     NavigationView {
                                         List {
                                             
-                                            ForEach(sortCurrencies, id: \.0) { flag, name, code, rate in
+                                            ForEach(sortCurrencies, id: \.0) { code, rate in
                                                 Button(action: {
                                                     settings.currency = code
                                                     networth = calcNetworth()
                                                     toogleSheet.toggle()
                                                 }) {
                                                     HStack {
-                                                        Text("\(flag) \(name)")
+                                                        Text("\(code.uppercased()) \(CurrencyRates.getCurrencyName(code: code, data: settings.currencyCodes))")
                                                             .font(.system(size: 15))
                                                             .fontWeight(.medium)
                                                         Spacer()
@@ -155,7 +218,7 @@ struct MainView: View {
                                     
                                 }
                             
-                            Text(settings.hideNetworth ? "***" : "\(settings.currency) \(networth)").font(.system(size: 50, design: .rounded))
+                            Text(settings.hideNetworth ? "***" : "\(networth)").font(.system(size: 50, design: .rounded))
                                 .fontWeight(.black)
                             
                         }
@@ -198,13 +261,16 @@ struct MainView: View {
             
         }.onAppear {
             
+//            CurrencyRates.fetchCurrencyCodesFawazahmed0 { result in
+//                print(result)
+//            }
+
             networth = calcNetworth()
             //                        modelContext.insert(BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
             //
             //                        modelContext.insert(BankInfo(amount: 0, bankName: "Sterling", currency: "EUR", number: 90))
 
         }
-        .frame(width: .infinity)
     
     }
 }

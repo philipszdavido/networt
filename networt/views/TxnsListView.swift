@@ -15,21 +15,7 @@ struct TxnsListView: View {
     @Environment(\.presentationMode) var presentationMode
 
     @State var searchText = ""
-
-    func formatDateTime(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE, h:mm a"
-        
-        _ = Calendar.current.date(byAdding: .day, value: -1, to: Date())!
-        
-        if Calendar.current.isDateInYesterday(date) {
-            return "Yesterday, " + dateFormatter.string(from: date)
-        } else if Calendar.current.isDateInToday(date) {
-            return "Today, " + dateFormatter.string(from: date)
-        } else {
-            return dateFormatter.string(from: date)
-        }
-    }
+    @State var isEditMode = EditMode.inactive
     
     var filteredTxns: [Transaction] {
         if searchText.isEmpty {
@@ -44,14 +30,16 @@ struct TxnsListView: View {
     @State private var selection = Set<Transaction>()
     
     var body: some View {
+
         NavigationStack {
+            
             List(selection: $selection) {
                 ForEach(filteredTxns, id: \.self) { txn in
                     
                     HStack {
                         VStack(alignment: .leading) {
                             Text("\(txn.bankInfo.bankName)")
-                            Text("\(formatDateTime(txn.dateTime))")
+                            Text("\(Time.formatDateTime(txn.dateTime))")
                                 .font(.system(.caption, design: .rounded))
                         }
                         Spacer()
@@ -77,18 +65,9 @@ struct TxnsListView: View {
                                 
             })
             
-//            Button(action: {
-//                
-//                let tempTxn = Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "NGN", bankInfo: BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
-//                
-//                modelContext.insert(tempTxn)
-//                
-//        }, label: {
-//            Text("Test")
-//        })
             
             .toolbar {
-                if(selection.count > 0) {
+                if(isEditMode == .active) {
                     ToolbarItem(placement: .bottomBar) {
                         HStack {
                             Button(action: {
@@ -97,6 +76,8 @@ struct TxnsListView: View {
                                 txns.forEach { txn in
                                     modelContext.delete(txn)
                                 }
+                                
+                                isEditMode = .inactive
 
                             }, label: {
                                 Text("Delete All")
@@ -106,9 +87,11 @@ struct TxnsListView: View {
                             Button(action: {
                                 print(selection)
                                 
-                                txns.forEach { txn in
+                                selection.forEach { txn in
                                     modelContext.delete(txn)
                                 }
+                                
+                                isEditMode = .inactive
 
                             }, label: {
                                 Text("Delete")
@@ -125,7 +108,8 @@ struct TxnsListView: View {
                         }
                     }
                 }
-            }
+            }.environment(\.editMode, $isEditMode)
+                
 
 
         }

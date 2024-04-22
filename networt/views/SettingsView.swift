@@ -18,9 +18,14 @@ struct SettingsView: View {
                                 
                 Section("Currency") {
                     HStack {
-                        Text("Global Currency")
                         
-                        CurrencyPickerView(selection: $settings.currency)
+                        NavigationLink(destination: CurrencyListPickerView(selection: $settings.currency)) {
+                            HStack {
+                                Text("Global Currency")
+                                Spacer()
+                                Text(settings.currency.uppercased())
+                            }
+                        }
                                     
                     }
                 }
@@ -60,26 +65,28 @@ struct ConversionRatesView: View {
     @ObservedObject var settings: GlobalSettings;
     @State var searchText = ""
     
-    var filteredCurrencies: [(String, String, String, Double)] {
-        let currencies = CurrencyRates.getAllRates(settings: self.settings).sorted { $0.1 < $1.1 }
+    @State var refreshingRates = false
+    
+    var filteredCurrencies: [(String, Double)] {
+        let currencies = CurrencyRates.getAllRates(settings: self.settings).sorted { $0.0 < $1.0 }
         
         if searchText.isEmpty {
             return currencies
         }
             else {
-                return currencies.filter({ (code, name, symbol, rate) in
-                    name.localizedStandardContains(searchText)
+                return currencies.filter({ (code, rate) in
+                    code.localizedStandardContains(searchText)
                 })
         }
     }
 
     var body: some View {
             List {
-                Section("Conversion rates pegged at 1 USD") {
-                    ForEach(filteredCurrencies, id: \.0) { code, name, symbol, rate in
+                Section("Conversion rates pegged at 1 \(settings.currencyRates.type.uppercased())") {
+                    ForEach(filteredCurrencies, id: \.0) { code, rate in
                     
                         HStack {
-                            Text("\(code) \(name)")
+                            Text("\(code.uppercased()) \(CurrencyRates.getCurrencyName(code: code, data: settings.currencyCodes))")
                             Spacer()
                             Text("\(rate)")
                         }
@@ -88,12 +95,29 @@ struct ConversionRatesView: View {
                 }
             }
                 
-        }.searchable(text: $searchText)
+            }.navigationTitle("\((Time.dateFromString( settings.currencyRates.date)))")
+            .searchable(text: $searchText)
             .toolbar {
                 ToolbarItem {
-                    Button("Refresh Rates") {
+                    Button(refreshingRates ? "Refreshing rates..." : "Refresh Rates") {
                         
-                    }
+                            refreshingRates = true
+                        
+                            Task {
+                                
+                                do {
+
+                                    settings.currencyRates = try await CurrencyRates.fetchCurrencyRates()
+                                    refreshingRates = false
+                                    
+                                } catch {
+                                    print(error)
+                                    refreshingRates = false
+                                }
+                                
+                            }
+                        
+                    }.disabled(refreshingRates)
                 }
             }
     }
