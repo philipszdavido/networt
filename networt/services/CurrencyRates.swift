@@ -9,7 +9,8 @@ import Foundation
 
 struct CurrencyRatesFawazahmed0: Codable {
     var date: String
-    var usd: [String: Double]
+    var data: [String: Double]
+    var type: String;
 }
 
 class CurrencyRates {
@@ -31,8 +32,13 @@ class CurrencyRates {
     }
     
     static func fetchCurrencyRates() async throws -> CurrencyRatesFawazahmed0 {
-        
-        guard let url = URL(string: "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json") else {
+
+        struct CurrencyRates: Codable {
+            var date: String
+            var eur: [String: Double]
+        }
+
+        guard let url = URL(string: "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json") else {
             
             throw NSError(domain: "InvalidURL", code: 0, userInfo: nil)
                         
@@ -40,9 +46,10 @@ class CurrencyRates {
         
         let (data, _) = try await URLSession.shared.data(from: url);
         
-        let response = try JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: data)
-
-        return response;
+        let response = try JSONDecoder().decode(CurrencyRates.self, from: data)
+        
+        
+        return CurrencyRatesFawazahmed0(date: response.date, data: response.eur, type: "eur")
         
     }
     
@@ -64,7 +71,7 @@ class CurrencyRates {
     static func convertCurrency(amount: Double, from sourceCurrency: String, to targetCurrency: String, using rates: CurrencyRatesFawazahmed0) -> Double? {
         
         // Check if the currency rates dictionary contains rates for both the source and target currencies
-        guard let sourceRate = rates.usd[sourceCurrency.lowercased()], let targetRate = rates.usd[targetCurrency.lowercased()] else {
+        guard let sourceRate = rates.data[sourceCurrency.lowercased()], let targetRate = rates.data[targetCurrency.lowercased()] else {
             // Unable to find conversion rates for source and/or target currencies
             return nil
         }
@@ -87,7 +94,7 @@ class CurrencyRates {
         
         var result: [(String, Double)] = []
         
-        rates.usd.forEach { (key: String, value: Double) in
+        rates.data.forEach { (key: String, value: Double) in
             result.append((key, value))
         }
         
@@ -97,7 +104,7 @@ class CurrencyRates {
     
     static func checkCurrencyRatesFawazahmed0IsEmpty(data: CurrencyRatesFawazahmed0) -> Bool {
         
-        if data.date.isEmpty && data.usd == ["": 0.0] {
+        if data.date.isEmpty && data.data == ["": 0.0] {
             
             return true
             
@@ -122,6 +129,10 @@ class CurrencyRates {
         
         return "- " + code
         
+    }
+    
+    static func getEmptyCurrencyRatesFawazahmed0() -> CurrencyRatesFawazahmed0 {
+        return CurrencyRatesFawazahmed0(date: "", data: ["" : 0.0], type: "")
     }
 
 }

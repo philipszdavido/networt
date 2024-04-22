@@ -125,7 +125,7 @@ struct MainView: View {
         
     func getCode(curr: String) -> String {
 
-        let codeRateDict = settings.currencyRates.usd.first { (code, rate) in
+        let codeRateDict = settings.currencyRates.data.first { (code, rate) in
             code == curr.lowercased()
         }
         
@@ -200,7 +200,7 @@ struct MainView: View {
                                                     toogleSheet.toggle()
                                                 }) {
                                                     HStack {
-                                                        Text("\(code.uppercased())\(CurrencyRates.getCurrencyName(code: code, data: settings.currencyCodes))")
+                                                        Text("\(code.uppercased()) \(CurrencyRates.getCurrencyName(code: code, data: settings.currencyCodes))")
                                                             .font(.system(size: 15))
                                                             .fontWeight(.medium)
                                                         Spacer()

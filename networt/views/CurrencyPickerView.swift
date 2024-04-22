@@ -18,7 +18,7 @@ struct CurrencyPickerView: View {
     var body: some View {
         
         Picker(selection: $selection, label: Text("")) {
-            ForEach(settings.currencyRates.usd.sorted { $0.0 < $1.0 }, id: \.0) { code, rate in
+            ForEach(settings.currencyRates.data.sorted { $0.0 < $1.0 }, id: \.0) { code, rate in
                 Text("\(code.uppercased()) \(CurrencyRates.getCurrencyName(code: code, data: settings.currencyCodes))")
                         }
         }

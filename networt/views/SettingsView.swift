@@ -82,7 +82,7 @@ struct ConversionRatesView: View {
 
     var body: some View {
             List {
-                Section("Conversion rates pegged at 1 USD") {
+                Section("Conversion rates pegged at 1 \(settings.currencyRates.type.uppercased())") {
                     ForEach(filteredCurrencies, id: \.0) { code, rate in
                     
                         HStack {
@@ -107,10 +107,11 @@ struct ConversionRatesView: View {
                                 
                                 do {
 
-                                    try await settings.loadCurrency()
+                                    settings.currencyRates = try await CurrencyRates.fetchCurrencyRates()
                                     refreshingRates = false
                                     
                                 } catch {
+                                    print(error)
                                     refreshingRates = false
                                 }
                                 

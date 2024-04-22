@@ -74,9 +74,9 @@ class GlobalSettings: ObservableObject {
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
            let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
             
-            if(decodedCurrencyRates.usd.isEmpty) {
+            if(decodedCurrencyRates.data.isEmpty) {
 
-                self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
+                self.currencyRates = CurrencyRates.getEmptyCurrencyRatesFawazahmed0()
                 
             } else {
                 self.currencyRates = decodedCurrencyRates
@@ -84,7 +84,7 @@ class GlobalSettings: ObservableObject {
                             
         } else {
             
-            self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
+            self.currencyRates = CurrencyRates.getEmptyCurrencyRatesFawazahmed0()
             
         }
         
@@ -117,9 +117,9 @@ class GlobalSettings: ObservableObject {
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
            let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
 
-            if(decodedCurrencyRates.usd.isEmpty) {
+            if(decodedCurrencyRates.data.isEmpty) {
 
-                self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
+                self.currencyRates = CurrencyRates.getEmptyCurrencyRatesFawazahmed0()
                 
                 return
             }
@@ -128,7 +128,7 @@ class GlobalSettings: ObservableObject {
             
         } else {
 
-            self.currencyRates = CurrencyRatesFawazahmed0(date: "", usd: ["" : 0.0])
+            self.currencyRates = CurrencyRates.getEmptyCurrencyRatesFawazahmed0()
 
         }
         
