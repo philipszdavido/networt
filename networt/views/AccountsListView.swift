@@ -151,67 +151,71 @@ struct EditAccountView: View {
     @Environment(\.modelContext) private var modelContext
 
     @Bindable var bankInfo: BankInfo;
-    
+        
     var onSave: () -> Void;
     
     @State var showSheet = false
-    @State var amount: Int = 0;
+    @State var txnAmount: Int = 0;
     
     @State var operation = "";
     
-    var body: some View {
+    @State var number = ""
+    @State var amount = ""
+    @State var bankName = ""
+    @State var savingBankDetails = false
+    
+    init(bankInfo: BankInfo, onSave: @escaping () -> Void, number: String = "", amount: String = "", bankName: String = "") {
 
-        CustomStringTextView(text: "Bank Name", link: $bankInfo.bankName)
+        self.bankInfo = bankInfo
+        self.onSave = onSave
         
-        CustomNumberTextView(text: "Bank Account", link: $bankInfo.number)
+        self._number = State(initialValue: String(bankInfo.number))
+        self._amount = State(initialValue: String(bankInfo.amount))
+        self._bankName = State(initialValue: bankInfo.bankName)
+    }
         
-        CustomNumberTextView(text: "Amount", link: $bankInfo.amount)
-        
-        HStack {
+    var body: some View {
+        VStack(alignment: .center) {
+            CustomStringTextView(text: "Bank Name", link: $bankName)
+            
+            CustomStringTextView(text: "Bank Account", link: $number, keyboardType: UIKeyboardType.numberPad)
+            
+            CustomStringTextView(text: "Amount", link: $amount, keyboardType: UIKeyboardType.numberPad)
+            
             HStack {
-                
-                NavigationLink(destination: CurrencyListPickerView(selection: $bankInfo.currency)) {
-                    HStack {
-                        Group {
-                            Text("Global Currency")
-                            Text(bankInfo.currency.uppercased())
-                            
-                        }
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                HStack {
+                    
+                    NavigationLink(destination: CurrencyListPickerView(selection: $bankInfo.currency)) {
+                        HStack {
+                            Group {
+                                Text("Select Currency")
+                                Text(bankInfo.currency.uppercased())
+                                
+                            }
+                            .font(.system(size: 20, weight: .semibold, design: .rounded))
                             .padding(.leading, 5.0)
                             .foregroundColor(.blue)
                             .underline(true)
-                        
+                            
+                        }
                     }
-                }
+                    
+                    
+                }.padding(.leading, 5.0)
                 
-                
-            }.padding(.leading, 5.0)
-                        
+                Spacer()
+            }
+            
             Spacer()
-        }
-
-        Spacer()
-
-            .toolbar {
-                ToolbarItem {
-                    Button("Withdraw") {
-                        operation = "-"
-                        showSheet.toggle()
-                    }
-
-                }
+            
                 
-                ToolbarItem {
-                    Button("Add Money") {
-                        operation = "+"
-                        showSheet.toggle()
-                    }
-
-                }
-
-            }.sheet(isPresented: $showSheet, onDismiss: {
-                amount = 0;
+        }
+        .overlay(alignment: .top) {
+            if savingBankDetails { ProgressView("Loading...").frame(width: 100, height: 100)
+            }
+        }
+        .sheet(isPresented: $showSheet, onDismiss: {
+                txnAmount = 0;
                 operation = ""
             }) {
                 VStack {
@@ -219,7 +223,7 @@ struct EditAccountView: View {
                         .foregroundColor(.gray)
 
                     HStack {
-                        TextField("Amount...", value: $amount, format: .number)
+                        TextField("Amount...", value: $txnAmount, format: .number)
                             .keyboardType(.numberPad)
                             .padding(10)
                             .background(Color(red: 0.8, green: 0.8, blue: 0.8))
@@ -227,14 +231,14 @@ struct EditAccountView: View {
                         Button("Save", action: {
                             switch operation {
                             case "+":
-                                bankInfo.amount = bankInfo.amount + amount
+                                bankInfo.amount = bankInfo.amount + txnAmount
                             case "-":
-                                bankInfo.amount = bankInfo.amount - amount
+                                bankInfo.amount = bankInfo.amount - txnAmount
                             default: break
                                 
                             }
                             
-                            let txn = Transaction(dateTime: Date(), operation: operation, amount: amount, currency: bankInfo.currency, bankInfo: bankInfo)
+                            let txn = Transaction(dateTime: Date(), operation: operation, amount: txnAmount, currency: bankInfo.currency, bankInfo: bankInfo)
                             
                             //bankInfo.transactions.append(txn)
                             
@@ -248,7 +252,50 @@ struct EditAccountView: View {
                 Spacer()
                 .presentationDetents([.height(250)])
             }
+            .toolbar {
+                ToolbarItem {
+                    Button("Withdraw") {
+                        operation = "-"
+                        showSheet.toggle()
+                    }
+                    
+                }
+                
+                ToolbarItem {
+                    Button("Add Money") {
+                        operation = "+"
+                        showSheet.toggle()
+                    }
+                    
+                }
+                
+                ToolbarItem {
+                    Button("Save") {
+                        
+                        savingBankDetails = true
+                        
+                        if !amount.isEmpty {
+                            if let amount = Int(amount) {
+                                bankInfo.amount = amount
+                            }
+                        }
+                        
+                        bankInfo.bankName = bankName
+                        
+                        if !number.isEmpty {
+                            if let number = Int(number) {
+                                bankInfo.number = number
+                            }
+                        }
+                        
+                        savingBankDetails = false
+                        
+                    }
+                }
+                
+            }
     }
+    
 }
 
 
@@ -256,6 +303,8 @@ struct CustomStringTextView: View {
     
     var text: String;
     @Binding var link: String;
+    
+    var keyboardType: UIKeyboardType = UIKeyboardType.default
         
     var body: some View {
         VStack(alignment: .leading) {
@@ -264,6 +313,8 @@ struct CustomStringTextView: View {
                 .foregroundColor(.gray)
 
                 TextField("\(text)", text: $link)
+                .keyboardType(keyboardType)
+                .disableAutocorrection(true)
                     .font(.system(size: 20, weight: .semibold, design: .rounded))
                     .padding(.horizontal)
             
