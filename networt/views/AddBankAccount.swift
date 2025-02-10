@@ -41,7 +41,7 @@ struct AddBankAccount: View {
                 }
 
             }.padding(.horizontal)
-                .padding(.bottom, 15)
+                .padding(.bottom, 30)
             
             VStack(alignment: .leading) {
                 

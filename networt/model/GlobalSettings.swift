@@ -8,6 +8,40 @@ import Foundation
 import Combine
 import SwiftUI
 
+extension UserDefaults {
+    private static let fontDesignKey = "savedFontDesign"
+
+    static func saveFontDesign(_ design: Font.Design) {
+        
+        let designString: String
+        
+        switch design {
+            case .default: designString = "default"
+            case .serif: designString = "serif"
+            case .monospaced: designString = "monospaced"
+            case .rounded: designString = "rounded"
+            default: designString = "default"
+        }
+        
+        UserDefaults.standard.set(designString, forKey: Self.fontDesignKey)
+        
+    }
+
+    static func loadFontDesign() -> Font.Design {
+        
+        let designString = UserDefaults.standard.string(forKey: Self.fontDesignKey) ?? "default"
+        
+        switch designString {
+            case "serif": return .serif
+            case "monospaced": return .monospaced
+            case "rounded": return .rounded
+            default: return .default
+        }
+        
+    }
+}
+
+
 class GlobalSettings: ObservableObject {
     
     @Published var currency: String {
@@ -66,10 +100,18 @@ class GlobalSettings: ObservableObject {
     @Published var bankCardBgColor: Color {
         didSet {
                         
-            let uiColor = UIColor(bankCardBgColor)
-                if let data = try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false) {
+            let uiColor = UIColor(bankCardBgColor);
+            if let data = try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false) {
                     UserDefaults.standard.set(data, forKey: "bankCardBgColor")
             }
+            
+        }
+    }
+    
+    @Published var fontDesign: Font.Design {
+        didSet {
+            
+            UserDefaults.saveFontDesign(fontDesign)
             
         }
     }
@@ -82,6 +124,7 @@ class GlobalSettings: ObservableObject {
         self.hideNetworth = UserDefaults.standard.bool(forKey: "hideNetworth")
         self.lockCodes = UserDefaults.standard.string(forKey: "lockCodes") ?? ""
         self.isLockCodeSet = UserDefaults.standard.bool(forKey: "isLockCodeSet")
+        self.fontDesign = UserDefaults.loadFontDesign()
         
         // Load currencyRates from UserDefaults
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
@@ -127,6 +170,7 @@ class GlobalSettings: ObservableObject {
         self.lockCodes = UserDefaults.standard.string(forKey: "lockCodes") ?? ""
         self.isLockCodeSet = UserDefaults.standard.bool(forKey: "isLockCodeSet")
         self.bankCardBgColor = Self.loadBgColor();
+        self.fontDesign = UserDefaults.loadFontDesign()
 
         // Load currencyRates from UserDefaults
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),

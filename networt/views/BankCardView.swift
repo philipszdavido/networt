@@ -33,8 +33,8 @@ struct BankCardView: View {
             
             HStack {
                 
-                Text(settings.hideNetworth ? getLengthOfAmount() : "\(bankInfo.currency.uppercased()) \(bankInfo.amount)").font(.system(.title, design: .rounded))
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                Text(settings.hideNetworth ? getLengthOfAmount() : "\(bankInfo.currency.uppercased()) \(bankInfo.amount)").font(.system(.title, design: settings.fontDesign))
+                        .fontWeight(.bold)
                 
                 Spacer()
 
@@ -46,7 +46,7 @@ struct BankCardView: View {
          .frame(width: 300)
          .background(settings.bankCardBgColor)
          //.cornerRadius(20.0)
-         .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+         .clipShape(RoundedRectangle(cornerRadius: 2.0))
 //         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
          .shadow(color: Color.black.opacity(0.2), radius: 4)
     }

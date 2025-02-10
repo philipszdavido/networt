@@ -56,8 +56,8 @@ struct AccountsListView: View {
                 }
                 
             }.onAppear(perform: {
-//                modelContext.insert(BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
-//                modelContext.insert(BankInfo(amount: 0, bankName: "Sterling", currency: "EUR", number: 90))
+                modelContext.insert(BankInfo(amount: 7000, bankName: "UBA", currency: "NGN", number: 345232340))
+                modelContext.insert(BankInfo(amount: 250, bankName: "Sterling", currency: "EUR", number: 2334343490))
         })
             .searchable(text: $searchText)
             .navigationTitle("Accounts")

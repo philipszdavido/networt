@@ -300,4 +300,3 @@ struct HeaderMenuView: View {
                     
     }
 }
-
