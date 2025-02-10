@@ -6,6 +6,7 @@
 //
 import Foundation
 import Combine
+import SwiftUI
 
 class GlobalSettings: ObservableObject {
     
@@ -62,7 +63,19 @@ class GlobalSettings: ObservableObject {
         }
     }
     
+    @Published var bankCardBgColor: Color {
+        didSet {
+                        
+            let uiColor = UIColor(bankCardBgColor)
+                if let data = try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false) {
+                    UserDefaults.standard.set(data, forKey: "bankCardBgColor")
+            }
+            
+        }
+    }
+        
     init() {
+        self.bankCardBgColor = Self.loadBgColor();
         self.currency = UserDefaults.standard.string(forKey: "currency") ?? "USD"
         self.showMyBanks = UserDefaults.standard.bool(forKey: "showMyBanks")
         self.showUpdates = UserDefaults.standard.bool(forKey: "showUpdates")
@@ -103,6 +116,7 @@ class GlobalSettings: ObservableObject {
         } else {
             self.currencyCodes = ["" : "" ]
         }
+        
     }
     
     func loadSettings() {
@@ -112,7 +126,8 @@ class GlobalSettings: ObservableObject {
         self.hideNetworth = UserDefaults.standard.bool(forKey: "hideNetworth")
         self.lockCodes = UserDefaults.standard.string(forKey: "lockCodes") ?? ""
         self.isLockCodeSet = UserDefaults.standard.bool(forKey: "isLockCodeSet")
-        
+        self.bankCardBgColor = Self.loadBgColor();
+
         // Load currencyRates from UserDefaults
         if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
            let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
@@ -147,7 +162,7 @@ class GlobalSettings: ObservableObject {
         } else {
             self.currencyCodes = ["" : "" ]
         }
-
+        
     }
     
     func loadCurrency() async throws {
@@ -159,5 +174,29 @@ class GlobalSettings: ObservableObject {
         self.currencyCodes = try await CurrencyRates.fetchCurrencyCodesFawazahmed0()
         
     }
+    
+    static func loadBgColor() -> Color {
+        
+        guard let data = UserDefaults.standard.data(forKey: "bankCardBgColor")
+        else {
+            return .blue
+        }
+        
+        do {
+            
+            if let uiColor = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
+                return Color(uiColor)
+            }
+            
+        } catch {
+            
+            print("Failed to load color:", error)
+            
+        }
+
+        return .blue;
+        
+    }
+
     
 }

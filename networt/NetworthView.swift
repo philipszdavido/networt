@@ -142,7 +142,6 @@ struct MainView: View {
     
     func calcNetworth() -> Double {
         return bankInfos.map { bankInfo in
-//            print(bankInfo.amount, CurrencyRates.convertToGlobalCurrency(bankInfo, settings), settings.currencyRates)
 
             return CurrencyRates.convertToGlobalCurrency(bankInfo, settings)
         }.reduce(0, +)
