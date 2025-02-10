@@ -15,7 +15,7 @@ struct SettingsView: View {
         
         NavigationView {
             List {
-                                
+                
                 Section("Currency") {
                     HStack {
                         
@@ -26,20 +26,26 @@ struct SettingsView: View {
                                 Text(settings.currency.uppercased())
                             }
                         }
-                                    
+                        
                     }
                 }
                 
-                Toggle(isOn: $settings.showMyBanks) {
-                    Text("Show My Banks")
-                }
-                
-                Toggle(isOn: $settings.hideNetworth) {
-                    Text("Hide Net Worth")
-                }
-                
-                Toggle(isOn: $settings.showUpdates) {
-                    Text("Show Updates")
+                Section("Home Screen") {
+                    
+                    Toggle(isOn: $settings.showMyBanks) {
+                        Text("Show My Banks")
+                    }
+                    
+                    Toggle(isOn: $settings.hideNetworth) {
+                        Text("Hide Net Worth")
+                    }
+                    
+                    Toggle(isOn: $settings.showUpdates) {
+                        Text("Show Updates")
+                    }
+                    
+                    ColorPicker("Bank Card Color", selection: $settings.bankCardBgColor)
+                                        
                 }
                 
                 Section("Rates") {

@@ -44,9 +44,11 @@ struct BankCardView: View {
             .padding(.top, 12)
          .frame(height: 120)
          .frame(width: 300)
-         .background(.purple)
-         .cornerRadius(20.0)
-         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+         .background(settings.bankCardBgColor)
+         //.cornerRadius(20.0)
+         .clipShape(RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/))
+//         .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 2)
+         .shadow(color: Color.black.opacity(0.2), radius: 4)
     }
     
 }
