@@ -20,26 +20,41 @@ struct AddBankAccount: View {
     
     @State private var amount = "";
     @State private var number = "";
+    
+    private let cornerRadius: CGFloat = 2;
 
     var body: some View {
+        
         NavigationStack {
-            Text("Enter Bank").font(.system(size: 30, weight: .bold, design: .rounded))
-                .padding(.bottom, 10)
+            
+            VStack {
+                
+                HStack {
+                    Text("Enter Bank").font(.system(size: 30, weight: .bold, design: .default))
+                        //.padding(.bottom, 10)
+                    Spacer()
+                }
+                
+                HStack {
+                    Text("Your bank details are encrypted and only visible to you.")
+                    Spacer()
+                }
+
+            }.padding(.horizontal)
+                .padding(.bottom, 15)
             
             VStack(alignment: .leading) {
                 
-                Text("Bank Name").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
-                
+                Text("Bank Name").font(.system(size: 15, weight: .semibold, design: .default)).padding(.horizontal).foregroundColor(.gray)
                 
                 VStack {
-                    TextField("Bank Name", text: $bankInfo.bankName)
+                    TextField("Bank Name, e.g United Bank", text: $bankInfo.bankName)
                         .padding(10.0)
-                        //.padding(.horizontal)
                         .contentMargins(1.0)
                         .textContentType(.name)
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.system(size: 20, weight: .semibold, design: .default))
                         .overlay(
-                                RoundedRectangle(cornerRadius: 5)
+                            RoundedRectangle(cornerRadius: cornerRadius)
                                     .stroke(Color.gray, lineWidth: 1)
                             )
                     .foregroundColor(.primary)
@@ -52,20 +67,19 @@ struct AddBankAccount: View {
             
             VStack(alignment: .leading) {
                 
-                Text("Bank Account").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
+                Text("Bank Account").font(.system(size: 15, weight: .semibold, design: .default)).padding(.horizontal).foregroundColor(.gray)
                 
                 
                 
                 VStack {
-                    TextField("Bank Account", text: $number)
+                    TextField("Bank Account, e.g 324XXX", text: $number)
                         .keyboardType(.numberPad)
                         .padding(10.0)
-                        //.padding(.horizontal)
                         .contentMargins(1.0)
                         .textContentType(.name)
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.system(size: 20, weight: .semibold, design: .default))
                         .overlay(
-                                RoundedRectangle(cornerRadius: 5)
+                                RoundedRectangle(cornerRadius: cornerRadius)
                                     .stroke(Color.gray, lineWidth: 1)
                             )
                     .foregroundColor(.primary)
@@ -79,18 +93,16 @@ struct AddBankAccount: View {
             
             VStack(alignment: .leading) {
                 
-                Text("Amount").font(.system(size: 20, weight: .semibold, design: .rounded)).padding(.horizontal).foregroundColor(.gray)
-                
+                Text("Amount").font(.system(size: 15, weight: .semibold, design: .default)).padding(.horizontal).foregroundColor(.gray)
                 
                 VStack {
-                    TextField("Amount", text: $amount)
+                    TextField("Amount, e.g 400", text: $amount)
                         .padding(10.0)
-                        //.padding(.horizontal)
                         .contentMargins(1.0)
                         .textContentType(.name)
-                        .font(.system(size: 20, weight: .semibold, design: .rounded))
+                        .font(.system(size: 20, weight: .semibold, design: .default))
                         .overlay(
-                                RoundedRectangle(cornerRadius: 5)
+                                RoundedRectangle(cornerRadius: cornerRadius)
                                     .stroke(Color.gray, lineWidth: 1)
                             )
                     .foregroundColor(.primary)
@@ -108,11 +120,14 @@ struct AddBankAccount: View {
                     
                     NavigationLink(destination: CurrencyListPickerView(selection: $bankInfo.currency)) {
                             
-                        Text("Select Currency: \(bankInfo.currency.uppercased())").font(.system(size: 20, weight: .semibold, design: .rounded)).foregroundColor(.blue)
-                            .underline(true)
-                        
+                        HStack {
+                            Text("Currency: \(bankInfo.currency.uppercased())")
+                                .font(.system(size: 20, weight: .semibold, design: .default))
+                            Spacer()
+                            Image(systemName: "chevron.right")
                         }
-                    
+                        
+                    }
                                         
                 }
                 Spacer()
@@ -150,6 +165,5 @@ struct AddBankAccount: View {
 }
 
 #Preview {
-    //AddBankAccount(states: States())
     AddBankAccount()
 }
