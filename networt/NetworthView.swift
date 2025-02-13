@@ -184,7 +184,7 @@ struct MainView: View {
                         
                         HStack(alignment: .top) {
                             
-                            Text("\(getCode(curr: settings.currency))").underline(true).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/).font(.system(size: 50, design: settings.fontDesign))
+                            Text("\(getCode(curr: settings.currency))").underline(true).foregroundColor(.blue).font(.system(size: 50, design: settings.fontDesign))
                                 .fontWeight(.black)
                                 .onTapGesture {
                                     toogleSheet.toggle()
@@ -242,7 +242,7 @@ struct MainView: View {
                                 }
                             }
                         }
-                        .padding(.top, 2.0).padding(.leading, 7.0)
+                        .padding(.top, 2.0).padding(.leading)
                     }
                     
                     
@@ -261,14 +261,7 @@ struct MainView: View {
             
         }.onAppear {
             
-//            CurrencyRates.fetchCurrencyCodesFawazahmed0 { result in
-//                print(result)
-//            }
-
             networth = calcNetworth()
-            //                        modelContext.insert(BankInfo(amount: 0, bankName: "UBA", currency: "NGN", number: 34540))
-            //
-            //                        modelContext.insert(BankInfo(amount: 0, bankName: "Sterling", currency: "EUR", number: 90))
 
         }
     

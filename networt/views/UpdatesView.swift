@@ -45,42 +45,56 @@ var settings: GlobalSettings
                 .padding()
             
         } else {
-        VStack {
-            ForEach(txns, id: \.self) { txn in
-                
-                HStack {
-                    VStack(alignment: .leading) {
-                        //Text("\(txn.bankInfo.bankName)")
-                        Text("\(Time.formatDateTime(txn.dateTime))")
-                            .font(.system(.caption, design: settings.fontDesign))
-                    }
-                    Spacer()
+            VStack {
+                ForEach(txns, id: \.self) { txn in
                     
-                    Text(settings.hideNetworth ? "****" : "\(txn.operation) \(txn.currency) \(txn.amount)")
+                    HStack {
+                        VStack(alignment: .leading) {
+                            //Text("\(txn.bankInfo.bankName)")
+                            Text("\(Time.formatDateTime(txn.dateTime))")
+                                .font(.system(.caption, design: settings.fontDesign))
+                        }
+                        Spacer()
+                        
+                        Text(settings.hideNetworth ? "****" : "\(txn.operation) \(txn.currency) \(txn.amount)")
+                    }
+                    Divider()
+                }.onDelete { (indexSet) in
+                    for offset in indexSet {
+                        modelContext.delete(txns[offset])
+                    }
                 }
-                Divider()
-            }.onDelete { (indexSet) in
-                for offset in indexSet {
-                    modelContext.delete(txns[offset])
-                }
-            }
-        }.listRowSeparator(.hidden)
-            .onAppear(perform: {
-                //                    for _ in 1...9 {
-                //                        modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "UBA", currency: "NGN", number: 90009876)))
-                //
-                //                        modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD", bankInfo: BankInfo(amount: 9000, bankName: "First Bank of Nigeria", currency: "EUR", number: 90009876)))
-                //                    }
-                
-            })
-    }
+            }.listRowSeparator(.hidden)
+                .onAppear(perform: {})
+                .fontDesign(settings.fontDesign)
+        }
     }
 }
 
 
-#Preview {
+struct UpdatesViewPreview: View {
+    
+    @Environment(\.modelContext) private var modelContext
 
-UpdatesView(settings: GlobalSettings()).modelContainer(for: [
-            BankInfo.self, Transaction.self
-        ], inMemory: true)
+    var body: some View {
+        
+        UpdatesView(
+            settings: GlobalSettings())
+        .modelContainer(for: [
+            BankInfo.self,
+            Transaction.self], inMemory: true)
+        .onAppear(perform: {
+                                for _ in 1...9 {
+                                    modelContext.insert(Transaction(dateTime: Date(), operation: "-", amount: 9000, currency: "USD"))
+            
+                                    modelContext.insert(Transaction(dateTime: Date(), operation: "+", amount: 9000, currency: "USD"))
+                                }
+            
+        })
+        
+    }
+}
+
+#Preview {
+    UpdatesViewPreview()
 }
