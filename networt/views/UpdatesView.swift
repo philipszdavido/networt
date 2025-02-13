@@ -18,7 +18,7 @@ var settings: GlobalSettings
     var body: some View {
         
         HStack {
-            Text("Txn Updates").font(.system(size: 20, design: .rounded)).bold()
+            Text("Txn Updates").font(.system(size: 20, design: settings.fontDesign)).bold()
             
             Spacer()
             
@@ -40,7 +40,9 @@ var settings: GlobalSettings
         Divider().listRowSeparator(.hidden)
         if txns.isEmpty {
             
-            Text("No txn updates").padding()
+            Text("No txn updates")
+                .font(.system(size: 19, design: settings.fontDesign))
+                .padding()
             
         } else {
         VStack {
@@ -48,9 +50,9 @@ var settings: GlobalSettings
                 
                 HStack {
                     VStack(alignment: .leading) {
-                        Text("\(txn.bankInfo.bankName)")
+                        //Text("\(txn.bankInfo.bankName)")
                         Text("\(Time.formatDateTime(txn.dateTime))")
-                            .font(.system(.caption, design: .rounded))
+                            .font(.system(.caption, design: settings.fontDesign))
                     }
                     Spacer()
                     

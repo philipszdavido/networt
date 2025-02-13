@@ -14,7 +14,7 @@ struct AddBankAccount: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.presentationMode) var presentationMode
     
-    //@ObservedObject var states: States
+    var settings: GlobalSettings
     
     @State var bankInfo: BankInfo = BankInfo(amount: 0, bankName: "", currency: "USD", number: 0)
     
@@ -159,11 +159,12 @@ struct AddBankAccount: View {
             }.disabled(bankInfo.bankName.isEmpty || amount.isEmpty || number.isEmpty)
         })
         .navigationBarTitle("", displayMode: .inline)
+        .fontDesign(settings.fontDesign)
         
     }
     
 }
 
 #Preview {
-    AddBankAccount()
+    AddBankAccount(settings: GlobalSettings())
 }

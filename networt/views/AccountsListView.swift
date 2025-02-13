@@ -56,8 +56,8 @@ struct AccountsListView: View {
                 }
                 
             }.onAppear(perform: {
-                modelContext.insert(BankInfo(amount: 7000, bankName: "UBA", currency: "NGN", number: 345232340))
-                modelContext.insert(BankInfo(amount: 250, bankName: "Sterling", currency: "EUR", number: 2334343490))
+//                modelContext.insert(BankInfo(amount: 7000, bankName: "UBA", currency: "NGN", number: 345232340))
+//                modelContext.insert(BankInfo(amount: 250, bankName: "Sterling", currency: "EUR", number: 2334343490))
         })
             .searchable(text: $searchText)
             .navigationTitle("Accounts")
@@ -72,7 +72,7 @@ struct AccountsListView: View {
                 }
 
                 ToolbarItem {
-                    NavigationLink(destination: AddBankAccount()) {
+                    NavigationLink(destination: AddBankAccount(settings: settings)) {
                         Image(systemName: "plus.circle.fill")
                             .font(.system(size: 30))
                     }
@@ -125,17 +125,11 @@ struct AccountsListView: View {
                 }
 
             }.environment(\.editMode, $isEditMode)
+                .fontDesign(settings.fontDesign)
             
         }
     }
     
-//    init(settings: GlobalSettings, searchText: String? = "") {
-//        self.settings = settings;
-//        self._bankInfos = Query(
-//            filter: #Predicate<BankInfo> {
-//                $0.bankName.contains(searchText!)
-//            })
-//    }
 }
 
 #Preview {
@@ -238,7 +232,7 @@ struct EditAccountView: View {
                                 
                             }
                             
-                            let txn = Transaction(dateTime: Date(), operation: operation, amount: txnAmount, currency: bankInfo.currency, bankInfo: bankInfo)
+                            let txn = Transaction(dateTime: Date(), operation: operation, amount: txnAmount, currency: bankInfo.currency)
                             
                             //bankInfo.transactions.append(txn)
                             

@@ -165,13 +165,14 @@ struct MainView: View {
         VStack {
             
             HStack {
-                Text("My Net Worth").font(.system(.largeTitle, design: .rounded))
+                Text("My Net Worth")
+                    .font(.system(.largeTitle, design: settings.fontDesign))
                     .bold()
                 .fontWeight(.black)
                 Spacer()
                 HeaderMenuView(states: states)
-                NavigationLink(destination: AddBankAccount()) {
-                                Image(systemName: "plus.circle.fill").font(.system(.largeTitle, design: .rounded))
+                NavigationLink(destination: AddBankAccount(settings: settings)) {
+                                Image(systemName: "plus.circle.fill").font(.system(.largeTitle, design: settings.fontDesign))
                                     .padding(.trailing, 4.0)
                             }
             }.padding([.horizontal, .vertical])
@@ -183,7 +184,7 @@ struct MainView: View {
                         
                         HStack(alignment: .top) {
                             
-                            Text("\(getCode(curr: settings.currency))").underline(true).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/).font(.system(size: 50, design: .rounded))
+                            Text("\(getCode(curr: settings.currency))").underline(true).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/).font(.system(size: 50, design: settings.fontDesign))
                                 .fontWeight(.black)
                                 .onTapGesture {
                                     toogleSheet.toggle()
@@ -217,7 +218,7 @@ struct MainView: View {
                                     
                                 }
                             
-                            Text(settings.hideNetworth ? "***" : "\(networth)").font(.system(size: 50, design: .rounded))
+                            Text(settings.hideNetworth ? "***" : "\(networth)").font(.system(size: 50, design: settings.fontDesign))
                                 .fontWeight(.black)
                             
                         }
@@ -230,7 +231,7 @@ struct MainView: View {
                     
                     if(!bankInfos.isEmpty && settings.showMyBanks) {
                         VStack(alignment: .leading) {
-                            Text("My Banks").padding(0.0).font(.system(size: 17, design: .rounded))
+                            Text("My Banks").padding(0.0).font(.system(size: 17, design: settings.fontDesign))
                             
                             ScrollView(.horizontal, showsIndicators: false) {
                                 HStack {
@@ -295,7 +296,7 @@ struct HeaderMenuView: View {
                 }
                 
             } label: {
-                Image(systemName: "ellipsis.circle").font(.system(.largeTitle, design: .rounded))
+                Image(systemName: "ellipsis.circle").font(.system(.largeTitle, design: settings.fontDesign))
             }
                     
     }

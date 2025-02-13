@@ -66,6 +66,7 @@ struct ConversionRatesView: View {
                     }.disabled(refreshingRates)
                 }
             }
+            .fontDesign(settings.fontDesign)
     }
 }
 

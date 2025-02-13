@@ -64,6 +64,7 @@ struct SettingsView: View {
                 
             }
             .navigationTitle("Settings")
+            .fontDesign(settings.fontDesign)
         }
         
     }

@@ -26,9 +26,12 @@ struct BankCardView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text("\(String(bankInfo.number))").bold().fontDesign(.rounded)
+                Text("\(String(bankInfo.number))")
+                    .bold()
+                    .fontDesign(settings.fontDesign)
                 Spacer()
-                Text("\(String(bankInfo.bankName))").fontDesign(.rounded)
+                Text("\(String(bankInfo.bankName))")
+                    .fontDesign(settings.fontDesign)
             }
             
             HStack {

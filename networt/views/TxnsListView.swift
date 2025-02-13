@@ -22,7 +22,7 @@ struct TxnsListView: View {
             return txns
         } else {
             return txns.filter { txn in
-                txn.bankInfo.bankName.localizedStandardContains(searchText)
+                txn.currency.localizedStandardContains(searchText)
             }
         }
     }
@@ -38,7 +38,7 @@ struct TxnsListView: View {
                     
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("\(txn.bankInfo.bankName)")
+                            //Text("\(txn.bankInfo.bankName)")
                             Text("\(Time.formatDateTime(txn.dateTime))")
                                 .font(.system(.caption, design: .rounded))
                         }
@@ -108,10 +108,10 @@ struct TxnsListView: View {
                         }
                     }
                 }
-            }.environment(\.editMode, $isEditMode)
-                
-
-
+            }
+            .environment(\.editMode, $isEditMode)
+            .fontDesign(settings.fontDesign)
+            
         }
     }
 }
@@ -119,5 +119,5 @@ struct TxnsListView: View {
 #Preview {
     TxnsListView().modelContainer(for: [
         Transaction.self, BankInfo.self
-    ], inMemory: true)
+    ], inMemory: true).environmentObject(GlobalSettings())
 }
