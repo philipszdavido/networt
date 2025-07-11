@@ -10,7 +10,7 @@ import SwiftData
 
 @main
 struct networtApp: App {
-    var sharedModelContainer: ModelContainer = {
+    public var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             BankInfo.self,
             Transaction.self

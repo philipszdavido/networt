@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F018CD02E212DAC00ED1A9D /* TestWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F018CCF2E212DAC00ED1A9D /* TestWelcomeView.swift */; };
 		4F22F78D2BCA995A00D26908 /* CurrencyPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F22F78C2BCA995900D26908 /* CurrencyPickerView.swift */; };
 		4F8302782BCC359F004A5882 /* NetworthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8302772BCC359F004A5882 /* NetworthView.swift */; };
 		4F83027A2BCC39F9004A5882 /* TxnsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8302792BCC39F9004A5882 /* TxnsListView.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4F018CCF2E212DAC00ED1A9D /* TestWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWelcomeView.swift; sourceTree = "<group>"; };
 		4F22F78C2BCA995900D26908 /* CurrencyPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyPickerView.swift; sourceTree = "<group>"; };
 		4F8302772BCC359F004A5882 /* NetworthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworthView.swift; sourceTree = "<group>"; };
 		4F8302792BCC39F9004A5882 /* TxnsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxnsListView.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 				4FC3C89B2BBD77E400C8911B /* Assets.xcassets */,
 				4FC3C89D2BBD77E400C8911B /* Preview Content */,
 				4F8302772BCC359F004A5882 /* NetworthView.swift */,
+				4F018CCF2E212DAC00ED1A9D /* TestWelcomeView.swift */,
 			);
 			path = networt;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				4F97BF4B2D5A1496003C8360 /* FontTypeView.swift in Sources */,
 				4FC7A54E2BC2D094005CA5B2 /* SettingsView.swift in Sources */,
 				4F97BF492D5A143E003C8360 /* CurrencyListPickerView.swift in Sources */,
+				4F018CD02E212DAC00ED1A9D /* TestWelcomeView.swift in Sources */,
 				4FC7A5502BC2D804005CA5B2 /* GlobalSettings.swift in Sources */,
 				4F97BF472D5A137C003C8360 /* ConversionRatesView.swift in Sources */,
 				4FC448D62BD434E100E87A4F /* Time.swift in Sources */,
