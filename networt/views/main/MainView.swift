@@ -68,15 +68,19 @@ struct MainView: View {
                 Text("My Net Worth")
                     .font(.system(.largeTitle, design: settings.fontDesign))
                     .bold()
-                .fontWeight(.black)
+                    .fontWeight(.black)
+                
                 Spacer()
+                                
+                NavigationLink(destination: AccountTypeSelection()) {
+                    Image(systemName: "plus.circle.fill").font(.system(.largeTitle, design: settings.fontDesign))
+                        .padding(.trailing, 4.0)
+                }
+                
                 HeaderMenuView(states: states)
-                NavigationLink(destination: AddBankAccount(settings: settings)) {
-                                Image(systemName: "plus.circle.fill").font(.system(.largeTitle, design: settings.fontDesign))
-                                    .padding(.trailing, 4.0)
-                            }
-            }.padding([.horizontal, .vertical])
 
+            }.padding([.horizontal, .vertical])
+            
             ScrollView {
                 
                 Section {
@@ -111,7 +115,7 @@ struct MainView: View {
                                         }.listStyle(PlainListStyle()) .searchable(text: $searchText)
                                         
                                             .navigationBarItems(trailing: Button("Done",
-                                                                                    action: {
+                                                                                 action: {
                                                 toogleSheet.toggle()
                                             }))
                                     }.padding(0.0)
@@ -126,7 +130,7 @@ struct MainView: View {
                         Spacer()
                     }
                 }.listRowSeparator(.hidden).padding(.leading)
-                                    
+                
                 VStack {
                     
                     if(!bankInfos.isEmpty && settings.showMyBanks) {
@@ -169,18 +173,20 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(
-        bankInfos: [
-            BankInfo(
-                amount: 9000,
-                bankName: "United Bank of America",
-                currency: "USD",
-                number: 90
-            )
-        ],
-        settings: GlobalSettings(),
-        states: States()
-    )
+    NavigationView {
+        MainView(
+            bankInfos: [
+                BankInfo(
+                    amount: 9000,
+                    bankName: "United Bank of America",
+                    currency: "USD",
+                    number: 90
+                )
+            ],
+            settings: GlobalSettings(),
+            states: States()
+        )
+    }
         .modelContainer(for: [
             BankInfo.self, Transaction.self
         ], inMemory: true)

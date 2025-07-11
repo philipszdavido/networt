@@ -36,8 +36,9 @@ struct CurrencyListPickerView: View {
             ForEach(filteredCurrencies, id: \.0) { code, rate in
                 HStack {
                     Text("\(code.uppercased()) \(CurrencyRates.getCurrencyName(code: code, data: settings.currencyCodes))")
+                        .fontDesign(settings.fontDesign)
                     Spacer()
-                    Text("\(rate)")
+                    Text("\(rate)").fontDesign(settings.fontDesign)
                     if currencySelection == code {
                         Image(systemName: "checkmark.circle.fill")
                             .foregroundColor(.blue)

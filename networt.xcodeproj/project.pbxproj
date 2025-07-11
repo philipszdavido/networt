@@ -82,6 +82,7 @@
 		4F018CB92E2128C300ED1A9D /* extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = extensions; sourceTree = "<group>"; };
 		4F018CBD2E21295200ED1A9D /* locks */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = locks; sourceTree = "<group>"; };
 		4F018CC62E212A4300ED1A9D /* accountslist */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = accountslist; sourceTree = "<group>"; };
+		4F018CD12E2130A900ED1A9D /* accounttypes */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = accounttypes; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,6 +133,7 @@
 		4FBE55BB2BC3C467008CBC42 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				4F018CD12E2130A900ED1A9D /* accounttypes */,
 				4F018CC62E212A4300ED1A9D /* accountslist */,
 				4F018CBD2E21295200ED1A9D /* locks */,
 				4F018CB82E21288200ED1A9D /* updates */,
@@ -238,6 +240,7 @@
 				4F018CB92E2128C300ED1A9D /* extensions */,
 				4F018CBD2E21295200ED1A9D /* locks */,
 				4F018CC62E212A4300ED1A9D /* accountslist */,
+				4F018CD12E2130A900ED1A9D /* accounttypes */,
 			);
 			name = networt;
 			productName = networt;

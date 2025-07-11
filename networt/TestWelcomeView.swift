@@ -37,3 +37,99 @@ struct TestWelcomeView: View {
     TestWelcomeView()
         .environmentObject(GlobalSettings())
 }
+
+// MARK: - Account Model
+struct Account: Identifiable {
+    let id = UUID()
+    var name: String
+    var type: AccountType
+    var balance: Double
+    var currency: String
+}
+
+enum AccountType: String, CaseIterable, Identifiable {
+    var id: String { rawValue }
+    case bank = "Bank"
+    case cash = "Cash"
+    case investment = "Investment"
+    case liability = "Liability"
+}
+
+// MARK: - ViewModel
+class FinanceViewModel: ObservableObject {
+    @Published var accounts: [Account] = [
+        Account(name: "Checking", type: .bank, balance: 4000, currency: "USD"),
+        Account(name: "Wallet", type: .cash, balance: 500, currency: "USD"),
+        Account(name: "Stocks", type: .investment, balance: 8000, currency: "USD"),
+        Account(name: "Credit Card", type: .liability, balance: -3000, currency: "USD")
+    ]
+
+    var totalAssets: Double {
+        accounts.filter { $0.type != .liability }.map { $0.balance }.reduce(0, +)
+    }
+
+    var totalLiabilities: Double {
+        accounts.filter { $0.type == .liability }.map { abs($0.balance) }.reduce(0, +)
+    }
+
+    var netWorth: Double {
+        totalAssets - totalLiabilities
+    }
+}
+
+// MARK: - Dashboard View
+struct DashboardView: View {
+    @StateObject private var viewModel = FinanceViewModel()
+
+    var body: some View {
+        NavigationView {
+            List {
+                Section(header: Text("Summary")) {
+                    HStack {
+                        Text("Assets")
+                        Spacer()
+                        Text("$\(viewModel.totalAssets, specifier: "%.2f")")
+                    }
+                    HStack {
+                        Text("Liabilities")
+                        Spacer()
+                        Text("-$\(viewModel.totalLiabilities, specifier: "%.2f")")
+                            .foregroundColor(.red)
+                    }
+                    HStack {
+                        Text("Net Worth")
+                        Spacer()
+                        Text("$\(viewModel.netWorth, specifier: "%.2f")")
+                            .fontWeight(.bold)
+                            .foregroundColor(viewModel.netWorth >= 0 ? .green : .red)
+                    }
+                }
+
+                Section(header: Text("Accounts")) {
+                    ForEach(viewModel.accounts) { account in
+                        VStack(alignment: .leading) {
+                            Text(account.name)
+                                .font(.headline)
+                            HStack {
+                                Text(account.type.rawValue)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                Spacer()
+                                Text("\(account.currency) \(account.balance, specifier: "%.2f")")
+                            }
+                        }
+                    }
+                }
+                
+            }
+            .navigationTitle("My Net Worth")
+        }
+    }
+}
+
+// MARK: - Preview
+struct DashboardView_Previews: PreviewProvider {
+    static var previews: some View {
+        DashboardView()
+    }
+}
