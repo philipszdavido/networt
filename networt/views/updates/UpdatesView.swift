@@ -29,7 +29,7 @@ var settings: GlobalSettings
                     
                 }
             } else {
-                /*@START_MENU_TOKEN@*/EmptyView()/*@END_MENU_TOKEN@*/
+                EmptyView()
             }
             
         }

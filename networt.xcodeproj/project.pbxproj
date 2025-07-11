@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,7 +15,6 @@
 		4F97BF4B2D5A1496003C8360 /* FontTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F97BF4A2D5A1496003C8360 /* FontTypeView.swift */; };
 		4FBE55B52BC30956008CBC42 /* AccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B42BC30956008CBC42 /* AccountsListView.swift */; };
 		4FBE55B72BC32A1D008CBC42 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B62BC32A1D008CBC42 /* Transaction.swift */; };
-		4FBE55BD2BC3D00A008CBC42 /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */; };
 		4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */; };
 		4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55C02BC3DEBF008CBC42 /* LockView.swift */; };
 		4FC1FF162BC7FDF0001912A8 /* CurrencyRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1FF152BC7FDF0001912A8 /* CurrencyRates.swift */; };
@@ -27,7 +26,6 @@
 		4FC3C8B52BBD77E500C8911B /* networtUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8B42BBD77E500C8911B /* networtUITestsLaunchTests.swift */; };
 		4FC448D62BD434E100E87A4F /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC448D52BD434E100E87A4F /* Time.swift */; };
 		4FC7A54A2BC2B99A005CA5B2 /* BankInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7A5492BC2B99A005CA5B2 /* BankInfo.swift */; };
-		4FC7A54C2BC2C07A005CA5B2 /* AddBankAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */; };
 		4FC7A54E2BC2D094005CA5B2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */; };
 		4FC7A5502BC2D804005CA5B2 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7A54F2BC2D804005CA5B2 /* GlobalSettings.swift */; };
 /* End PBXBuildFile section */
@@ -58,7 +56,6 @@
 		4F97BF4A2D5A1496003C8360 /* FontTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTypeView.swift; sourceTree = "<group>"; };
 		4FBE55B42BC30956008CBC42 /* AccountsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsListView.swift; sourceTree = "<group>"; };
 		4FBE55B62BC32A1D008CBC42 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardView.swift; sourceTree = "<group>"; };
 		4FBE55C02BC3DEBF008CBC42 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
 		4FC1FF152BC7FDF0001912A8 /* CurrencyRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRates.swift; sourceTree = "<group>"; };
@@ -73,10 +70,17 @@
 		4FC3C8B42BBD77E500C8911B /* networtUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networtUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		4FC448D52BD434E100E87A4F /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		4FC7A5492BC2B99A005CA5B2 /* BankInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankInfo.swift; sourceTree = "<group>"; };
-		4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBankAccount.swift; sourceTree = "<group>"; };
 		4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4FC7A54F2BC2D804005CA5B2 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		4F018CB32E21276800ED1A9D /* main */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = main; sourceTree = "<group>"; };
+		4F018CB82E21288200ED1A9D /* updates */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = updates; sourceTree = "<group>"; };
+		4F018CB92E2128C300ED1A9D /* extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = extensions; sourceTree = "<group>"; };
+		4F018CBD2E21295200ED1A9D /* locks */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = locks; sourceTree = "<group>"; };
+		4F018CC62E212A4300ED1A9D /* accountslist */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = accountslist; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4FC3C88F2BBD77DB00C8911B /* Frameworks */ = {
@@ -126,12 +130,14 @@
 		4FBE55BB2BC3C467008CBC42 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				4F018CC62E212A4300ED1A9D /* accountslist */,
+				4F018CBD2E21295200ED1A9D /* locks */,
+				4F018CB82E21288200ED1A9D /* updates */,
+				4F018CB32E21276800ED1A9D /* main */,
 				4F97BF432D5A1345003C8360 /* settings */,
-				4FC7A54B2BC2C07A005CA5B2 /* AddBankAccount.swift */,
 				4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */,
 				4F22F78C2BCA995900D26908 /* CurrencyPickerView.swift */,
 				4FBE55B42BC30956008CBC42 /* AccountsListView.swift */,
-				4FBE55BC2BC3D00A008CBC42 /* UpdatesView.swift */,
 				4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */,
 				4FBE55C02BC3DEBF008CBC42 /* LockView.swift */,
 				4F8302792BCC39F9004A5882 /* TxnsListView.swift */,
@@ -171,6 +177,7 @@
 		4FC3C8942BBD77DB00C8911B /* networt */ = {
 			isa = PBXGroup;
 			children = (
+				4F018CB92E2128C300ED1A9D /* extensions */,
 				4FC1FF142BC7FDD5001912A8 /* services */,
 				4FBE55BB2BC3C467008CBC42 /* views */,
 				4FBE55BA2BC3C461008CBC42 /* model */,
@@ -221,6 +228,13 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				4F018CB32E21276800ED1A9D /* main */,
+				4F018CB82E21288200ED1A9D /* updates */,
+				4F018CB92E2128C300ED1A9D /* extensions */,
+				4F018CBD2E21295200ED1A9D /* locks */,
+				4F018CC62E212A4300ED1A9D /* accountslist */,
 			);
 			name = networt;
 			productName = networt;
@@ -349,11 +363,9 @@
 				4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */,
 				4F8302782BCC359F004A5882 /* NetworthView.swift in Sources */,
 				4FC7A54A2BC2B99A005CA5B2 /* BankInfo.swift in Sources */,
-				4FBE55BD2BC3D00A008CBC42 /* UpdatesView.swift in Sources */,
 				4F22F78D2BCA995A00D26908 /* CurrencyPickerView.swift in Sources */,
 				4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */,
 				4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */,
-				4FC7A54C2BC2C07A005CA5B2 /* AddBankAccount.swift in Sources */,
 				4F83027A2BCC39F9004A5882 /* TxnsListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
