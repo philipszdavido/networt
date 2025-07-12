@@ -12,6 +12,8 @@ struct CashListView: View {
     
     @Query var cashList: [Cash]
     @Environment(\.modelContext) var modelContext
+    @EnvironmentObject var settings: GlobalSettings
+
     @State var search: String = ""
     
     var filter: [Cash] {
@@ -36,6 +38,23 @@ struct CashListView: View {
     }
 
     var body: some View {
+        
+        VStack(alignment: .leading) {
+            
+            HStack {
+                Text("Cash").font(.system(size: 30, weight: .bold, design: settings.fontDesign))
+                Spacer()
+            }
+
+            Text(
+                "Track all your cash in your wallets"
+            )
+            .fontDesign(settings.fontDesign)
+            
+        }
+        .padding(.bottom)
+        .padding(.horizontal)
+        
         List {
             ForEach(filter) { cash in
                 HStack {
@@ -51,12 +70,8 @@ struct CashListView: View {
                 deleteCash(IndexSet)
             }
         }
-        .navigationTitle("All Cash")
         .searchable(text: $search)
         .onAppear {
-            modelContext.insert(Cash(amount: 900000.0, currency: "usd"))
-            modelContext.insert(Cash(amount: 80.0, currency: "ngn"))
-            modelContext.insert(Cash(amount: 70.0, currency: "ghc"))
         }
         .toolbar {
             ToolbarItem(
@@ -71,6 +86,12 @@ struct CashListView: View {
             modelContext.delete(cashList[index])
         }
     }
+    
+    func populateDumbData() {
+        modelContext.insert(Cash(amount: 900000.0, currency: "usd"))
+        modelContext.insert(Cash(amount: 80.0, currency: "ngn"))
+        modelContext.insert(Cash(amount: 70.0, currency: "ghc"))
+    }
 }
 
 #Preview {
@@ -78,4 +99,5 @@ struct CashListView: View {
         CashListView()
     }
         .modelContainer(for: allModels, inMemory: true)
+        .environmentObject(GlobalSettings())
 }

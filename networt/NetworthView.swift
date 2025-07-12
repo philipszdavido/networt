@@ -72,7 +72,7 @@ struct NetworthView: View {
                         }.tag(1)
                     
                     MainView(bankInfos: bankInfos, settings: settings).tabItem {
-                        Label("Home", systemImage: "dollarsign.bank.building")
+                        Label("Overall", systemImage: "dollarsign.bank.building")
                     }.tag(2)
 
                     AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")

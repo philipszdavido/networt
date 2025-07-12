@@ -56,8 +56,8 @@ class CurrencyRates {
     static func convertToCurrency(from: String, to: String, amount: Double, _ settings: GlobalSettings) -> Double {
         
         let rates = settings.currencyRates
-        let a = CurrencyRates.convertCurrency(amount: Double(amount), from: from, to: to, using: rates) ?? 0.0
-        return a
+        let convertedCurrency = CurrencyRates.convertCurrency(amount: Double(amount), from: from, to: to, using: rates) ?? 0.0
+        return convertedCurrency
 
     }
     
@@ -71,9 +71,9 @@ class CurrencyRates {
         
         let rates = settings.currencyRates
 
-        let a = CurrencyRates.convertCurrency(amount: Double(amount), from: currency, to: globalCurrency, using: rates) ?? 0.0
+        let convertedCurrency = CurrencyRates.convertCurrency(amount: Double(amount), from: currency, to: globalCurrency, using: rates) ?? 0.0
                 
-        return a
+        return convertedCurrency
     }
     
     static func convertCurrency(amount: Double, from sourceCurrency: String, to targetCurrency: String, using rates: CurrencyRatesFawazahmed0) -> Double? {
@@ -89,9 +89,7 @@ class CurrencyRates {
         
         // Convert the amount from USD to the target currency using the target currency rate
         let amountInTargetCurrency = amountInUSD * targetRate
-        
-        print(amount, sourceCurrency, targetCurrency, sourceRate, targetRate, amountInUSD, amountInTargetCurrency)
-        
+                
         return amountInTargetCurrency
     }
     

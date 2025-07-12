@@ -257,23 +257,20 @@ struct SummaryView: View {
                 Section(header: Text("Accounts")) {
                     ForEach(viewModel.accounts) { account in
                         NavigationLink {
-                            if account.type == .bank {
+                            
+                            switch account.type {
+                            case .bank:
                                 AccountsListView(
                                     settings: settings
                                 )
-                            }
-                            else if account.type == .cash {
+                            case .cash:
                                 CashListView()
-                            }
-                            else if account.type == .investment {
+                            case .investment:
                                 InvestmentsList()
-                            }
-                            else if account.type == .liability {
+                            case .liability:
                                 LiabilityListView()
                             }
-                            else {
-                                EmptyView()
-                            }
+                            
                         } label: {
                             VStack(alignment: .leading) {
                                 Text(account.name)

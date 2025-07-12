@@ -10,6 +10,7 @@ import SwiftData
 
 struct InvestmentsList: View {
     @Environment(\.modelContext) var modelContext
+    @EnvironmentObject var settings: GlobalSettings
 
     @Query var stocks: [Stock]
     @Query var properties: [Property]
@@ -53,6 +54,23 @@ struct InvestmentsList: View {
     }
 
     var body: some View {
+        
+        VStack(alignment: .leading) {
+            
+            HStack {
+                Text("Investments").font(.system(size: 30, weight: .bold, design: settings.fontDesign))
+                Spacer()
+            }
+
+            Text(
+                "Track your investments such as: Stocks, Cryptos and Properties"
+            )
+            .fontDesign(settings.fontDesign)
+            
+        }
+        .padding(.bottom)
+        .padding(.horizontal)
+        
         List {
             Section("Stocks") {
                 ForEach(filterStocks) { stock in
@@ -113,38 +131,42 @@ struct InvestmentsList: View {
                 }
         }
         .onAppear {
-            for _ in 0..<5 {
-                modelContext.insert(Stock(symbol: "EXP", name: "Expat", sector: "Finance", exchange: "EXP"))
-            }
             
-            for _ in 0..<5 {
-                modelContext
-                    .insert(
-                        CoinHolding(
-                            coin: Coin(id: "uiiop", symbol: "OPI", name: "Nop", current_price: 90.0),
-                            amount: 90.0
-                        )
-                    )
-            }
-            
-            for _ in 0..<5 {
-                modelContext
-                    .insert(
-                        Property(
-                            name: "Rental",
-                            currency: "ngn",
-                            purchasePrice: 890.0,
-                            marketValue: 789.0,
-                            appreciationPercent: 8.0
-                        )
-                    )
-            }
         }
     }
     
     func delete<T: PersistentModel>(_ indexSet: IndexSet, from model: [T]) {
         for index in indexSet {
             modelContext.delete(model[index])
+        }
+    }
+    
+    func populateDumbData() {
+        for _ in 0..<5 {
+            modelContext.insert(Stock(symbol: "EXP", name: "Expat", sector: "Finance", exchange: "EXP"))
+        }
+        
+        for _ in 0..<5 {
+            modelContext
+                .insert(
+                    CoinHolding(
+                        coin: Coin(id: "uiiop", symbol: "OPI", name: "Nop", current_price: 90.0),
+                        amount: 90.0
+                    )
+                )
+        }
+        
+        for _ in 0..<5 {
+            modelContext
+                .insert(
+                    Property(
+                        name: "Rental",
+                        currency: "ngn",
+                        purchasePrice: 890.0,
+                        marketValue: 789.0,
+                        appreciationPercent: 8.0
+                    )
+                )
         }
     }
 
