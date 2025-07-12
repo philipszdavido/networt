@@ -17,7 +17,7 @@ class Stock: Identifiable {
     var exchange: String
     
     var quantity: Int = 0;
-    var price: Int = 0
+    var price: Double = 0
     
     init(symbol: String, name: String, sector: String, exchange: String) {
         self.symbol = symbol

@@ -157,7 +157,7 @@ struct Stocks: View {
             if let stock = stock {
                 
                 stock.quantity = Int(quantity) ?? 0
-                stock.price = Int(price) ?? 0
+                stock.price = Double(price) ?? 0.0
                 
                 modelContext.insert(stock)
                 

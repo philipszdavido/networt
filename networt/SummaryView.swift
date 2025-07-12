@@ -98,7 +98,7 @@ class SummaryViewModel: ObservableObject {
         let totalStocks = stocks.map { Stock in
             
             let a = CurrencyRates.convertCurrency(
-                amount: Double(Double(Stock.price * Stock.quantity)),
+                amount: Double(Double(Stock.price * Double(Stock.quantity))),
                 from: "USD",
                 to: settings.currency,
                 using: settings.currencyRates
