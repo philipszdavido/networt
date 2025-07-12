@@ -71,14 +71,20 @@ struct NetworthView: View {
                             Label("Summary", systemImage: "dollarsign.circle")
                         }.tag(1)
                     
-                    MainView(bankInfos: bankInfos, settings: settings).tabItem {
+                    
+                    MainView(bankInfos: bankInfos, settings: settings)
+                        .tabItem {
                         Label("Overall", systemImage: "dollarsign.bank.building")
                     }.tag(2)
-
-                    AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")
+                    
+                    NavigationView {
+                        AccountsListView(settings: settings)
+                    }.tabItem { Label("Accounts", systemImage: "person.3")
                     }.tag(3)
                     
-                    SettingsView(settings: settings).tabItem { Label("Settings", systemImage: "gear") }.tag(4)
+                    SettingsView(settings: settings)
+                        .tabItem { Label("Settings", systemImage: "gear") }
+                        .tag(4)
                     
                 }
             }

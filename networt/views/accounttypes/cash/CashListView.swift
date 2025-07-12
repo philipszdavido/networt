@@ -76,7 +76,15 @@ struct CashListView: View {
         .toolbar {
             ToolbarItem(
                 placement: ToolbarItemPlacement.topBarTrailing) {
-                    EditButton()
+                    HStack {
+                        EditButton()
+                        
+                        NavigationLink {
+                            CashView()
+                        } label: {
+                            Image(systemName: "plus.circle")
+                        }
+                    }
                 }
         }
     }

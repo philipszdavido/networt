@@ -31,7 +31,7 @@ struct AccountsListView: View {
     @State private var isSelected = false;
 
     var body: some View {
-        NavigationView {
+        //NavigationView {
             List(selection: $selection) {
                 ForEach(filteredBankInfos, id: \.self) { bankInfo in
                     NavigationLink(
@@ -55,7 +55,8 @@ struct AccountsListView: View {
                         
                 }
                 
-            }.onAppear(perform: {
+            }
+            .onAppear(perform: {
                 
             // MARK: always comment out
 //                modelContext.insert(BankInfo(amount: 7000, bankName: "UBA", currency: "NGN", number: 345232340))
@@ -130,13 +131,15 @@ struct AccountsListView: View {
             }.environment(\.editMode, $isEditMode)
                 .fontDesign(settings.fontDesign)
             
-        }
+        //}
     }
     
 }
 
 #Preview {
-    AccountsListView(settings: GlobalSettings())
+    NavigationStack {
+        AccountsListView(settings: GlobalSettings())
+    }
         .modelContainer(for: [
         BankInfo.self
     ], inMemory: true)

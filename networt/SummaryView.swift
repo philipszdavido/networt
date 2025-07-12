@@ -309,7 +309,9 @@ struct SummaryView: View {
                                     )
                         )
                     }
-                }.padding()
+                }
+                .frame(height: 300)
+                .padding()
                 
             }
             .onAppear {

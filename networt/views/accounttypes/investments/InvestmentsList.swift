@@ -153,7 +153,15 @@ struct InvestmentsList: View {
         .toolbar {
             ToolbarItem(
                 placement: ToolbarItemPlacement.topBarTrailing) {
-                    EditButton()
+                    HStack {
+                        EditButton()
+                        
+                        NavigationLink {
+                            Investments()
+                        } label: {
+                            Image(systemName: "plus.circle")
+                        }
+                    }
                 }
         }
         .onAppear {
