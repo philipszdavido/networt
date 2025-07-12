@@ -10,35 +10,36 @@ import SwiftUI
 struct CurrencySelector: View {
     
     @EnvironmentObject var settings: GlobalSettings
-    @State var currency: String;
+    @Binding var currency: String;
     
     var body: some View {
-        VStack {
+        //VStack {
             
             NavigationLink(destination: CurrencyListPickerView(selection: $currency)) {
                 
                 HStack {
                     Text("Currency: \(currency.uppercased())")
-                        .font(
-                            .system(
-                                size: 20,
-                                weight: .semibold,
-                                design: settings.fontDesign
-                                    )
-                        )
-                    Spacer()
-                    Image(systemName: "chevron.right")
+//                        .font(
+//                            .system(
+//                                size: 20,
+//                                weight: .semibold,
+//                                design: settings.fontDesign
+//                                    )
+//                        )
+//                    Spacer()
+//                    Image(systemName: "chevron.right")
                 }
                 
             }
-        }.padding(.horizontal)
-            .padding(.bottom)
+        //}
+//        .padding(.horizontal)
+//            .padding(.bottom)
     }
 }
 
 #Preview {
     NavigationStack {
-        CurrencySelector(currency: "")
+        CurrencySelector(currency: .constant("USD"))
     }
         .environmentObject(GlobalSettings())
 }

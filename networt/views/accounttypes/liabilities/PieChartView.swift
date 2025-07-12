@@ -32,6 +32,47 @@ struct PieChartView: View {
     }
 }
 
-//#Preview {
-//    PieChartView()
-//}
+#Preview {
+    PieChartView(
+        liabilities: [
+            Liability(
+                name: "Bal",
+                type: .creditCard,
+                currency: "usd",
+                balance: 90.0,
+                creditLimit: 40.0,
+                minPayment: 30.0,
+                interestRate: 10.0,
+                dueDate: Date.now
+            ),
+            Liability(
+                name: "Bal",
+                type: .loan, currency: "ngn",
+                balance: 90.0,
+                creditLimit: 40.0,
+                minPayment: 30.0,
+                interestRate: 10.0,
+                dueDate: Date.now
+            ),
+            Liability(
+                name: "Bal",
+                type: .creditCard,
+                currency: "ghc",
+                balance: 90.0,
+                creditLimit: 40.0,
+                minPayment: 30.0,
+                interestRate: 10.0,
+                dueDate: Date.now
+            ),
+            Liability(
+                name: "Bal",
+                type: .loan, currency: "agn",
+                balance: 90.0,
+                creditLimit: 40.0,
+                minPayment: 30.0,
+                interestRate: 10.0,
+                dueDate: Date.now
+            )
+        ]
+    )
+}

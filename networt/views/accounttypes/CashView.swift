@@ -7,17 +7,18 @@
 
 import SwiftUI
 
-struct Cash: View {
+struct CashView: View {
     
     @State var amount: String = "0";
-    @State var bankInfo: BankInfo = BankInfo(amount: 0, bankName: "", currency: "USD", number: 0)
+    @State var currency: String = "USD"
     
     private let cornerRadius: CGFloat = 2;
     
     @EnvironmentObject var settings: GlobalSettings
+    @Environment(\.modelContext) var modelContext
     
     var body: some View {
-        NavigationStack {
+        VStack(alignment: .leading) {
             
             VStack(alignment: .leading) {
                 
@@ -36,10 +37,10 @@ struct Cash: View {
             
             VStack {
                 
-                NavigationLink(destination: CurrencyListPickerView(selection: $bankInfo.currency)) {
+                NavigationLink(destination: CurrencyListPickerView(selection: $currency)) {
                     
                     HStack {
-                        Text("Currency: \(bankInfo.currency.uppercased())")
+                        Text("Currency: \(currency.uppercased())")
                             .font(
                                 .system(
                                     size: 20,
@@ -88,11 +89,28 @@ struct Cash: View {
             
             Spacer()
         }
+        .toolbar {
+            ToolbarItem(
+                placement: ToolbarItemPlacement.topBarTrailing) {
+                    Button {
+                        addCash()
+                    } label: {
+                        Text("Add Cash")
+                    }
+
+                }
+        }
+    }
+    
+    func addCash() {
+        let cash = Cash(amount: Double(amount) ?? 0.0, currency: currency)
+        modelContext.insert(cash)
     }
 }
 
 #Preview {
-    
-    Cash()
+    NavigationStack {
+        CashView()
+    }
         .environmentObject(GlobalSettings())
 }

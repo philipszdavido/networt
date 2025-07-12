@@ -21,41 +21,52 @@ struct AddLiabilityView: View {
     @State private var minPayment: Double?
     @State private var interestRate: Double?
     @State private var dueDate: Date = .now
+    @State private var currency: String = "USD"
 
     var body: some View {
         NavigationStack {
             Form {
                 Section("Details") {
+                    CurrencySelector(currency: $currency)
+
                     TextField("Name", text: $name)
                     Picker("Type", selection: $type) {
                         ForEach(LiabilityType.allCases) { Text($0.rawValue).tag($0) }
                     }
-                    TextField("Balance", value: $balance, format: .currency(code: "USD"))
+                    TextField("Balance", value: $balance, format: .currency(code: currency))
                         .keyboardType(.decimalPad)
                 }
 
                 if type == .creditCard {
-                    Section("Credit Card Info") {
-                        TextField("Credit Limit", value: Binding($creditLimit, default: 0), format: .currency(code: "USD"))
-                            .keyboardType(.decimalPad)
-                    }
+                    CreditCard(creditLimit: $creditLimit, currency: currency)
                 }
 
-                Section("Optional") {
-                    TextField("Min Payment", value: Binding($minPayment, default: 0), format: .currency(code: "USD"))
-                        .keyboardType(.decimalPad)
-                    TextField("Interest Rate (%)", value: Binding($interestRate, default: 0), format: .number)
-                        .keyboardType(.decimalPad)
-                    DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
-                }
+                Loans(
+                    minPayment: $minPayment,
+                    interestRate: $interestRate,
+                    dueDate: $dueDate,
+                    currency: currency
+                )
+                
             }
             .navigationTitle("New Liability")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        let liability = Liability(name: name, type: type, balance: balance, creditLimit: creditLimit, minPayment: minPayment, interestRate: interestRate, dueDate: dueDate)
+                        
+                        let liability = Liability(
+                            name: name,
+                            type: type,
+                            currency: currency,
+                            balance: balance,
+                            creditLimit: creditLimit,
+                            minPayment: minPayment,
+                            interestRate: interestRate,
+                            dueDate: dueDate
+                        )
                         context.insert(liability)
                         dismiss()
+                        
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
@@ -66,6 +77,7 @@ struct AddLiabilityView: View {
     }
 }
 
-//#Preview {
-//    AddLiabilityView()
-//}
+#Preview {
+    AddLiabilityView()
+        .environmentObject(GlobalSettings())
+}

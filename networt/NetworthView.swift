@@ -9,10 +9,6 @@ import SwiftUI
 import SwiftData
 import Combine
 
-class States: ObservableObject {
-    @Published var addNewAccount: Bool = false;
-}
-
 struct NetworthView: View {
     
     @Query var bankInfos: [BankInfo]
@@ -20,9 +16,6 @@ struct NetworthView: View {
     @State var selectedTab = 1
     
     var settings = GlobalSettings()
-    
-    
-    @StateObject var states = States()
     
     @State var errorLoadingCurrencayRates = false
     
@@ -73,19 +66,22 @@ struct NetworthView: View {
             NavigationStack {
                 TabView(selection: $selectedTab) {
                     
-                    MainView(bankInfos: bankInfos, settings: settings, states: states).tabItem {
-                        Label("Home", systemImage: "dollarsign.circle")
-                    }.tag(1)
+                    SummaryView(settings: settings)
+                        .tabItem {
+                            Label("Summary", systemImage: "dollarsign.circle")
+                        }.tag(1)
                     
-                    
-                    AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")
+                    MainView(bankInfos: bankInfos, settings: settings).tabItem {
+                        Label("Home", systemImage: "dollarsign.bank.building")
                     }.tag(2)
+
+                    AccountsListView(settings: settings).tabItem { Label("Accounts", systemImage: "person.3")
+                    }.tag(3)
                     
-                    SettingsView(settings: settings).tabItem { Label("Settings", systemImage: "gear") }.tag(3)
+                    SettingsView(settings: settings).tabItem { Label("Settings", systemImage: "gear") }.tag(4)
                     
                 }
-            }.onAppear(perform: {
-            })
+            }
         }
         
     }
@@ -100,9 +96,7 @@ struct NetworthView: View {
 #Preview {
     
     NetworthView()
-        .modelContainer(for: [
-            BankInfo.self, Transaction.self
-        ], inMemory: true)
+        .modelContainer(for: allModels, inMemory: true)
         .environmentObject(GlobalSettings())
 
 }

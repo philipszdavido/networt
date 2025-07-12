@@ -130,7 +130,7 @@ struct Cryptocurrency: View {
         
         if let coin = coin {
             
-            var coinHolding = CoinHolding(
+            let coinHolding = CoinHolding(
                 coin: coin,
                 amount: Double(amount) ?? 0.0
             )

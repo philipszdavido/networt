@@ -10,28 +10,18 @@ import SwiftUI
 struct CreditCard: View {
     
     @EnvironmentObject var settings: GlobalSettings
+    @Binding var creditLimit: Double?
+    var currency: String
 
     var body: some View {
-        NavigationStack {
-            
-            VStack(alignment: .leading) {
-                
-                HStack {
-                    Text("Enter Investments").font(.system(size: 30, weight: .bold, design: settings.fontDesign))
-                    Spacer()
-                }
-                
-                Text("Support for multiple subtypes: Stocks, Cryptocurrency, Real Estate"
-                )
-                .fontDesign(settings.fontDesign)
-                
-            }.padding(.bottom)
-                .padding(.horizontal)
+        Section("Credit Card Info") {
+            TextField("Credit Limit", value: Binding($creditLimit, default: 0), format: .currency(code: currency))
+                .keyboardType(.decimalPad)
         }
     }
 }
 
 #Preview {
-    CreditCard()
+    CreditCard(creditLimit: .constant(34.0), currency: "USD")
         .environmentObject(GlobalSettings())
 }

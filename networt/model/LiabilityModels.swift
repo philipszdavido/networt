@@ -10,8 +10,6 @@ import Charts
 import Foundation
 
 // MARK: - Models
-
-
 @Model
 class Liability {
     var name: String

@@ -13,8 +13,6 @@ struct MainView: View {
     
     @ObservedObject var settings: GlobalSettings
     
-    @ObservedObject var states: States;
-
     @Environment(\.modelContext) private var modelContext
 
     @State private var networth: Double = 0.0;
@@ -65,19 +63,15 @@ struct MainView: View {
         VStack {
             
             HStack {
-                Text("My Net Worth")
-                    .font(.system(.largeTitle, design: settings.fontDesign))
-                    .bold()
-                    .fontWeight(.black)
                 
                 Spacer()
                                 
                 NavigationLink(destination: AccountTypeSelection()) {
-                    Image(systemName: "plus.circle.fill").font(.system(.largeTitle, design: settings.fontDesign))
+                    Image(systemName: "plus.circle.fill").font(.system(.title, design: settings.fontDesign))
                         .padding(.trailing, 4.0)
                 }
                 
-                HeaderMenuView(states: states)
+                HeaderMenuView()
 
             }.padding([.horizontal, .vertical])
             
@@ -183,8 +177,7 @@ struct MainView: View {
                     number: 90
                 )
             ],
-            settings: GlobalSettings(),
-            states: States()
+            settings: GlobalSettings()
         )
     }
         .modelContainer(for: [

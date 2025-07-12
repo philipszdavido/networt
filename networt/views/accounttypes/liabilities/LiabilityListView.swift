@@ -8,23 +8,63 @@
 import SwiftUI
 import SwiftData
 
+enum SortLiabilityType {
+    case all
+    case upcoming
+    case sortduedate
+}
+
+struct LiabilityTag: Identifiable {
+    var id: SortLiabilityType;
+    var name: String
+}
+
+var tags : [LiabilityTag] = [
+    LiabilityTag(id: .all, name: "All"),
+    LiabilityTag(id: .upcoming, name: "Upcoming Only"),
+    LiabilityTag(id: .sortduedate, name: "Sort by Due Date")
+]
+
 // MARK: - Main List View
 struct LiabilityListView: View {
+
+    @EnvironmentObject var settings: GlobalSettings
     @Query var liabilities: [Liability]
     @State private var showingAdd = false
-    @State private var sortByDueDate = false
-    @State private var showUpcomingOnly = false
+    
+    @State var selectedSector: SortLiabilityType? = .all;
 
     var body: some View {
-        NavigationStack {
-            VStack {
-                HStack {
-                    Toggle("Upcoming Only", isOn: $showUpcomingOnly)
-                    Spacer()
-                    Toggle("Sort by Due Date", isOn: $sortByDueDate)
-                }
-                .padding([.horizontal, .top])
+        
+        VStack(alignment: .leading) {
+            
+            HStack {
+                Text("Enter Liabilities").font(.system(size: 30, weight: .bold, design: settings.fontDesign))
+                Spacer()
+            }
 
+            Text(
+                "Track debt such as: Loans and Credit Cards"
+            )
+            .fontDesign(settings.fontDesign)
+            
+        }
+        .padding(.bottom)
+        .padding(.horizontal)
+
+            VStack {
+                
+                Picker("Sector", selection: $selectedSector) {
+                    ForEach(tags) { tag in
+                        Text(tag.name)
+                            .tag(Optional(tag.id))
+                            .fontDesign(settings.fontDesign)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+
+                
                 let sortedTypes = groupedLiabilities.keys.sorted(by: { $0.rawValue < $1.rawValue })
 
                 List {
@@ -41,7 +81,6 @@ struct LiabilityListView: View {
                 PieChartView(liabilities: liabilities)
                     .frame(height: 300)
             }
-            .navigationTitle("Liabilities")
             .toolbar {
                 Button(action: { showingAdd = true }) {
                     Label("Add", systemImage: "plus")
@@ -50,7 +89,7 @@ struct LiabilityListView: View {
             .sheet(isPresented: $showingAdd) {
                 AddLiabilityView()
             }
-        }
+        
     }
 
     var groupedLiabilities: [LiabilityType: [Liability]] {
@@ -60,12 +99,12 @@ struct LiabilityListView: View {
     func filteredAndSortedLiabilities(for type: LiabilityType) -> [Liability] {
         var list = groupedLiabilities[type] ?? []
         
-        if showUpcomingOnly {
+        if selectedSector == .upcoming {
             let now = Date()
             list = list.filter { $0.dueDate ?? now >= now }
         }
         
-        if sortByDueDate {
+        if selectedSector == .sortduedate {
             return list.sorted(by: { ($0.dueDate ?? Date.distantFuture) < ($1.dueDate ?? Date.distantFuture) })
         } else {
             return list.sorted(by: { $0.balance > $1.balance })
@@ -75,6 +114,10 @@ struct LiabilityListView: View {
 }
 
 #Preview {
-    LiabilityListView()
+    NavigationStack {
+        
+        LiabilityListView()
+    }
         .modelContainer(for: [Liability.self, Payment.self])
+        .environmentObject(GlobalSettings())
 }

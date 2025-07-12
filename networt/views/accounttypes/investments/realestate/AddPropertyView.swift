@@ -15,10 +15,12 @@ struct AddPropertyView: View {
     @State private var purchasePrice = ""
     @State private var marketValue = ""
     @State private var appreciation = ""
+    @State private var currency: String = "usd"
 
     var body: some View {
         Form {
             Section("Property Info") {
+                CurrencySelector(currency: $currency)
                 TextField("Name", text: $name)
                 TextField("Purchase Price", text: $purchasePrice)
                     .keyboardType(.decimalPad)
@@ -30,7 +32,7 @@ struct AddPropertyView: View {
 
             Button("Save") {
                 let newProperty = Property(
-                    name: name,
+                    name: name, currency: currency,
                     purchasePrice: Double(purchasePrice) ?? 0,
                     marketValue: Double(marketValue) ?? 0,
                     appreciationPercent: Double(appreciation) ?? 0

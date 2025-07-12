@@ -16,7 +16,7 @@ struct CryptoListView: View {
 
     var body: some View {
         
-        if let errorMessage = viewModel.errorMessage {
+        if viewModel.errorMessage != nil {
             Button {
                 viewModel.fetchCoins()
             } label: {

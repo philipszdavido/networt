@@ -17,10 +17,18 @@ struct PropertyDetailView: View {
         var data: [AppreciationPoint] = []
         var value = property.purchasePrice
         let rate = property.appreciationPercent / 100
+        let currency = property.currency
 
         for year in 1...10 {
             value *= (1 + rate)
-            data.append(AppreciationPoint(year: year, estimatedValue: value))
+            data
+                .append(
+                    AppreciationPoint(
+                        year: year,
+                        currency: currency,
+                        estimatedValue: value
+                    )
+                )
         }
         return data
     }
@@ -30,8 +38,9 @@ struct PropertyDetailView: View {
             VStack(spacing: 20) {
                 Text("\(property.name)")
                     .font(.largeTitle)
-                Text("Purchase: $\(property.purchasePrice, specifier: "%.0f")")
-                Text("Market: $\(property.marketValue, specifier: "%.0f")")
+                Text("Purchase: \(property.purchasePrice, format: .currency(code: property.currency).precision(.fractionLength(0)))")
+                Text("Market: \(property.marketValue, format: .currency(code: property.currency))")
+
                 Text("Appreciation: \(property.appreciationPercent, specifier: "%.1f")%")
 
                 Chart(appreciationData) {
@@ -57,7 +66,8 @@ struct PropertyDetailView: View {
 #Preview {
     PropertyDetailView(
         property: Property(
-            name: "",
+            name: "Rent",
+            currency: "ngn",
             purchasePrice: 0.0,
             marketValue: 0.0,
             appreciationPercent: 0.0

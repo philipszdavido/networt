@@ -16,11 +16,17 @@ struct AddPaymentView: View {
     @State private var amount: Double = 0
     @State private var date: Date = .now
     @State private var note: String = ""
+    @State private var currency: String = "USD"
 
     var body: some View {
         NavigationStack {
             Form {
-                TextField("Amount", value: $amount, format: .currency(code: "USD"))
+                CurrencySelector(currency: $currency)
+                TextField(
+                    "Amount",
+                    value: $amount,
+                    format: .currency(code: currency)
+                )
                     .keyboardType(.decimalPad)
                 DatePicker("Date", selection: $date, displayedComponents: .date)
                 TextField("Note", text: $note)
@@ -29,7 +35,12 @@ struct AddPaymentView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") {
-                        let payment = Payment(amount: amount, date: date, note: note)
+                        let payment = Payment(
+                            currency: currency,
+                            amount: amount,
+                            date: date,
+                            note: note
+                        )
                         liability.payments.append(payment)
                         liability.balance -= amount
                         dismiss()
@@ -43,6 +54,12 @@ struct AddPaymentView: View {
     }
 }
 
-//#Preview {
-//    AddPaymentView()
-//}
+#Preview {
+    AddPaymentView(
+        liability: Liability(
+            name: "Inv",
+            type: LiabilityType.creditCard, currency: "usd",
+            balance: 900.0
+        )
+    ).environmentObject(GlobalSettings())
+}

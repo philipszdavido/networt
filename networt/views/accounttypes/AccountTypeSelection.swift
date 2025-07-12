@@ -21,7 +21,7 @@ struct AccountTypeSelection: View {
             }
             
             NavigationLink {
-                Cash()
+                CashView()
             } label: {
                 Text("Cash")
             }
@@ -44,7 +44,7 @@ struct AccountTypeSelection: View {
 }
 
 #Preview {
-    NavigationView {
+    NavigationStack {
         AccountTypeSelection()
     }        .environmentObject(GlobalSettings())
 

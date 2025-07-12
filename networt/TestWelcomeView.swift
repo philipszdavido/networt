@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Charts
 
 struct TestWelcomeView: View {
     
@@ -36,23 +37,6 @@ struct TestWelcomeView: View {
 #Preview {
     TestWelcomeView()
         .environmentObject(GlobalSettings())
-}
-
-// MARK: - Account Model
-struct Account: Identifiable {
-    let id = UUID()
-    var name: String
-    var type: AccountType
-    var balance: Double
-    var currency: String
-}
-
-enum AccountType: String, CaseIterable, Identifiable {
-    var id: String { rawValue }
-    case bank = "Bank"
-    case cash = "Cash"
-    case investment = "Investment"
-    case liability = "Liability"
 }
 
 // MARK: - ViewModel
@@ -121,6 +105,29 @@ struct DashboardView: View {
                     }
                 }
                 
+                Chart {
+                    ForEach($viewModel.accounts) { account in
+                        SectorMark(
+                            angle:
+                                    .value(
+                                        "Amount",
+                                        account.balance.wrappedValue
+                                    ),
+                            innerRadius: .ratio(0.5),
+                            angularInset: 1.0
+
+                        )
+                        .foregroundStyle(
+                            by:
+                                    .value(
+                                        "Type",
+                                        account.type.id
+                                    )
+                        )
+                    }
+                }.padding()
+
+                
             }
             .navigationTitle("My Net Worth")
         }
@@ -131,5 +138,6 @@ struct DashboardView: View {
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
         DashboardView()
+            .environmentObject(GlobalSettings())
     }
 }

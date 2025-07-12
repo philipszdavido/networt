@@ -17,7 +17,8 @@ struct RealEstate: View {
         @State private var purchasePrice = ""
         @State private var marketValue = ""
         @State private var appreciation = ""
-    
+        @State private var currency: String = "usd"
+
     var body: some View {
         VStack(alignment: .leading) {
             
@@ -35,6 +36,12 @@ struct RealEstate: View {
             }
             .padding(.bottom)
             .padding(.horizontal)
+
+            CurrencySelector(currency: $currency)
+                .padding([.horizontal, .bottom])
+                .font(
+                    .system(size: 20, weight: .semibold, design: settings.fontDesign)
+                )
 
             // MARK: - "Purchase Price"
             TextFieldView(
@@ -70,10 +77,10 @@ struct RealEstate: View {
                     VStack(alignment: .leading, spacing: 5) {
                         Text(property.name)
                             .font(.headline)
-                        Text("Purchase: $\(property.purchasePrice, specifier: "%.2f")")
-                        Text("Market: $\(property.marketValue, specifier: "%.2f")")
-                        Text("Gain: $\(property.gain, specifier: "%.2f")")
-                            .foregroundColor(property.gain >= 0 ? .green : .red)
+                        Text("Purchase: \(property.purchasePrice, format: .currency(code: property.currency))")
+                            Text("Market: \(property.marketValue, format: .currency(code: property.currency))")
+                            Text("Gain: \(property.gain, format: .currency(code: property.currency))")
+                                .foregroundColor(property.gain >= 0 ? .green : .red)
                         Text("ROI: \(property.roi, specifier: "%.2f")%")
                             .font(.footnote)
                             .foregroundColor(.blue)
@@ -102,7 +109,14 @@ struct RealEstate: View {
            let market = Double(marketValue),
            let appr = Double(appreciation) {
             print(purchase, market, appr)
-            vm.addProperty(name: name, purchasePrice: purchase, marketValue: market, appreciation: appr)
+            vm
+                .addProperty(
+                    name: name,
+                    currency: currency,
+                    purchasePrice: purchase,
+                    marketValue: market,
+                    appreciation: appr
+                )
             name = ""; purchasePrice = ""; marketValue = ""; appreciation = ""
         }
     }
@@ -123,11 +137,13 @@ struct RealEstateTrackerView: View {
     @State private var purchasePrice = ""
     @State private var marketValue = ""
     @State private var appreciation = ""
+    @State private var currency: String = "usd"
     
     var body: some View {
         NavigationView {
             VStack(spacing: 20) {
                 // Input Fields
+                CurrencySelector(currency: $currency)
                 TextField("Property Name or Location", text: $name)
                     .textFieldStyle(.roundedBorder)
                 TextField("Purchase Price", text: $purchasePrice)
@@ -145,7 +161,14 @@ struct RealEstateTrackerView: View {
                     if let purchase = Double(purchasePrice),
                        let market = Double(marketValue),
                        let appr = Double(appreciation) {
-                        vm.addProperty(name: name, purchasePrice: purchase, marketValue: market, appreciation: appr)
+                        vm
+                            .addProperty(
+                                name: name,
+                                currency: currency,
+                                purchasePrice: purchase,
+                                marketValue: market,
+                                appreciation: appr
+                            )
                         name = ""; purchasePrice = ""; marketValue = ""; appreciation = ""
                     }
                 }
@@ -157,9 +180,9 @@ struct RealEstateTrackerView: View {
                     VStack(alignment: .leading, spacing: 5) {
                         Text(property.name)
                             .font(.headline)
-                        Text("Purchase: $\(property.purchasePrice, specifier: "%.2f")")
-                        Text("Market: $\(property.marketValue, specifier: "%.2f")")
-                        Text("Gain: $\(property.gain, specifier: "%.2f")")
+                        Text("Purchase: \(property.purchasePrice, format: .currency(code: property.currency))")
+                        Text("Market: \(property.marketValue, format: .currency(code: property.currency))")
+                        Text("Gain: \(property.gain, format: .currency(code: property.currency))")
                             .foregroundColor(property.gain >= 0 ? .green : .red)
                         Text("ROI: \(property.roi, specifier: "%.2f")%")
                             .font(.footnote)
@@ -191,12 +214,8 @@ struct TextFieldView: View {
     @Binding var value: String;
     @EnvironmentObject var settings: GlobalSettings
     
-    @State var test:String = ""
-
     var body: some View {
-        
-        // TextField("Test", text: $test)
-        
+                
         VStack(alignment: .leading) {
             
             Text("\(name)")

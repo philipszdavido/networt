@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct HeaderMenuView: View {
-    
-    @ObservedObject var states: States;
-    
+        
     @EnvironmentObject var settings: GlobalSettings
     
     var body: some View {
@@ -28,14 +26,14 @@ struct HeaderMenuView: View {
                 }
                 
             } label: {
-                Image(systemName: "ellipsis.circle").font(.system(.largeTitle, design: settings.fontDesign))
+                Image(systemName: "ellipsis.circle").font(.system(.title, design: settings.fontDesign))
             }
                     
     }
 }
 
 #Preview {
-    HeaderMenuView(states: States())
+    HeaderMenuView()
         .modelContainer(for: [
             BankInfo.self, Transaction.self
         ], inMemory: true)

@@ -24,13 +24,20 @@ struct LiabilityListItemView: View {
                     }
                 }
                 Spacer()
-                Text("$\(liability.balance, specifier: "%.2f")")
+                Text(liability.balance, format: .currency(code: liability.currency))
+
                     .foregroundStyle(.red)
             }
         }
     }
 }
-//
-//#Preview {
-//    LiabilityListItemView()
-//}
+
+#Preview {
+    LiabilityListItemView(
+        liability: Liability(
+            name: "Inv",
+            type: LiabilityType.creditCard, currency: "usd",
+            balance: 100.0
+        )
+    )
+}

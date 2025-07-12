@@ -11,10 +11,7 @@ import SwiftData
 @main
 struct networtApp: App {
     public var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            BankInfo.self,
-            Transaction.self
-        ])
+        let schema = Schema(allModels)
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
         do {

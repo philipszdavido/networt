@@ -53,6 +53,14 @@ class CurrencyRates {
         
     }
     
+    static func convertToCurrency(from: String, to: String, amount: Double, _ settings: GlobalSettings) -> Double {
+        
+        let rates = settings.currencyRates
+        let a = CurrencyRates.convertCurrency(amount: Double(amount), from: from, to: to, using: rates) ?? 0.0
+        return a
+
+    }
+    
     static func convertToGlobalCurrency(_ bankInfo: BankInfo, _ settings: GlobalSettings) -> Double {
 
         let amount = bankInfo.amount;
