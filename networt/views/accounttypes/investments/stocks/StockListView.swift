@@ -8,41 +8,6 @@
 import SwiftUI
 import SwiftData
 
-let stockList: [Stock] = [
-    // U.S. Tech
-    Stock(symbol: "AAPL", name: "Apple Inc.", sector: "Technology", exchange: "NASDAQ"),
-    Stock(symbol: "MSFT", name: "Microsoft Corp.", sector: "Technology", exchange: "NASDAQ"),
-    Stock(symbol: "GOOGL", name: "Alphabet Inc.", sector: "Technology", exchange: "NASDAQ"),
-    Stock(symbol: "NVDA", name: "NVIDIA Corp.", sector: "Technology", exchange: "NASDAQ"),
-    
-    // Finance
-    Stock(symbol: "JPM", name: "JPMorgan Chase & Co.", sector: "Finance", exchange: "NYSE"),
-    Stock(symbol: "BAC", name: "Bank of America", sector: "Finance", exchange: "NYSE"),
-    
-    // Healthcare
-    Stock(symbol: "JNJ", name: "Johnson & Johnson", sector: "Healthcare", exchange: "NYSE"),
-    Stock(symbol: "PFE", name: "Pfizer Inc.", sector: "Healthcare", exchange: "NYSE"),
-    
-    // Retail
-    Stock(symbol: "WMT", name: "Walmart Inc.", sector: "Retail", exchange: "NYSE"),
-    Stock(symbol: "AMZN", name: "Amazon.com Inc.", sector: "Retail", exchange: "NASDAQ"),
-    
-    // Energy
-    Stock(symbol: "XOM", name: "ExxonMobil", sector: "Energy", exchange: "NYSE"),
-    Stock(symbol: "CVX", name: "Chevron", sector: "Energy", exchange: "NYSE"),
-
-    // 🇮🇳 NSE India
-    Stock(symbol: "RELIANCE.NS", name: "Reliance Industries", sector: "Energy", exchange: "NSE"),
-    Stock(symbol: "INFY.NS", name: "Infosys Ltd", sector: "Technology", exchange: "NSE"),
-    
-    // 🇬🇧 LSE UK
-    Stock(symbol: "HSBA.L", name: "HSBC Holdings", sector: "Finance", exchange: "LSE"),
-    Stock(symbol: "BP.L", name: "BP plc", sector: "Energy", exchange: "LSE"),
-    
-    // 🪙 Crypto
-    Stock(symbol: "BTC-USD", name: "Bitcoin", sector: "Cryptocurrency", exchange: "Crypto"),
-    Stock(symbol: "ETH-USD", name: "Ethereum", sector: "Cryptocurrency", exchange: "Crypto")
-]
 
 struct StockListView: View {
     @State private var searchText = ""
@@ -50,7 +15,43 @@ struct StockListView: View {
     @Binding var selectedStock: Stock
     
     @Environment(\.dismiss) var dismiss
-    
+
+    let stockList: [Stock] = [
+        // U.S. Tech
+        Stock(symbol: "AAPL", name: "Apple Inc.", sector: "Technology", exchange: "NASDAQ"),
+        Stock(symbol: "MSFT", name: "Microsoft Corp.", sector: "Technology", exchange: "NASDAQ"),
+        Stock(symbol: "GOOGL", name: "Alphabet Inc.", sector: "Technology", exchange: "NASDAQ"),
+        Stock(symbol: "NVDA", name: "NVIDIA Corp.", sector: "Technology", exchange: "NASDAQ"),
+        
+        // Finance
+        Stock(symbol: "JPM", name: "JPMorgan Chase & Co.", sector: "Finance", exchange: "NYSE"),
+        Stock(symbol: "BAC", name: "Bank of America", sector: "Finance", exchange: "NYSE"),
+        
+        // Healthcare
+        Stock(symbol: "JNJ", name: "Johnson & Johnson", sector: "Healthcare", exchange: "NYSE"),
+        Stock(symbol: "PFE", name: "Pfizer Inc.", sector: "Healthcare", exchange: "NYSE"),
+        
+        // Retail
+        Stock(symbol: "WMT", name: "Walmart Inc.", sector: "Retail", exchange: "NYSE"),
+        Stock(symbol: "AMZN", name: "Amazon.com Inc.", sector: "Retail", exchange: "NASDAQ"),
+        
+        // Energy
+        Stock(symbol: "XOM", name: "ExxonMobil", sector: "Energy", exchange: "NYSE"),
+        Stock(symbol: "CVX", name: "Chevron", sector: "Energy", exchange: "NYSE"),
+
+        // 🇮🇳 NSE India
+        Stock(symbol: "RELIANCE.NS", name: "Reliance Industries", sector: "Energy", exchange: "NSE"),
+        Stock(symbol: "INFY.NS", name: "Infosys Ltd", sector: "Technology", exchange: "NSE"),
+        
+        // 🇬🇧 LSE UK
+        Stock(symbol: "HSBA.L", name: "HSBC Holdings", sector: "Finance", exchange: "LSE"),
+        Stock(symbol: "BP.L", name: "BP plc", sector: "Energy", exchange: "LSE"),
+        
+        // 🪙 Crypto
+        Stock(symbol: "BTC-USD", name: "Bitcoin", sector: "Cryptocurrency", exchange: "Crypto"),
+        Stock(symbol: "ETH-USD", name: "Ethereum", sector: "Cryptocurrency", exchange: "Crypto")
+    ]
+
     var sectors: [String] {
         Set(stockList.map { $0.sector }).sorted()
     }
@@ -113,6 +114,9 @@ struct StockListView: View {
 #Preview {
     NavigationStack {
         
-        StockListView(selectedStock: .constant(stockList[0]))
+        StockListView(
+            selectedStock:
+                    .constant(Stock(symbol: "", name: "", sector: "", exchange: ""))
+        )
     }
 }

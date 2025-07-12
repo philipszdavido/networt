@@ -168,7 +168,9 @@ struct Stocks: View {
 }
 
 #Preview {
-    StockListView(selectedStock: .constant(stockList[0]))
+    StockListView(
+        selectedStock: .constant(Stock(symbol: "", name: "", sector: "", exchange: ""))
+    )
 }
 
 #Preview {

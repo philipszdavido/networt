@@ -39,7 +39,7 @@ struct LiabilityListView: View {
         VStack(alignment: .leading) {
             
             HStack {
-                Text("Enter Liabilities").font(.system(size: 30, weight: .bold, design: settings.fontDesign))
+                Text("Liabilities").font(.system(size: 30, weight: .bold, design: settings.fontDesign))
                 Spacer()
             }
 

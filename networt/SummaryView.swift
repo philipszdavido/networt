@@ -256,16 +256,36 @@ struct SummaryView: View {
                 
                 Section(header: Text("Accounts")) {
                     ForEach(viewModel.accounts) { account in
-                        VStack(alignment: .leading) {
-                            Text(account.name)
-                                .font(.headline)
-                            HStack {
-                                Text(account.type.rawValue)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
-                                Spacer()
-                                Text(account.balance, format: .currency(code: settings.currency))
-                                
+                        NavigationLink {
+                            if account.type == .bank {
+                                AccountsListView(
+                                    settings: settings
+                                )
+                            }
+                            else if account.type == .cash {
+                                CashListView()
+                            }
+                            else if account.type == .investment {
+                                InvestmentsList()
+                            }
+                            else if account.type == .liability {
+                                LiabilityListView()
+                            }
+                            else {
+                                EmptyView()
+                            }
+                        } label: {
+                            VStack(alignment: .leading) {
+                                Text(account.name)
+                                    .font(.headline)
+                                HStack {
+                                    Text(account.type.rawValue)
+                                        .font(.subheadline)
+                                        .foregroundColor(.gray)
+                                    Spacer()
+                                    Text(account.balance, format: .currency(code: settings.currency))
+                                    
+                                }
                             }
                         }
                     }
@@ -321,7 +341,10 @@ struct SummaryView: View {
 }
 
 #Preview {
-    SummaryView(settings: GlobalSettings())
+    NavigationStack {
+        
+        SummaryView(settings: GlobalSettings())
+    }
         .environmentObject(GlobalSettings())
         .modelContainer(for: allModels, inMemory: true)
 }
