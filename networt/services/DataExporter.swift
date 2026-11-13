@@ -127,17 +127,21 @@ struct Backup: Codable, Equatable {
     /// Replaces everything in `context` with this backup's contents.
     @MainActor
     func restore(into context: ModelContext) throws {
-        try context.delete(model: Transaction.self)
-        try context.delete(model: BankInfo.self)
-        try context.delete(model: Cash.self)
-        try context.delete(model: Stock.self)
-        try context.delete(model: CoinHolding.self)
-        try context.delete(model: Coin.self)
-        try context.delete(model: Payment.self)
-        try context.delete(model: Liability.self)
-        try context.delete(model: RentalIncome.self)
-        try context.delete(model: Property.self)
-        try context.delete(model: NetWorthSnapshot.self)
+        // Delete object by object: a batch delete skips unsaved changes and doesn't cascade.
+        func deleteAll<T: PersistentModel>(_ type: T.Type) throws {
+            try context.fetch(FetchDescriptor<T>()).forEach(context.delete)
+        }
+        try deleteAll(Transaction.self)
+        try deleteAll(BankInfo.self)
+        try deleteAll(Cash.self)
+        try deleteAll(Stock.self)
+        try deleteAll(CoinHolding.self)
+        try deleteAll(Coin.self)
+        try deleteAll(Payment.self)
+        try deleteAll(Liability.self)
+        try deleteAll(RentalIncome.self)
+        try deleteAll(Property.self)
+        try deleteAll(NetWorthSnapshot.self)
 
         for item in banks {
             let bank = BankInfo(balance: item.balance, bankName: item.name, currency: item.currency, number: item.number)

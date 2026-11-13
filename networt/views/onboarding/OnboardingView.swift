@@ -56,6 +56,7 @@ struct OnboardingView: View {
                     }
                     .card()
                 }
+                .buttonStyle(.plain)
                 .padding(.bottom, 12)
 
                 Button("Continue") {

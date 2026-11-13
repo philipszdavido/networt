@@ -2,19 +2,22 @@
 
 Ideas are grouped by theme and roughly ordered by priority within each group. Each one points at the code it affects.
 
-## Status (2026-11-12)
+## Status (2026-11-13)
 
-Done: everything in sections 1–4 and 7, plus goals, the debt planner, reminders, CSV/JSON export and the privacy features from section 5, and the onboarding, empty states, haptics, VoiceOver labels and offline-first items from section 6.
+Everything below is implemented, including widgets, iCloud sync, backup and restore, the `@Observable` migration, Dynamic Type throughout, and a full UI redesign on a shared design system (`views/design/Theme.swift`).
 
 Changed from the plan:
-- **Money is `Double`, not `Decimal`.** `BankInfo` and `Transaction` moved from `Int` to `Double` to match the other models. Moving everything to `Decimal` would touch every model and view.
-- **No `VersionedSchema` yet.** The schema changes are additive or renames, so they rely on SwiftData's automatic migration (verified against a store in the old format).
+- **Money is `Double`, not `Decimal`.** Moving to `Decimal` would mean rewriting every model and view.
+- **No `VersionedSchema`.** All schema changes are lightweight-migratable. Migration was verified against a store from the original release, including relationships.
+- **The "Overall" tab, bank card carousel and card colour setting were removed.** Home now covers net worth, history, allocation and recent activity.
 
-Not done yet:
-- **Widgets.** These need a widget extension target and an App Group to share the store.
-- **iCloud sync.** This needs the CloudKit capability on a paid developer account, and every model property must be optional or have a default.
-- **JSON import.** Export exists; import doesn't.
-- **Remaining UX polish.** Moving to `@Observable`, and Dynamic Type in older views (many still use fixed `.system(size:)` fonts). Currency format styles are only applied in the views that were touched.
+Needs you:
+- **iCloud sync and the widget's App Group** need the iCloud and App Groups capabilities on your Apple Developer team (a paid account for iCloud). Xcode registers them on the first device build with automatic signing.
+- **iCloud sync is untested end to end**, because that needs signed builds on two devices with the same Apple ID.
+
+Next ideas:
+- **Fractional shares.** `Stock.quantity` is an `Int`; it needs a new `Double` property plus a migration.
+- **Interactive widgets.** For example, tapping to refresh prices.
 
 ## 1. Trust first: security and correctness
 

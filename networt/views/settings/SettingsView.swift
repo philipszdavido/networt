@@ -71,11 +71,13 @@ struct SettingsView: View {
                     } label: {
                         SettingsLabel("Change PIN", icon: "lock.rotation", tint: .blue)
                     }
+                    .foregroundStyle(.primary)
                     Button {
                         settings.lock()
                     } label: {
                         SettingsLabel("Lock now", icon: "lock.fill", tint: .gray)
                     }
+                    .foregroundStyle(.primary)
                 } header: {
                     Text("Security")
                 } footer: {
@@ -116,14 +118,17 @@ struct SettingsView: View {
                     ShareLink(item: exporter.backup(), preview: SharePreview("Net worth backup")) {
                         SettingsLabel("Back up", icon: "arrow.up.doc.fill", tint: .blue)
                     }
+                    .foregroundStyle(.primary)
                     Button {
                         importing = true
                     } label: {
                         SettingsLabel("Restore from backup", icon: "arrow.down.doc.fill", tint: .blue)
                     }
+                    .foregroundStyle(.primary)
                     ShareLink(item: exporter.csv(), preview: SharePreview("Net worth (CSV)")) {
                         SettingsLabel("Export spreadsheet", icon: "tablecells.fill", tint: .green)
                     }
+                    .foregroundStyle(.primary)
                 } header: {
                     Text("Data")
                 } footer: {

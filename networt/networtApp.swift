@@ -26,13 +26,19 @@ struct networtApp: App {
         _settings = State(initialValue: settings)
     }
 
+    /// The store's location since the first release. Set explicitly because, once the app has an App Group,
+    /// SwiftData's default location moves into the group container and existing data would seem to vanish.
+    static var storeURL: URL {
+        URL.applicationSupportDirectory.appending(path: "default.store")
+    }
+
     /// Local and iCloud configurations share the same store file, so switching keeps the data.
     /// If iCloud can't be used (no account, or the capability isn't provisioned) the app falls back to local.
     static func makeContainer(iCloud: Bool) -> (ModelContainer, syncing: Bool) {
         let schema = Schema(allModels)
 
         if iCloud, let container = try? ModelContainer(for: schema, configurations: [
-            ModelConfiguration(schema: schema, cloudKitDatabase: .private(cloudContainerID))
+            ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .private(cloudContainerID))
         ]) {
             LegacyMigration.run(container.mainContext)
             return (container, true)
@@ -41,7 +47,7 @@ struct networtApp: App {
         do {
             // `.none` matters: with iCloud entitlements present, the default would sync regardless of the setting.
             let container = try ModelContainer(for: schema, configurations: [
-                ModelConfiguration(schema: schema, cloudKitDatabase: .none)
+                ModelConfiguration(schema: schema, url: storeURL, cloudKitDatabase: .none)
             ])
             LegacyMigration.run(container.mainContext)
             return (container, false)
