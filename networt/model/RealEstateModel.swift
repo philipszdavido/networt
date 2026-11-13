@@ -10,10 +10,11 @@ import SwiftData
 
 @Model
 class RentalIncome {
-    var date: Date
-    var amount: Double
-    var currency: String
+    var date: Date = Date.now
+    var amount: Double = 0
+    var currency: String = "USD"
     var notes: String?
+    var property: Property?
 
     init(date: Date, amount: Double, currency: String, notes: String? = nil) {
         self.date = date
@@ -25,15 +26,15 @@ class RentalIncome {
 
 @Model
 class Property {
-    var name: String
-    var currency: String
-    var purchasePrice: Double
-    var marketValue: Double
-    var appreciationPercent: Double
+    var name: String = ""
+    var currency: String = "USD"
+    var purchasePrice: Double = 0
+    var marketValue: Double = 0
+    var appreciationPercent: Double = 0
     var latitude: Double?
     var longitude: Double?
-    var rentalIncomes: [RentalIncome] = []
-    
+    @Relationship(deleteRule: .cascade, inverse: \RentalIncome.property) var rentalIncomes: [RentalIncome]? = []
+
     init(name: String, currency: String, purchasePrice: Double, marketValue: Double, appreciationPercent: Double) {
         self.name = name
         self.currency = currency
@@ -47,17 +48,15 @@ class Property {
     }
 
     var roi: Double {
-        (gain / purchasePrice) * 100
+        purchasePrice > 0 ? (gain / purchasePrice) * 100 : 0
     }
 
     var totalRentalIncome: Double {
-        rentalIncomes.map(\.amount).reduce(0, +)
+        (rentalIncomes ?? []).map(\.amount).reduce(0, +)
     }
-}
 
-struct AppreciationPoint: Identifiable {
-    let id = UUID()
-    let year: Int
-    var currency: String
-    let estimatedValue: Double
+    /// Projected value after `years`, compounding `appreciationPercent` from today's market value.
+    func projectedValue(afterYears years: Int) -> Double {
+        marketValue * pow(1 + appreciationPercent / 100, Double(years))
+    }
 }

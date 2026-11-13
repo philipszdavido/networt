@@ -5,208 +5,197 @@
 //  Created by Chidume Nnamdi on 4/7/24.
 //
 import Foundation
-import Combine
 import SwiftUI
 
-class GlobalSettings: ObservableObject {
-    
-    @Published var currency: String {
+/// App-wide preferences. Each stored property saves itself to UserDefaults when it changes.
+@Observable
+final class GlobalSettings {
+
+    @ObservationIgnored private let defaults: UserDefaults
+    @ObservationIgnored let lockStore: LockStore
+
+    // MARK: - Display
+
+    var currency: String {
+        didSet { defaults.set(currency, forKey: "currency") }
+    }
+
+    var hideNetworth: Bool {
         didSet {
-            UserDefaults.standard.set(currency, forKey: "currency")
+            defaults.set(hideNetworth, forKey: "hideNetworth")
+            WidgetBridge.setHidden(hideNetworth)
         }
     }
-    
-    @Published var showMyBanks: Bool {
-        didSet {
-            UserDefaults.standard.set(showMyBanks, forKey: "showMyBanks")
-        }
+
+    /// Shows recent bank transactions on Home.
+    var showUpdates: Bool {
+        didSet { defaults.set(showUpdates, forKey: "showUpdates") }
     }
-    
-    @Published var showUpdates: Bool {
-        didSet {
-            UserDefaults.standard.set(showUpdates, forKey: "showUpdates")
-        }
+
+    var fontDesign: Font.Design {
+        didSet { UserDefaults.saveFontDesign(fontDesign) }
     }
-    
-    @Published var hideNetworth: Bool {
-        didSet {
-            UserDefaults.standard.set(hideNetworth, forKey: "hideNetworth")
-        }
+
+    // MARK: - Lock
+
+    /// Whether a PIN exists in the Keychain. The PIN itself never touches UserDefaults.
+    private(set) var hasLockCode: Bool
+
+    /// Held in memory only, so every launch (and every return from the background) starts locked.
+    var isUnlocked = false
+
+    var useBiometrics: Bool {
+        didSet { defaults.set(useBiometrics, forKey: "useBiometrics") }
     }
-    
-    @Published var lockCodes: String {
-        didSet {
-            UserDefaults.standard.set(lockCodes, forKey: "lockCodes")
-        }
+
+    var hasOnboarded: Bool {
+        didSet { defaults.set(hasOnboarded, forKey: "hasOnboarded") }
     }
-    
-    @Published var isLockCodeSet: Bool {
-        didSet {
-            UserDefaults.standard.set(isLockCodeSet, forKey: "isLockCodeSet")
-        }
+
+    // MARK: - Features
+
+    var remindersEnabled: Bool {
+        didSet { defaults.set(remindersEnabled, forKey: "remindersEnabled") }
     }
-    
-    @Published var currencyRates: CurrencyRatesFawazahmed0 {
+
+    /// Read when the model container is created, so a change applies on the next launch.
+    var iCloudSync: Bool {
+        didSet { defaults.set(iCloudSync, forKey: Self.iCloudSyncKey) }
+    }
+
+    /// Whether the running container was created with iCloud sync on.
+    @ObservationIgnored var iCloudSyncActive = false
+
+    static let iCloudSyncKey = "iCloudSync"
+
+    /// Target net worth in the base currency. 0 means no goal.
+    var netWorthGoal: Double {
+        didSet { defaults.set(netWorthGoal, forKey: "netWorthGoal") }
+    }
+
+    /// Target for bank + cash in the base currency. 0 means no goal.
+    var emergencyFundGoal: Double {
+        didSet { defaults.set(emergencyFundGoal, forKey: "emergencyFundGoal") }
+    }
+
+    // MARK: - Rates
+
+    var currencyRates: CurrencyRatesFawazahmed0 {
         didSet {
-            // Convert CurrencyRatesResponse to Data before storing in UserDefaults
             if let encoded = try? JSONEncoder().encode(currencyRates) {
-                UserDefaults.standard.set(encoded, forKey: "currencyRates")
+                defaults.set(encoded, forKey: "currencyRates")
             }
         }
     }
-    
-    @Published var currencyCodes: [String: String] {
+
+    var currencyCodes: [String: String] {
         didSet {
-            if let currencyCodes = try? JSONEncoder().encode(currencyCodes) {
-                UserDefaults.standard.set(currencyCodes, forKey: "currencyCodes")
+            if let encoded = try? JSONEncoder().encode(currencyCodes) {
+                defaults.set(encoded, forKey: "currencyCodes")
             }
         }
     }
-    
-    @Published var bankCardBgColor: Color {
-        didSet {
-                        
-            let uiColor = UIColor(bankCardBgColor);
-            if let data = try? NSKeyedArchiver.archivedData(withRootObject: uiColor, requiringSecureCoding: false) {
-                    UserDefaults.standard.set(data, forKey: "bankCardBgColor")
-            }
-            
-        }
+
+    var ratesFetchedAt: Date? {
+        didSet { defaults.set(ratesFetchedAt, forKey: "ratesFetchedAt") }
     }
-    
-    @Published var fontDesign: Font.Design {
-        didSet {
-            
-            UserDefaults.saveFontDesign(fontDesign)
-            
-        }
-    }
-        
-    init() {
-        self.bankCardBgColor = Self.loadBgColor();
-        self.currency = UserDefaults.standard.string(forKey: "currency") ?? "USD"
-        self.showMyBanks = UserDefaults.standard.bool(forKey: "showMyBanks")
-        self.showUpdates = UserDefaults.standard.bool(forKey: "showUpdates")
-        self.hideNetworth = UserDefaults.standard.bool(forKey: "hideNetworth")
-        self.lockCodes = UserDefaults.standard.string(forKey: "lockCodes") ?? ""
-        self.isLockCodeSet = UserDefaults.standard.bool(forKey: "isLockCodeSet")
+
+    init(lockStore: LockStore = LockStore(), defaults: UserDefaults = .standard) {
+        lockStore.migrateLegacyPasscode(from: defaults)
+        self.lockStore = lockStore
+        self.defaults = defaults
+        self.hasLockCode = lockStore.hasPasscode
+
+        self.currency = defaults.string(forKey: "currency") ?? "USD"
+        self.hideNetworth = defaults.bool(forKey: "hideNetworth")
+        self.showUpdates = defaults.object(forKey: "showUpdates") as? Bool ?? true
         self.fontDesign = UserDefaults.loadFontDesign()
-        
-        // Load currencyRates from UserDefaults
-        if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
-           let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
-            
-            if(decodedCurrencyRates.data.isEmpty) {
+        self.useBiometrics = defaults.bool(forKey: "useBiometrics")
+        self.hasOnboarded = defaults.bool(forKey: "hasOnboarded") || lockStore.hasPasscode
+        self.remindersEnabled = defaults.bool(forKey: "remindersEnabled")
+        self.iCloudSync = defaults.bool(forKey: Self.iCloudSyncKey)
+        self.netWorthGoal = defaults.double(forKey: "netWorthGoal")
+        self.emergencyFundGoal = defaults.double(forKey: "emergencyFundGoal")
+        self.ratesFetchedAt = defaults.object(forKey: "ratesFetchedAt") as? Date
 
-                self.currencyRates = CurrencyRates.getEmptyCurrencyRatesFawazahmed0()
-                
-            } else {
-                self.currencyRates = decodedCurrencyRates
-            }
-                            
+        if let data = defaults.data(forKey: "currencyRates"),
+           let decoded = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: data),
+           !decoded.data.isEmpty {
+            self.currencyRates = decoded
         } else {
-            
             self.currencyRates = CurrencyRates.getEmptyCurrencyRatesFawazahmed0()
-            
         }
-        
-        if let encodedCurrencyCodes = UserDefaults.standard.data(forKey: "currencyCodes"), let decodedCurrencyCodes = try? JSONDecoder().decode([String: String].self, from: encodedCurrencyCodes) {
-            
-            if (decodedCurrencyCodes.isEmpty) {
-                
-                self.currencyCodes = ["" : ""]
-                
-            } else {
-                
-                self.currencyCodes = decodedCurrencyCodes;
-                
-            }
-            
+
+        if let data = defaults.data(forKey: "currencyCodes"),
+           let decoded = try? JSONDecoder().decode([String: String].self, from: data),
+           !decoded.isEmpty {
+            self.currencyCodes = decoded
         } else {
-            self.currencyCodes = ["" : "" ]
+            self.currencyCodes = ["": ""]
         }
-        
-    }
-    
-    func loadSettings() {
-        self.currency = UserDefaults.standard.string(forKey: "currency") ?? "USD"
-        self.showMyBanks = UserDefaults.standard.bool(forKey: "showMyBanks")
-        self.showUpdates = UserDefaults.standard.bool(forKey: "showUpdates")
-        self.hideNetworth = UserDefaults.standard.bool(forKey: "hideNetworth")
-        self.lockCodes = UserDefaults.standard.string(forKey: "lockCodes") ?? ""
-        self.isLockCodeSet = UserDefaults.standard.bool(forKey: "isLockCodeSet")
-        self.bankCardBgColor = Self.loadBgColor();
-        self.fontDesign = UserDefaults.loadFontDesign()
-
-        // Load currencyRates from UserDefaults
-        if let savedCurrencyRatesData = UserDefaults.standard.data(forKey: "currencyRates"),
-           let decodedCurrencyRates = try? JSONDecoder().decode(CurrencyRatesFawazahmed0.self, from: savedCurrencyRatesData) {
-
-            if(decodedCurrencyRates.data.isEmpty) {
-
-                self.currencyRates = CurrencyRates.getEmptyCurrencyRatesFawazahmed0()
-                
-                return
-            }
-
-            self.currencyRates = decodedCurrencyRates
-            
-        } else {
-
-            self.currencyRates = CurrencyRates.getEmptyCurrencyRatesFawazahmed0()
-
-        }
-        
-        // Load currencyCodes from UserDefaults
-        if let encodedCurrencyCodes = UserDefaults.standard.data(forKey: "currencyCodes"), let decodedCurrencyCodes = try? JSONDecoder().decode([String: String].self, from: encodedCurrencyCodes) {
-            
-            if decodedCurrencyCodes.isEmpty {
-                
-                self.currencyCodes = ["" : ""]
-                return;
-                
-            }
-            
-            self.currencyCodes = decodedCurrencyCodes;
-            
-        } else {
-            self.currencyCodes = ["" : "" ]
-        }
-        
-    }
-    
-    func loadCurrency() async throws {
-        self.currencyRates = try await CurrencyRates.fetchCurrencyRates()
-    }
-    
-    func loadCurrencycodes() async throws {
-        
-        self.currencyCodes = try await CurrencyRates.fetchCurrencyCodesFawazahmed0()
-        
-    }
-    
-    static func loadBgColor() -> Color {
-        
-        guard let data = UserDefaults.standard.data(forKey: "bankCardBgColor")
-        else {
-            return .blue
-        }
-        
-        do {
-            
-            if let uiColor = try NSKeyedUnarchiver.unarchivedObject(ofClass: UIColor.self, from: data) {
-                return Color(uiColor)
-            }
-            
-        } catch {
-            
-            print("Failed to load color:", error)
-            
-        }
-
-        return .blue;
-        
     }
 
-    
+    // MARK: - Lock
+
+    func setPasscode(_ pin: String) {
+        lockStore.setPasscode(pin)
+        hasLockCode = true
+        isUnlocked = true
+    }
+
+    /// Returns false when the PIN is wrong.
+    func unlock(with pin: String) -> Bool {
+        guard lockStore.verify(pin) else { return false }
+        isUnlocked = true
+        return true
+    }
+
+    func lock() {
+        isUnlocked = false
+    }
+
+    /// Removes the current PIN so the user is asked to create a new one. Only reachable while unlocked.
+    func resetPasscode() {
+        lockStore.clear()
+        hasLockCode = false
+    }
+
+    // MARK: - Rates
+
+    var hasRates: Bool {
+        !CurrencyRates.checkCurrencyRatesFawazahmed0IsEmpty(data: currencyRates) && !CurrencyRates.checkCurrencyCodesIsEmpty(data: currencyCodes)
+    }
+
+    var ratesAreStale: Bool {
+        guard let ratesFetchedAt else { return true }
+        return Date.now.timeIntervalSince(ratesFetchedAt) > 12 * 60 * 60
+    }
+
+    var ratesDate: Date? {
+        currencyRates.date.isEmpty ? nil : Time.dateFromString(currencyRates.date)
+    }
+
+    @MainActor
+    func refreshRates() async throws {
+        currencyRates = try await CurrencyRates.fetchCurrencyRates()
+        ratesFetchedAt = .now
+        currencyCodes = try await CurrencyRates.fetchCurrencyCodesFawazahmed0()
+    }
+
+    /// Refreshes rates when they are older than 12 hours. Failures keep the cached rates.
+    @MainActor
+    func refreshRatesIfStale() async {
+        if ratesAreStale {
+            try? await refreshRates()
+        }
+    }
+
+    func currencyName(_ code: String) -> String {
+        currencyCodes[code.lowercased()] ?? ""
+    }
+
+    /// Lowercase currency codes that have a rate, sorted.
+    var availableCurrencies: [String] {
+        currencyRates.data.keys.filter { !$0.isEmpty }.sorted()
+    }
 }

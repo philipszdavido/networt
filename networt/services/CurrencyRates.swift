@@ -13,9 +13,19 @@ struct CurrencyRatesFawazahmed0: Codable {
     var type: String;
 }
 
+typealias DataLoader = (URL) async throws -> Data
+
+let urlSessionLoader: DataLoader = { url in
+    let (data, response) = try await URLSession.shared.data(from: url)
+    if let http = response as? HTTPURLResponse, !(200..<300).contains(http.statusCode) {
+        throw URLError(.badServerResponse)
+    }
+    return data
+}
+
 class CurrencyRates {
         
-    static func fetchCurrencyCodesFawazahmed0() async throws -> [String: String] {
+    static func fetchCurrencyCodesFawazahmed0(load: DataLoader = urlSessionLoader) async throws -> [String: String] {
 
         guard let url = URL(string: "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.min.json") else {
 
@@ -23,7 +33,7 @@ class CurrencyRates {
 
         }
         
-        let (data, _) = try await URLSession.shared.data(from: url)
+        let data = try await load(url)
         
         let currencyData = try JSONDecoder().decode([String: String].self, from: data)
 
@@ -31,7 +41,7 @@ class CurrencyRates {
         
     }
     
-    static func fetchCurrencyRates() async throws -> CurrencyRatesFawazahmed0 {
+    static func fetchCurrencyRates(load: DataLoader = urlSessionLoader) async throws -> CurrencyRatesFawazahmed0 {
 
         struct CurrencyRates: Codable {
             var date: String
@@ -44,7 +54,7 @@ class CurrencyRates {
                         
         }
         
-        let (data, _) = try await URLSession.shared.data(from: url);
+        let data = try await load(url)
         
         let response = try JSONDecoder().decode(CurrencyRates.self, from: data)
         
@@ -59,21 +69,6 @@ class CurrencyRates {
         let convertedCurrency = CurrencyRates.convertCurrency(amount: Double(amount), from: from, to: to, using: rates) ?? 0.0
         return convertedCurrency
 
-    }
-    
-    static func convertToGlobalCurrency(_ bankInfo: BankInfo, _ settings: GlobalSettings) -> Double {
-
-        let amount = bankInfo.amount;
-
-        let currency = bankInfo.currency;
-                
-        let globalCurrency = settings.currency;
-        
-        let rates = settings.currencyRates
-
-        let convertedCurrency = CurrencyRates.convertCurrency(amount: Double(amount), from: currency, to: globalCurrency, using: rates) ?? 0.0
-                
-        return convertedCurrency
     }
     
     static func convertCurrency(amount: Double, from sourceCurrency: String, to targetCurrency: String, using rates: CurrencyRatesFawazahmed0) -> Double? {

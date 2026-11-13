@@ -9,86 +9,54 @@ import SwiftUI
 
 struct EnterLockView: View {
 
-    @State var lockCodes = ["", "", "", ""]
-    @EnvironmentObject var settings: GlobalSettings
-    
-    func isLockCodesComplete() -> Bool {
-        let index = lockCodes.first { lockCode in
-            lockCode.isEmpty
-        }
-        
-        if((index) != nil) {
-            return false
-        }
-        return true
-    }
-    
-    func onClick(value: String) {
-        
-        if(value == "erase") {
-            
-            let lockCodeIndex = lockCodes.lastIndex(where: { item in
-                !item.isEmpty
-            })
-            
-            if(lockCodeIndex != nil) {
-                lockCodes[lockCodeIndex!] = ""
-            }
+    @Environment(GlobalSettings.self) private var settings
+    @Environment(\.scenePhase) private var scenePhase
 
-            return
-        } else {
-            let lockCodeIndex = lockCodes.firstIndex(where: { item in
-                item.isEmpty
-            })
-            
-            if(lockCodeIndex != nil) {
-                lockCodes[lockCodeIndex!] = value
-            }
-        }
-        
-        // check if lockCodes is complete
-        if(isLockCodesComplete()) {
-            
-            if(settings.lockCodes == lockCodes.joined()) {
-                
-                settings.lockCodes = lockCodes.joined()
-                settings.isLockCodeSet = true
+    @State private var failures = 0
 
-            } else {
-                emptyLockCodes()
-            }
-        }
-        
-        
+    var canUseBiometrics: Bool {
+        settings.useBiometrics && Biometrics.isAvailable
     }
-    
-    func emptyLockCodes() {
-        lockCodes = ["", "", "", ""]
-    }
-    
+
     var body: some View {
-        
-        Text("Welcome").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).padding()
-        //Text(settings.lockCodes)
-        //Text(lockCodes.joined())
-        
-        //Text(String(settings.isLockCodeSet))
-        
-        HStack {
-            ForEach(lockCodes, id: \.self) { item in
-                Circle()
-                    .foregroundColor(item.isEmpty ? .secondary : .black)
-                    .frame(width: 10)
+        PinEntryView(
+            title: "Enter PIN",
+            message: failures > 0 ? "Incorrect PIN. Try again." : "Unlock to see your net worth",
+            failures: failures
+        ) { pin in
+            if !settings.unlock(with: pin) {
+                failures += 1
+            }
+        } accessory: {
+            if canUseBiometrics {
+                Button {
+                    Task { await unlockWithBiometrics() }
+                } label: {
+                    Label("Use \(Biometrics.label)", systemImage: Biometrics.label == "Touch ID" ? "touchid" : "faceid")
+                        .font(.body.weight(.medium))
+                }
             }
         }
-        
-        Text("Enter your lock code")
-        
-        LockGridView(onClick: onClick)
+        .task {
+            await unlockWithBiometrics()
+        }
+        .onChange(of: scenePhase) { oldPhase, newPhase in
+            // The biometric prompt itself toggles .inactive/.active, so only retry on a real return to the app.
+            if oldPhase == .background && newPhase != .background {
+                Task { await unlockWithBiometrics() }
+            }
+        }
+    }
+
+    func unlockWithBiometrics() async {
+        guard canUseBiometrics, scenePhase != .background else { return }
+        if await Biometrics.authenticate() {
+            settings.isUnlocked = true
+        }
     }
 }
 
-
 #Preview {
     EnterLockView()
+        .environment(GlobalSettings())
 }

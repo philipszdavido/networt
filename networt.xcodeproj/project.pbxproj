@@ -7,34 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4F018CD02E212DAC00ED1A9D /* TestWelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F018CCF2E212DAC00ED1A9D /* TestWelcomeView.swift */; };
-		4F64A9C52E2192E400597EC1 /* CryptoModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F64A9B52E2192E400597EC1 /* CryptoModels.swift */; };
-		4F64A9FE2E219D3800597EC1 /* LiabilityModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F64A9FC2E219D3700597EC1 /* LiabilityModels.swift */; };
-		4F64AA082E2271C500597EC1 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F64AA072E2271C500597EC1 /* SummaryView.swift */; };
-		4F64AA0C2E22868600597EC1 /* Cash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F64AA0B2E22868600597EC1 /* Cash.swift */; };
-		4F64AA142E22967E00597EC1 /* RealEstateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F64AA132E22967E00597EC1 /* RealEstateModel.swift */; };
-		4F64AA162E2296B900597EC1 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F64AA152E2296B900597EC1 /* Stock.swift */; };
-		4F64AA1A2E22972D00597EC1 /* All.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F64AA192E22972D00597EC1 /* All.swift */; };
-		4F8302782BCC359F004A5882 /* NetworthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8302772BCC359F004A5882 /* NetworthView.swift */; };
-		4F83027A2BCC39F9004A5882 /* TxnsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8302792BCC39F9004A5882 /* TxnsListView.swift */; };
-		4F97BF472D5A137C003C8360 /* ConversionRatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F97BF462D5A137C003C8360 /* ConversionRatesView.swift */; };
-		4F97BF492D5A143E003C8360 /* CurrencyListPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F97BF482D5A143E003C8360 /* CurrencyListPickerView.swift */; };
-		4F97BF4B2D5A1496003C8360 /* FontTypeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F97BF4A2D5A1496003C8360 /* FontTypeView.swift */; };
-		4FBE55B52BC30956008CBC42 /* AccountsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B42BC30956008CBC42 /* AccountsListView.swift */; };
-		4FBE55B72BC32A1D008CBC42 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55B62BC32A1D008CBC42 /* Transaction.swift */; };
-		4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */; };
-		4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FBE55C02BC3DEBF008CBC42 /* LockView.swift */; };
-		4FC1FF162BC7FDF0001912A8 /* CurrencyRates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC1FF152BC7FDF0001912A8 /* CurrencyRates.swift */; };
 		4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8952BBD77DC00C8911B /* networtApp.swift */; };
 		4FC3C89C2BBD77E400C8911B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FC3C89B2BBD77E400C8911B /* Assets.xcassets */; };
 		4FC3C89F2BBD77E400C8911B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4FC3C89E2BBD77E400C8911B /* Preview Assets.xcassets */; };
 		4FC3C8A92BBD77E500C8911B /* networtTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8A82BBD77E500C8911B /* networtTests.swift */; };
 		4FC3C8B32BBD77E500C8911B /* networtUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8B22BBD77E500C8911B /* networtUITests.swift */; };
 		4FC3C8B52BBD77E500C8911B /* networtUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC3C8B42BBD77E500C8911B /* networtUITestsLaunchTests.swift */; };
-		4FC448D62BD434E100E87A4F /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC448D52BD434E100E87A4F /* Time.swift */; };
-		4FC7A54A2BC2B99A005CA5B2 /* BankInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7A5492BC2B99A005CA5B2 /* BankInfo.swift */; };
-		4FC7A54E2BC2D094005CA5B2 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */; };
-		4FC7A5502BC2D804005CA5B2 /* GlobalSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FC7A54F2BC2D804005CA5B2 /* GlobalSettings.swift */; };
+		455E880D89D88A9BB3A36F71 /* networtWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A01CB56866491CB672E69C5B /* networtWidgetsExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,28 +31,31 @@
 			remoteGlobalIDString = 4FC3C8912BBD77DB00C8911B;
 			remoteInfo = networt;
 		};
+		39249D53D37988C4FED36283 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4FC3C88A2BBD77DB00C8911B /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3309FCC8A9F66164EE0296EB;
+			remoteInfo = networtWidgetsExtension;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		8F5389D1FD39A67097C276FC /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				455E880D89D88A9BB3A36F71 /* networtWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		4F018CCF2E212DAC00ED1A9D /* TestWelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestWelcomeView.swift; sourceTree = "<group>"; };
-		4F64A9B52E2192E400597EC1 /* CryptoModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoModels.swift; sourceTree = "<group>"; };
-		4F64A9FC2E219D3700597EC1 /* LiabilityModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiabilityModels.swift; sourceTree = "<group>"; };
 		4F64AA062E2256AD00597EC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		4F64AA072E2271C500597EC1 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
-		4F64AA0B2E22868600597EC1 /* Cash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cash.swift; sourceTree = "<group>"; };
-		4F64AA132E22967E00597EC1 /* RealEstateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealEstateModel.swift; sourceTree = "<group>"; };
-		4F64AA152E2296B900597EC1 /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
-		4F64AA192E22972D00597EC1 /* All.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = All.swift; sourceTree = "<group>"; };
-		4F8302772BCC359F004A5882 /* NetworthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworthView.swift; sourceTree = "<group>"; };
-		4F8302792BCC39F9004A5882 /* TxnsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TxnsListView.swift; sourceTree = "<group>"; };
-		4F97BF462D5A137C003C8360 /* ConversionRatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionRatesView.swift; sourceTree = "<group>"; };
-		4F97BF482D5A143E003C8360 /* CurrencyListPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyListPickerView.swift; sourceTree = "<group>"; };
-		4F97BF4A2D5A1496003C8360 /* FontTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontTypeView.swift; sourceTree = "<group>"; };
-		4FBE55B42BC30956008CBC42 /* AccountsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsListView.swift; sourceTree = "<group>"; };
-		4FBE55B62BC32A1D008CBC42 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankCardView.swift; sourceTree = "<group>"; };
-		4FBE55C02BC3DEBF008CBC42 /* LockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockView.swift; sourceTree = "<group>"; };
-		4FC1FF152BC7FDF0001912A8 /* CurrencyRates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyRates.swift; sourceTree = "<group>"; };
 		4FC3C8922BBD77DB00C8911B /* networt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = networt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC3C8952BBD77DC00C8911B /* networtApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networtApp.swift; sourceTree = "<group>"; };
 		4FC3C89B2BBD77E400C8911B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -83,20 +65,36 @@
 		4FC3C8AE2BBD77E500C8911B /* networtUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = networtUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FC3C8B22BBD77E500C8911B /* networtUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networtUITests.swift; sourceTree = "<group>"; };
 		4FC3C8B42BBD77E500C8911B /* networtUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = networtUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		4FC448D52BD434E100E87A4F /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
-		4FC7A5492BC2B99A005CA5B2 /* BankInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BankInfo.swift; sourceTree = "<group>"; };
-		4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		4FC7A54F2BC2D804005CA5B2 /* GlobalSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalSettings.swift; sourceTree = "<group>"; };
+		A01CB56866491CB672E69C5B /* networtWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = networtWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BE88C285D0428CDC44DBB68B /* Exceptions for "networtWidgets" folder in "networtWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+				networtWidgets.entitlements,
+			);
+			target = 3309FCC8A9F66164EE0296EB /* networtWidgetsExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		4F018CB32E21276800ED1A9D /* main */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = main; sourceTree = "<group>"; };
-		4F018CB82E21288200ED1A9D /* updates */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = updates; sourceTree = "<group>"; };
 		4F018CB92E2128C300ED1A9D /* extensions */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = extensions; sourceTree = "<group>"; };
 		4F018CBD2E21295200ED1A9D /* locks */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = locks; sourceTree = "<group>"; };
 		4F018CC62E212A4300ED1A9D /* accountslist */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = accountslist; sourceTree = "<group>"; };
 		4F018CD12E2130A900ED1A9D /* accounttypes */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = accounttypes; sourceTree = "<group>"; };
 		4F64AA052E2248E800597EC1 /* currency */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = currency; sourceTree = "<group>"; };
+		48B7F6D8F3156CA8E95E5F1A /* summary */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = summary; sourceTree = "<group>"; };
+		E0D1D98850934E9896DF73FF /* planner */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = planner; sourceTree = "<group>"; };
+		83F0B1405CB994FB311D6FA2 /* onboarding */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = onboarding; sourceTree = "<group>"; };
+		4FBE55BA2BC3C461008CBC42 /* model */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = model; sourceTree = "<group>"; };
+		4FC1FF142BC7FDD5001912A8 /* services */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = services; sourceTree = "<group>"; };
+		4F97BF432D5A1345003C8360 /* settings */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = settings; sourceTree = "<group>"; };
+		9ED3E1D1A8A8920FB69AF273 /* design */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = design; sourceTree = "<group>"; };
+		01A025656E8C38AF2B9A942B /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
+		9940BED97086FBFE2B6F302D /* networtWidgets */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (BE88C285D0428CDC44DBB68B /* Exceptions for "networtWidgets" folder in "networtWidgetsExtension" target */, ); explicitFileTypes = {}; explicitFolders = (); path = networtWidgets; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,66 +119,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C65D0649E32A3AFE8BB93830 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		4F97BF432D5A1345003C8360 /* settings */ = {
-			isa = PBXGroup;
-			children = (
-				4F97BF462D5A137C003C8360 /* ConversionRatesView.swift */,
-				4F97BF482D5A143E003C8360 /* CurrencyListPickerView.swift */,
-				4F97BF4A2D5A1496003C8360 /* FontTypeView.swift */,
-			);
-			path = settings;
-			sourceTree = "<group>";
-		};
-		4FBE55BA2BC3C461008CBC42 /* model */ = {
-			isa = PBXGroup;
-			children = (
-				4FBE55B62BC32A1D008CBC42 /* Transaction.swift */,
-				4FC7A5492BC2B99A005CA5B2 /* BankInfo.swift */,
-				4FC7A54F2BC2D804005CA5B2 /* GlobalSettings.swift */,
-				4F64AA0B2E22868600597EC1 /* Cash.swift */,
-				4F64A9B52E2192E400597EC1 /* CryptoModels.swift */,
-				4F64AA132E22967E00597EC1 /* RealEstateModel.swift */,
-				4F64AA152E2296B900597EC1 /* Stock.swift */,
-				4F64A9FC2E219D3700597EC1 /* LiabilityModels.swift */,
-				4F64AA192E22972D00597EC1 /* All.swift */,
-			);
-			path = model;
-			sourceTree = "<group>";
-		};
 		4FBE55BB2BC3C467008CBC42 /* views */ = {
 			isa = PBXGroup;
 			children = (
+				9ED3E1D1A8A8920FB69AF273 /* design */,
+				83F0B1405CB994FB311D6FA2 /* onboarding */,
+				E0D1D98850934E9896DF73FF /* planner */,
+				48B7F6D8F3156CA8E95E5F1A /* summary */,
 				4F64AA052E2248E800597EC1 /* currency */,
 				4F018CD12E2130A900ED1A9D /* accounttypes */,
 				4F018CC62E212A4300ED1A9D /* accountslist */,
 				4F018CBD2E21295200ED1A9D /* locks */,
-				4F018CB82E21288200ED1A9D /* updates */,
 				4F018CB32E21276800ED1A9D /* main */,
 				4F97BF432D5A1345003C8360 /* settings */,
-				4FC7A54D2BC2D094005CA5B2 /* SettingsView.swift */,
-				4FBE55B42BC30956008CBC42 /* AccountsListView.swift */,
-				4FBE55BE2BC3D1EE008CBC42 /* BankCardView.swift */,
-				4FBE55C02BC3DEBF008CBC42 /* LockView.swift */,
-				4F8302792BCC39F9004A5882 /* TxnsListView.swift */,
 			);
 			path = views;
-			sourceTree = "<group>";
-		};
-		4FC1FF142BC7FDD5001912A8 /* services */ = {
-			isa = PBXGroup;
-			children = (
-				4FC1FF152BC7FDF0001912A8 /* CurrencyRates.swift */,
-				4FC448D52BD434E100E87A4F /* Time.swift */,
-			);
-			path = services;
 			sourceTree = "<group>";
 		};
 		4FC3C8892BBD77DB00C8911B = {
 			isa = PBXGroup;
 			children = (
+				9940BED97086FBFE2B6F302D /* networtWidgets */,
+				01A025656E8C38AF2B9A942B /* Shared */,
 				4FC3C8942BBD77DB00C8911B /* networt */,
 				4FC3C8A72BBD77E500C8911B /* networtTests */,
 				4FC3C8B12BBD77E500C8911B /* networtUITests */,
@@ -191,6 +161,7 @@
 		4FC3C8932BBD77DB00C8911B /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				A01CB56866491CB672E69C5B /* networtWidgetsExtension.appex */,
 				4FC3C8922BBD77DB00C8911B /* networt.app */,
 				4FC3C8A42BBD77E500C8911B /* networtTests.xctest */,
 				4FC3C8AE2BBD77E500C8911B /* networtUITests.xctest */,
@@ -209,9 +180,6 @@
 				4FC3C8952BBD77DC00C8911B /* networtApp.swift */,
 				4FC3C89B2BBD77E400C8911B /* Assets.xcassets */,
 				4FC3C89D2BBD77E400C8911B /* Preview Content */,
-				4F8302772BCC359F004A5882 /* NetworthView.swift */,
-				4F018CCF2E212DAC00ED1A9D /* TestWelcomeView.swift */,
-				4F64AA072E2271C500597EC1 /* SummaryView.swift */,
 			);
 			path = networt;
 			sourceTree = "<group>";
@@ -251,14 +219,23 @@
 				4FC3C88E2BBD77DB00C8911B /* Sources */,
 				4FC3C88F2BBD77DB00C8911B /* Frameworks */,
 				4FC3C8902BBD77DB00C8911B /* Resources */,
+				8F5389D1FD39A67097C276FC /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				31B5DD475AC9B4032BFC7923 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				4FBE55BA2BC3C461008CBC42 /* model */,
+				4FC1FF142BC7FDD5001912A8 /* services */,
+				4F97BF432D5A1345003C8360 /* settings */,
+				9ED3E1D1A8A8920FB69AF273 /* design */,
+				01A025656E8C38AF2B9A942B /* Shared */,
+				83F0B1405CB994FB311D6FA2 /* onboarding */,
+				E0D1D98850934E9896DF73FF /* planner */,
+				48B7F6D8F3156CA8E95E5F1A /* summary */,
 				4F018CB32E21276800ED1A9D /* main */,
-				4F018CB82E21288200ED1A9D /* updates */,
 				4F018CB92E2128C300ED1A9D /* extensions */,
 				4F018CBD2E21295200ED1A9D /* locks */,
 				4F018CC62E212A4300ED1A9D /* accountslist */,
@@ -306,6 +283,27 @@
 			productReference = 4FC3C8AE2BBD77E500C8911B /* networtUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		3309FCC8A9F66164EE0296EB /* networtWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3117140AC872EB2217852A5A /* Build configuration list for PBXNativeTarget "networtWidgetsExtension" */;
+			buildPhases = (
+				288788EBC4161E019F8F85A1 /* Sources */,
+				C65D0649E32A3AFE8BB93830 /* Frameworks */,
+				DAB6FF0C27C8A9993033DDFE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9940BED97086FBFE2B6F302D /* networtWidgets */,
+				01A025656E8C38AF2B9A942B /* Shared */,
+			);
+			name = networtWidgetsExtension;
+			productName = networtWidgetsExtension;
+			productReference = A01CB56866491CB672E69C5B /* networtWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -316,6 +314,9 @@
 				LastSwiftUpdateCheck = 1510;
 				LastUpgradeCheck = 1510;
 				TargetAttributes = {
+					3309FCC8A9F66164EE0296EB = {
+						CreatedOnToolsVersion = 16.0;
+					};
 					4FC3C8912BBD77DB00C8911B = {
 						CreatedOnToolsVersion = 15.1;
 					};
@@ -345,6 +346,7 @@
 				4FC3C8912BBD77DB00C8911B /* networt */,
 				4FC3C8A32BBD77E500C8911B /* networtTests */,
 				4FC3C8AD2BBD77E500C8911B /* networtUITests */,
+				3309FCC8A9F66164EE0296EB /* networtWidgetsExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -373,6 +375,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DAB6FF0C27C8A9993033DDFE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -380,29 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4FC1FF162BC7FDF0001912A8 /* CurrencyRates.swift in Sources */,
-				4F97BF4B2D5A1496003C8360 /* FontTypeView.swift in Sources */,
-				4FC7A54E2BC2D094005CA5B2 /* SettingsView.swift in Sources */,
-				4F97BF492D5A143E003C8360 /* CurrencyListPickerView.swift in Sources */,
-				4F64A9FE2E219D3800597EC1 /* LiabilityModels.swift in Sources */,
-				4F018CD02E212DAC00ED1A9D /* TestWelcomeView.swift in Sources */,
-				4FC7A5502BC2D804005CA5B2 /* GlobalSettings.swift in Sources */,
-				4F97BF472D5A137C003C8360 /* ConversionRatesView.swift in Sources */,
-				4FC448D62BD434E100E87A4F /* Time.swift in Sources */,
-				4FBE55B52BC30956008CBC42 /* AccountsListView.swift in Sources */,
-				4FBE55B72BC32A1D008CBC42 /* Transaction.swift in Sources */,
 				4FC3C8962BBD77DC00C8911B /* networtApp.swift in Sources */,
-				4F8302782BCC359F004A5882 /* NetworthView.swift in Sources */,
-				4FC7A54A2BC2B99A005CA5B2 /* BankInfo.swift in Sources */,
-				4FBE55C12BC3DEBF008CBC42 /* LockView.swift in Sources */,
-				4FBE55BF2BC3D1EE008CBC42 /* BankCardView.swift in Sources */,
-				4F64AA082E2271C500597EC1 /* SummaryView.swift in Sources */,
-				4F64A9C52E2192E400597EC1 /* CryptoModels.swift in Sources */,
-				4F64AA162E2296B900597EC1 /* Stock.swift in Sources */,
-				4F64AA142E22967E00597EC1 /* RealEstateModel.swift in Sources */,
-				4F64AA0C2E22868600597EC1 /* Cash.swift in Sources */,
-				4F64AA1A2E22972D00597EC1 /* All.swift in Sources */,
-				4F83027A2BCC39F9004A5882 /* TxnsListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +410,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		288788EBC4161E019F8F85A1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -435,6 +429,11 @@
 			isa = PBXTargetDependency;
 			target = 4FC3C8912BBD77DB00C8911B /* networt */;
 			targetProxy = 4FC3C8AF2BBD77E500C8911B /* PBXContainerItemProxy */;
+		};
+		31B5DD475AC9B4032BFC7923 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3309FCC8A9F66164EE0296EB /* networtWidgetsExtension */;
+			targetProxy = 39249D53D37988C4FED36283 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -570,6 +569,7 @@
 				DEVELOPMENT_TEAM = AVHBF8657S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_ENTITLEMENTS = networt/networt.entitlements;
 				INFOPLIST_FILE = networt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My Networth";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
@@ -604,6 +604,7 @@
 				DEVELOPMENT_TEAM = AVHBF8657S;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_ENTITLEMENTS = networt/networt.entitlements;
 				INFOPLIST_FILE = networt/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "My Networth";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
@@ -704,6 +705,58 @@
 			};
 			name = Release;
 		};
+		3732751A0ACE34491F4472A9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = networtWidgets/networtWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AVHBF8657S;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = networtWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Net Worth";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = chidumennamdi.networth.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C8E839894CA93E54B2088970 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = networtWidgets/networtWidgets.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AVHBF8657S;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = networtWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Net Worth";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = chidumennamdi.networth.widgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -739,6 +792,15 @@
 			buildConfigurations = (
 				4FC3C8BF2BBD77E500C8911B /* Debug */,
 				4FC3C8C02BBD77E500C8911B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3117140AC872EB2217852A5A /* Build configuration list for PBXNativeTarget "networtWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3732751A0ACE34491F4472A9 /* Debug */,
+				C8E839894CA93E54B2088970 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

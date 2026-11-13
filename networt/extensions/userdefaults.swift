@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftUICore
+import SwiftUI
 
 extension UserDefaults {
     private static let fontDesignKey = "savedFontDesign"

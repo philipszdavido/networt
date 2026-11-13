@@ -6,24 +6,25 @@
 //
 
 import Foundation
-
-import Foundation
 import SwiftData
 
 @Model
 class Transaction {
-    var dateTime: Date;
-    var operation: String;
-    var amount: Int;
-    var currency: String;
-    
-//    var bankInfo: BankInfo;
-    
-    init(dateTime: Date, operation: String, amount: Int, currency: String) {
+    var dateTime: Date = Date.now
+    var operation: String = "+"
+    var value: Double = 0
+    var currency: String = "USD"
+
+    var bankInfo: BankInfo?
+
+    // See `BankInfo.legacyAmount`.
+    @Attribute(originalName: "amount") var legacyAmount: Int = 0
+
+    init(dateTime: Date, operation: String, value: Double, currency: String, bankInfo: BankInfo? = nil) {
         self.dateTime = dateTime
         self.operation = operation
-        self.amount = amount
+        self.value = value
         self.currency = currency
-        //self.bankInfo = bankInfo
+        self.bankInfo = bankInfo
     }
 }

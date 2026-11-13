@@ -1,39 +1,41 @@
 //
-//  models.swift
+//  CryptoModels.swift
 //  networt
 //
-//  Created by Chidume Nnamdi on 11/07/2025.
+//  Created by Chidume Nnamdi on 12/07/2025.
 //
 
 import Foundation
 import SwiftData
 
+/// A CoinGecko coin and its last known USD price.
 @Model
 class Coin: Decodable, Identifiable {
-    var id: String
-    var symbol: String
-    var name: String
-    var current_price: Double
-    
+    var id: String = ""
+    var symbol: String = ""
+    var name: String = ""
+    var current_price: Double = 0
+    var priceUpdatedAt: Date?
+
+    @Relationship(deleteRule: .nullify, inverse: \CoinHolding.coin) var holdings: [CoinHolding]? = []
+
     init(id: String, symbol: String, name: String, current_price: Double) {
         self.id = id
         self.symbol = symbol
         self.name = name
         self.current_price = current_price
     }
-    
-    // Decodable conformance
+
     required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-        let id = try container.decode(String.self, forKey: .id)
-        let symbol = try container.decode(String.self, forKey: .symbol)
-        let name = try container.decode(String.self, forKey: .name)
-        let current_price = try container.decode(Double.self, forKey: .current_price)
-        
-        self.init(id: id, symbol: symbol, name: name, current_price: current_price)
+        self.init(
+            id: try container.decode(String.self, forKey: .id),
+            symbol: try container.decode(String.self, forKey: .symbol),
+            name: try container.decode(String.self, forKey: .name),
+            current_price: try container.decode(Double.self, forKey: .current_price)
+        )
     }
-    
+
     private enum CodingKeys: String, CodingKey {
         case id
         case symbol
@@ -45,16 +47,25 @@ class Coin: Decodable, Identifiable {
 @Model
 class CoinHolding: Identifiable {
     var id = UUID()
-    var coin: Coin
-    var amount: Double
-    
-    var totalValue: Double {
-        amount * coin.current_price
-    }
-    
+    var coin: Coin?
+    var amount: Double = 0
+    /// Purchase price per coin, in USD.
+    var costBasis: Double?
+
     init(coin: Coin, amount: Double) {
         self.coin = coin
         self.amount = amount
     }
-}
 
+    var name: String { coin?.name ?? "Unknown coin" }
+    var symbol: String { coin?.symbol.uppercased() ?? "" }
+    var price: Double { coin?.current_price ?? 0 }
+
+    var totalValue: Double {
+        amount * price
+    }
+
+    var unrealizedGain: Double? {
+        costBasis.map { (price - $0) * amount }
+    }
+}
